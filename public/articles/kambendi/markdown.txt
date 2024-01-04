@@ -1,0 +1,29 @@
+# Kambendi.fr : Une vitrine web personnalisable pour un artiste
+
+Mon père expose ses œuvres sur internet depuis des années, mais il n'a jamais eu l'occasion d'avoir son propre site web. Il était donc dépendant de plateformes tierces pour vendre ses œuvres, ce qui signifie qu'il devait payer une part de la vente à ces sites et qu'il ne pouvait pas contrôler entièrement l'apparence de sa présence en ligne. J'ai donc décidé de lui créer son propre site web, [kambendi.fr](https://www.kambendi.fr/), où il peut exposer et vendre ses œuvres en toute liberté.
+
+#### Le site vitrine
+
+Le site vitrine [kambendi.fr](https://www.kambendi.fr/) est un espace où mon père peut exposer ses différentes œuvres. Il est conçu pour mettre en valeur ses toiles et permettre aux visiteurs de les découvrir et de les acheter facilement. Le site est intégré avec Stripe, ce qui permet aux acheteurs de payer en toute sécurité directement sur le site.
+
+![Site vitrine : www.kambendi.fr](/kambendi/preview.png)
+
+#### Le site administrateur
+
+J'ai également créé un second site, un site administrateur, qui permet à mon père de gérer ses œuvres et le contenu du site vitrine. Grâce à ce site, il peut ajouter, modifier ou supprimer des œuvres, et gérer le contenu des différentes pages du site vitrine. Cela lui donne un contrôle total sur son site et lui permet de le maintenir à jour facilement.
+
+![Site administrateur](/kambendi/admin_preview.png)
+
+#### Un site web en évolution
+
+À l'heure où j'écris cet article, le site web est déployé et accessible, mais toujours en développement. Je travaille main dans la main avec mon père pour comprendre au mieux ses besoins et améliorer le site en conséquence. Nous avons déjà ajouté de nouvelles fonctionnalités, comme la possibilité de créer des collections d'œuvres, et nous avons d'autres idées en tête pour améliorer le site.
+
+#### Un service pour les artistes
+
+Si vous êtes un artiste et que vous êtes intéressé par la création d'un site web similaire, n'hésitez pas à me contacter. Je serais ravi de vous aider à créer un espace en ligne qui met en valeur votre travail et vous permet de le vendre directement à vos admirateurs.
+
+#### Conclusion
+
+La création de [kambendi.fr](https://www.kambendi.fr/) a été pour moi l'occasion de mettre finalement mes compétences au service de mon père. Cela m'a permis de lui offrir un site web qui lui permet de présenter et de vendre ses œuvres en toute liberté. Cela m'a également permis de travailler sur un projet concret et de mettre en pratique mes compétences en développement web. Je suis très fier du résultat et j'espère que vous apprécierez le site autant que moi.
+
+##### Yannis Bendi-Ouis

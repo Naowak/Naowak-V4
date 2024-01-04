@@ -1,0 +1,33 @@
+# GaucheDroite : Un nouvel outil d'analyse de texte politique
+
+Vous êtes-vous déjà demandé les tendances politiques d'un auteur, d'un livre, d'un discours, ou plus simplement d'un texte ? Jusqu'à présent, vous n'aviez pas le choix, il fallait lire le texte en question pour le savoir. Mais ça, c'était avant ! Si je vous disais qu'il est maintenant possible de connaître l'orientation politique d'un texte sans même le lire, vous me croiriez ? Et bien c'est désormais possible grâce à [GaucheDroite](https://www.gauchedroite.net/), un nouvel outil d'analyse de texte politique.
+
+#### Qu'est-ce que GaucheDroite ?
+
+GaucheDroite est un service disponible sur le web à l'adresse [www.gauchedroite.net](https://www.gauchedroite.net). Il propose un outil d'analyse de texte qui étiquette une à une chaque phrase d'un texte (parmi les valeurs : neutre, extrême gauche, gauche, centre, droite, extrême droite), puis qui fournit des statistiques sur l'orientation politique du texte. C'est un outil facile à utiliser, parfait pour les passionnés de politique, les chercheurs et les journalistes.
+
+J'ai développé [GaucheDroite](https://www.gauchedroite.net/) dans le but de fournir un outil précis et accessible pour analyser les discours politiques. Après avoir travaillé sur des projets tels que [GPTJ-Overton](https://www.naowak.fr/gptj-overton/), un chatbot spécialisé dans la politique française, j'ai voulu créer un outil qui pourrait aider les gens à mieux comprendre le paysage politique français.
+
+![Preview du site www.gauchedroite.net](/gauchedroite/preview.png)
+
+#### Comment ça marche ?
+
+GaucheDroite utilise [GPT-3](https://fr.wikipedia.org/wiki/GPT-3), un modèle de langage développé par [OpenAI](https://openai.com). [GPT-3](https://fr.wikipedia.org/wiki/GPT-3) est un modèle de langage très puissant qui peut générer du texte à partir d'une simple phrase d'entrée. 
+Ici, je détourne un peu son usage et profite de son champ de connaissance pour labeliser chacune des phrases du texte donné en entrée. 
+
+#### Comment l'utiliser ?
+
+Pour l'utiliser, vous devez vous rendre sur [GaucheDroite](https://www.gauchedroite.net/) et y créer un compte. Une fois connecté, vous pouvez analyser un texte en 
+accédant au Playground. Copiez-collez le texte que vous souhaitez analyser dans le champ de texte. Une fois le texte analysé, vous pouvez voir les statistiques sur l'orientation politique du texte.  
+
+Vous pouvez essayer [GaucheDroite](https://www.gauchedroite.net/)  gratuitement jusqu'à 50 000 caractères. Si vous avez besoin d'analyser plus de texte, nous proposons une offre payante à seulement 0,01 euro les 1 000 caractères. 
+
+Pour vous donner une idée de ce que [GaucheDroite](https://www.gauchedroite.net/) peut faire, j'ai réalisé une vidéo de présentation dans laquelle j'évalue un discours de Jean-Luc Mélenchon. Vous pouvez la regarder ci-dessous.
+
+![Vidéo de présentation de GaucheDroite](/gauchedroite/video-melanchon.mp4)
+
+#### Conclusion
+
+J'ai bien apprécié développer ce site, cela a été pour moi une première expérience en Next.js plutôt concluante. J'espère qu'il vous sera utile pour comprendre et analyser le paysage politique français. N'hésitez pas à me faire part de vos commentaires et suggestions, je serais ravi de les entendre.
+
+##### Yannis Bendi-Ouis

@@ -1,0 +1,131 @@
+# BattleFieldAgents : GPT-4 pour contrôler des agents intelligents
+
+Dans le monde de l'intelligence artificielle (IA), les modèles de langage comme [GPT-4 d'OpenAI](https://openai.com/gpt-4) ont ouvert de nouvelles portes pour la simulation d'agents intelligents. Dans cet article, nous parlerons de mon dernier projet en date : "BattleFieldAgents", qui utilise [GPT-4](https://openai.com/gpt-4) pour contrôler des agents dans un jeu vidéo de stratégie. Nous discuterons de la conception du jeu, des défis rencontrés, et de la manière dont l'IA a été intégrée pour créer une expérience de jeu unique.
+
+![BattleFieldAgents : example d'une partie en vidéo](https://youtu.be/W-KyDJx34Qg)
+
+#### Présentation du projet "BattleFieldAgents"
+
+"BattleFieldAgents" est un projet de jeu vidéo stratégique qui utilise le modèle de langage [GPT-4 d'OpenAI](https://openai.com/gpt-4) pour contrôler des agents dans le jeu. Les agents sont conçus pour prendre des décisions stratégiques en fonction de leur environnement et expliquer leurs raisonnements derrière leurs actions. L'objectif du projet est de permettre à ces agents de communiquer en langage naturel (ici en anglais), de se partager des informations importantes, et de coordonner leurs actions pour atteindre un objectif commun.
+
+Le jeu est un champ de bataille disposé sur une grille 2D et se compose de deux équipes : "rouge" et "bleu", chacune ayant plusieurs agents (100 pdv). Chaque équipe possède une cible (150 pdv) qu'elle doit protéger tout en essayant de détruire la cible ennemie. Sur le champ de bataille, il y a également des obstacles positionnés aléatoirement qui obstruent le champ de vue des agents et leurs déplacements. Les agents peuvent tirer sur n'importe quel ennemi (agent ou cible) qui est dans leur champ de vue. Lorsqu'une balle touche un agent ou une cible, leurs points de vie sont réduits de 25. Si les points de vie d'un agent atteignent zéro, il est retiré du jeu. Si les points de vie d'une cible atteignent zéro, le jeu est gagné par l'équipe adverse. Si tous les agents d'une équipe sont retirés du jeu, l'équipe adverse gagne.
+
+Chaque agent doit réaliser 3 actions par tour, et possède les informations suivantes : 
+- sa position actuelle 
+- ses points de vie
+- ce qu'il voit (agents, cibles, obstacles) et leurs coordonnées
+- les messages qu'il a reçu de ses coéquipiers
+- un historique de ses actions précédentes
+- une mémoire des dernières positions observées pour chaque agent et cible  
+
+Ils utilisent ces informations pour décider de ce qu'ils vont faire, c'est à dire se déplacer de 1 à 3 cases, attaquer un adversaire en vu, ou communiquer avec un coéquipier en vu.  
+
+
+
+#### Vulgarisation du fonctionnement du projet
+
+
+Pour comprendre comment "BattleFieldAgents" fonctionne, il est utile de le visualiser comme un cycle d'interaction entre le jeu et [GPT-4](https://openai.com/gpt-4). Voici un schéma simplifié de ce cycle :
+
+![Workflow](/battlefieldagents/workflow.png)
+
+1. Le jeu envoie l'état actuel du jeu à l'API Python. Cet état comprend des informations sur la position des agents, leur vie, les obstacles, etc.
+2. L'API Python génère un prompt basé sur cet état et l'envoie à GPT-4.
+3. GPT-4 génère une action basée sur le prompt et la renvoie à l'API Python.
+4. L'API Python traduit cette action en une commande que le jeu peut comprendre et l'envoie au jeu.
+5. Le jeu exécute la commande, met à jour l'état du jeu, et le cycle recommence.
+
+Ce cycle se répète pour chaque action et pour chaque tour du jeu. 
+
+
+#### Exploration du comportement des agents
+
+Une partie non négligeable du travail a été d'observer le comportements des agents et de modifier les informations auxquelles ils avaient accès, leur actions possibles et leur prompt jusqu'à obtenir une version satisfaisante. Mon objectif principal était de leur faire adopter un comportement cohérent dans lequel ils partagerait des informations. Plus précisément, je voulais qu'ils interagissent entre eux et s'entraident pour atteindre un objectif commun. Sachant que chacun d'entre eux ne peut voir qu'une partie du champ de bataille, vont-ils être capable de se partager des informations et de coordonner leurs actions ?
+
+Au départ, j'ai réalisé de nombreux tests avec [GPT-3.5-turbo](https://fr.wikipedia.org/wiki/GPT-3), mais il était difficile d'obtenir un prompt qui permettait d'obtenir à coup sûr le résultat dans un certain format. C'est une préoccupation importante pour un informaticien, car le format de sortie doit être prévisible et cohérent pour que le code puisse interagir correctement avec lui.
+
+> ℹ️ **Update**
+>
+> Depuis la rédaction de cet article, OpenAI a publié une [mise à jour](https://openai.com/blog/function-calling-and-other-api-updates) de GPT-3.5 et GPT-4 permettant de la génération d'arguments pour des l'appels de fonction.
+> Bien que non testée pour ce projet, cette fonctionnalité devrait résoudre ce dernier problème permettre l'utilisation de GPT-3.5. 
+> Cependant, il reste à noter que GPT-4 est plus performant que GPT-3.5 pour de la logique et de la stratégie. GPT-4 produit donc de meilleurs agents.
+
+Après de nombreux tests avec différents prompts, j'ai réussi à obtenir un comportement intéressant. Les agents communiquent avec leurs coéquipiers pour coordonner leurs attaques ou partager des informations, malgré le coût associé à la communication. Elles prennent en compte les messages reçus de leurs camarades lors de leur tour de jeu, ce qui montre une véritable coopération entre elles.
+
+Cependant, j'ai rencontré quelques difficultés. Au début, les agents ne choisissaient pas de parler spontanément. J'ai dû modifier le prompt pour les encourager à le faire. C'est assez fascinant de voir comment le comportement d'un agent peut être manipulé simplement en modifiant du texte en langage naturel.
+
+Il y a cependant des limites à ce que nous pouvons accomplir. Les informations que les agents reçoivent sont limitées par la façon dont le jeu est implémenté. De plus, le prompt et la description du jeu qu'il contient limitent également leur comportement. Trouver les instructions claires et concises qui auront le plus grand impact est un défi en soi.
+
+> 📝 **Le prompt** 
+>
+> You're a helpful assistant who tells me the next immediate action to take in a turn-based strategy game with timeline. Your ultimate goal is to kill all enemy agents or destroy the enemy target, and not to die.
+> 
+> Those are some tips for the game:
+> 1/ The map is composed of cells on an orthogonal grid. Each cell can be occupied only by one agent, target or obstacle.
+> 2/ The center of the map is [0, 0].
+> 3/ An attack reduces the life points of the target by 25.
+> 4/ If you can see an agent, he can see you too.
+> 5/ An enemy agent with low life can still attack you.
+> 6/ Every agent has 3 actions per turn.
+> 7/ Each move can be from 1 to 3 cells. The more cell you move, the faster you are, but the less you can see.
+> 8/ Do not worry about obstacles or distances. You can make a clear attack on every enemy you see.
+> 
+> I'm going to give you the following information:
+> Messages: sent by friends
+> Historic: previous thoughts and actions you made
+> Last Positions Seen: last positions of friends and enemies that you saw
+> Your position: [x, y]
+> Your life points: 100 max
+> Friends: visible
+> Enemy: visible
+> Friendly target: visible
+> Enemy target: visible
+> Obstacles: visible
+> Actions Left: number of actions left to perform this turn
+> Possible Actions: you have to choose one of them
+> 
+> You must follow the following criteria:
+> 1/ You must act as a strategic warlord and make the best decision for the mission.
+> 2/ Please be very clear about your concerns and the reasons for your actions.
+> 3/ The next action must be in the list of possible actions. Any action not included will be punished. Do not choose more than one action. Do not mention anything else than the chosen action.
+> 5/ When you choose the action "SPEAK [x, y]", you must also include the message you want to send. This should follow a specific format: "SPEAK [x, y] The message you want to send.". The message must be less than 50 words.
+> 6/ Please, share enemy positions with your friends if you think they do not see it according to their location. Do not share them your movements or location. Do not speak twice in a same turn to the same friend.
+> 7/ Please answer to your friends when they ask you informations. But do not expect any answer or action from them until your next turn.
+> 8/ Please, move intelliently. Use the coordinates of the cell to determine which cell is the best to move to. Do not go back on previous cells.
+> 
+> You should only respond in the format as described below:
+> RESPONSE FORMAT:
+> THOUGHTS: Based on the information I listed above, in 50 words, do reasoning about what the next task should be.
+> ACTION: The next action.
+> 
+> Here's an example response:
+> THOUGHTS: The enemy target is in my sight, I should attack it.
+> ACTION: ATTACK [3, -1]
+
+
+
+
+#### Perspectives et applications futures
+
+Le projet "BattleFieldAgents" ouvre la voie à de nombreuses possibilités de recherche et d'application. L'une des perspectives les plus intéressantes selon moi est l'amélioration de ces agents via apprentissage par renforcement d'un [LLM](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) "miniature". Il existe aujourd'hui de nombreux modèle Open-Source de LLM, comme [GPT-2](https://en.wikipedia.org/wiki/GPT-2), [LLama](https://en.wikipedia.org/wiki/LLaMA) ou [Falcon](https://huggingface.co/tiiuae/falcon-40b). Il serait intéressant de voir si ces modèle - bien plus petits et moins performants que GPT-4 - peuvent être finetuné sur cette tâche spécifique, et s'il peuvent être utilisé comme base pour l'entrainement par renforcement d'agent autonome. 
+
+Ceci permettrait de remplacer GPT-4 qui présente trois désaventages majeurs : 
+- Il est très coûteux. Chaque action coûte entre 0.01$ - 0.02$.
+- C'est un modèle fermé. Nous ne connaissont pas les données sur lesquels il s'est entrainé et ses biais.
+- Nous ne pouvons pas le modifier et l'améliorer.
+D'ailleurs, si le fine-tuning d'un [LLM](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) vous intéresse, je vous invite à lire [**GPTJ-OVERTON : le finetuning d'un LLM Politique**](/gptj-overton/).
+
+Aussi, bien que le prompt actuel permette un comportement intéressant, il est loin d'être parfait. Des recherches supplémentaires pourraient être menées pour améliorer le prompt et obtenir un comportement plus complexe et stratégique de la part des agents. 
+
+Une autre possibilité est l'explicabilités des décisions des agents et de leur raisonnement. Nous pouvons imaginer entrenenir des discussions avec un agent tout au long de l'expérience pour mieux comprendre ses décisions et son raisonnement, ou même pour lui donner des conseils sur la façon de se comporter dans une situation.
+
+En outre, le projet pourrait être étendu pour inclure plus d'agents, ou pour permettre aux agents d'avoir des "personnalités" différentes basées sur différents prompts. Cela pourrait conduire à des dynamiques de jeu plus intéressantes et plus variées.
+
+Enfin, le projet pourrait être utilisé comme un outil d'apprentissage pour ceux qui s'intéressent à l'IA et aux jeux vidéo. En modifiant le code et en expérimentant avec différents prompts, les utilisateurs peuvent en apprendre davantage sur le fonctionnement de [GPT-4](https://openai.com/gpt-4) et sur la manière dont l'IA peut être utilisée dans les jeux vidéo, et en général.
+
+
+#### Conclusion
+
+En utilisant [GPT-4](https://openai.com/gpt-4) pour contrôler les agents dans un jeu de stratégie, **BattleFieldAgents** offre une nouvelle perspective de recherche sur les problèmes multi-agents et illuste bien le potentiel des [LLMs](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) dans de tels contextes. Bien qu'il reste encore beaucoup à faire pour améliorer le comportement des agents et pour explorer d'autres applications possibles, **BattleFieldAgents** est un POC prometteur pour l'utilisation des [LLMs](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage)s- pour le développement d'agent intelligents capable de fournir des explications en langage naturelle de leurs décisions et de leurs raisonnements.
+
+##### Yannis Bendi-Ouis

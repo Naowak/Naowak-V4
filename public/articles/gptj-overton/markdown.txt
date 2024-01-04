@@ -1,0 +1,48 @@
+# GPTJ-Overton : le finetuning d'un LLM Politique
+
+Suite aux précédents travaux que j'ai réalisés lors du projet [Overton](https://www.naowak.fr/overton), je suis ravi de vous présenter mon dernier projet : GPTJ-Overton, un chatbot spécialisé dans la politique française. C'est un projet qui me tient à cœur et pour lequel je me suis pas mal investi. Je suis très heureux de vous le présenter aujourd'hui !
+
+#### L'idée derrière le projet
+
+L'idée de créer un chatbot spécialisé dans la politique française m'est venue il y a quelques semaines. Alors que les différents LLMs [(Large Language Model)](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) étaient en train de faire leurs preuves aux yeux du monde, je me suis demandé comment je pouvais utiliser cette technologie pour créer un chatbot spécialisé dans un domaine précis. Ainsi, fort de mes précédents travaux sur le projet [Overton](https://www.naowak.fr/overton), et notamment du jeu de donnée que j'avais pu récupérer (près de 1 Go de texte politique français), j'ai décidé de me lancer dans l'entraînement d'un chatbot spécialisé dans la politique française. 
+J'ai conscience que mes moyens sont limités, et que je ne pourrais pas rivaliser avec les modèles de [OpenAI](https://openai.com), mais je suis tout de même déterminer à entraîner un modèle de plusieurs milliards de paramètres sur mes données, ne serait-ce que pour apprendre !  
+
+Il y a en effet de nombreuses problématiques à résoudre pour entraîner un tel modèle. La puissance de calcul nécessaire est grande, et bien supérieur à ce que nous pouvons avoir sur nos ordinateurs personnels. De plus, les données nécessaires à l'entraînement d'un tel modèle sont très importantes. Il faut donc trouver un moyen de récupérer des données de qualité, et en grande quantité. Enfin, il faut trouver un moyen de financer tout cela, car cela peut vite devenir très couteux. Ici, je me contenterai de me fixer un budget de 500 euros.
+
+Pour ce projet, j'ai choisi d'utiliser le modèle français open-source [Cedille](https://huggingface.co/Cedille/fr-boris), proposé par [Cedille.ai](https://cedille.ai), qui a été entraîné à partir du modèle open-source [GPT-J](https://huggingface.co/docs/transformers/model_doc/gptj) de 6 milliards de paramètres, proposé par [Eleutheria](https://www.eleuther.ai). L'avantage d'utiliser ces modèles open-source est que je ne passe pas par [OpenAI](https://openai.com), et qu'une fois entraîné le modèle que j'obtiendrai m'appartiendra ! Certes, nous ne sommes pas sur les 175 milliards de paramètres que possède [GPT-3](https://fr.wikipedia.org/wiki/GPT-3), mais cela ne nous empêche pas d'obtenir de très bons résultats !
+
+#### Le POC
+
+Avant d'entraîner le modèle sur l'ensemble de mes données (ce qui peut prendre du temps, et être très coûteux), j'ai préféré réaliser un POC me permettant d'entraîner un modèle sur un subset de mes données (environ 1%, soit 15Mo). Cela m'a permis de tester la faisabilité de mon projet, et de voir si les résultats étaient satisfaisants.  
+
+Pour cela, j'ai utilisé le modèle [GPTJ-6B](https://huggingface.co/EleutherAI/gpt-j-6B) de 6 milliards de paramètres, proposé par [Eleutheria](https://www.eleuther.ai), et j'ai entraîné le modèle sur 15Mo de données politiques françaises. L'entraînement de ce POC n'a duré qu'une petite demi-heure.  
+
+Le résultat de ce POC n'est pas un modèle avec lequel nous pouvons chatter, où à qui nous pouvons poser des questions. Il n'a pas été affiné (finetune) pour ces tâches. Il s'agit seulement d'un modèle capable de continuer un texte (trouver le prochain mot), et ayant des notions plus approfondies sur la politique française qu'un modèle lambda. 
+Comme vous pouvez le voir sur les images ci-dessous, le modèle a été capable de générer des textes politiques cohérents et de conserver un contexte. C'est un bon début !
+Nous pouvons alors passer à l'étape suivante : l'entraînement du modèle sur l'ensemble de mes données !
+
+![Résultats du POC - Example 1](/gptj-overton/poc-0.png)
+![Résultats du POC - Example 2](/gptj-overton/poc-1.png)
+![Résultats du POC - Example 3](/gptj-overton/poc-2.png)
+
+#### Le processus d'entraînement
+
+Pour entraîner mon modèle, j'ai travaillé avec un jeu de données d'environ 1Go de discours politique que j'ai enrichi avec des données extraites de [Wikipedia](https://fr.wikipedia.org/) et de [Quora](https://www.quora.com), pour atteindre plus de 2GB de texte, soit l'équivalent de 4000 livres de 150 pages, le tout orienté sur la politique française !
+
+J'ai ensuite loué une grosse machine à [Google](https://cloud.google.com/?hl=fr) pour 14$/h (4 [GPU A100](https://www.nvidia.com/fr-fr/data-center/a100/)) pour lancer mon entraînement. Malheureusement, la machine a manqué de stockage pendant la nuit et l'entraînement s'est brusquement arrêté à 20%. Malgré cette mésaventure, j'ai tout de même pu récupérer une version du modèle ayant vu près d'un demi GB de données textuelles politiques, que j'ai ensuite pu affiner (finetune).
+
+![Résultats du Modèle - Example 1](/gptj-overton/model-0.jpeg)
+![Résultats du Modèle - Example 2](/gptj-overton/model-1.jpeg)
+![Résultats du Modèle - Example 3](/gptj-overton/model-2.jpeg)
+
+#### Les résultats
+
+Alors, qu'est-ce que ça donne ? Eh bien, je dois dire que je suis assez satisfait des résultats. Certes, GPTJ-Overton dit de grandes bêtises, et semble avoir un penchant pour l'uchronie. Mais il retient un contexte, parle très correctement français, et propose de temps en temps de très bonnes réponses. La politique est un sujet complexe, où une petite erreur peut être assez punitive (beaucoup de dates, d'événements, de valeurs ambiguës, de personnalité), mais malgré cela, le chatbot s'en sort plutôt bien.
+
+#### Conclusion
+
+En conclusion, je suis très heureux des résultats obtenus avec GPTJ-Overton. Bien sûr, ces derniers auraient pu être bien meilleur si l'entraînement n'avait pas été interrompu, ou si j'avais eu un plus gros budget pour entraîner le modèle sur plus de données. Mais je suis tout de même très satisfait de ce que j'ai pu obtenir avec un budget de 500 euros.  
+
+J'espère que ce projet vous a plu et je suis impatient de partager avec vous mes prochains travaux. Restez à l'écoute !
+
+##### Yannis Bendi-Ouis

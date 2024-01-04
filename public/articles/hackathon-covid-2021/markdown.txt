@@ -1,0 +1,56 @@
+# Hackathon Covid-19, édition 2021
+
+Les 23 et 24 avril 2021 a eu lieu le [hackathon covid-19](https://hackathon-covid.fr/). Lors de cet événement, des participants provenant de la France entière participèrent par groupe au développement de divers projets visant à aider la lutte contre **la propagation du coronavirus**. A l'issue de ces deux jours, le **ministère de la santé** a élu 10 projets qui selon eux, remplissaient le mieux cet objectif. Parmi eux, nous pouvons notamment citer [Vite ma dose](https://vitemadose.covidtracker.fr/) réalisé par *Guillaume Rozier*, aussi créateur de [Covid Tracker](https://covidtracker.fr/).
+
+J’ai eu l’occasion de participer à ce Hackathon au sein de l’équipe [**Psy-Covid**](https://github.com/babash/hackhathon_covid19), avec laquelle nous avons cherché à identifier **des indicateurs de la santé mentale des français** dans les tendances [**Twitter**](https://twitter.com/) et [**Google Trends**](https://trends.google.fr/trends/), ainsi qu’à visualiser **l’évolution de la santé mentale des Français** depuis le début de l’épidémie de la  Covid-19.
+
+#### Indicateurs de la santé mentale des français
+
+Pour mettre à bien cette recherche d'indicateurs, nous avons regrouper des données publiques nous indiquant l'évolution de la santé mentale des français : [**Coviprev**](https://www.data.gouv.fr/fr/datasets/donnees-denquete-relatives-a-levolution-des-comportements-et-de-la-sante-mentale-pendant-lepidemie-de-covid-19-coviprev/) et [**Covidistress**](https://covidistress.github.io/), l'évolution de l'épidémie du coronavirus en France avec **les données d'hospitalisation, de réanimation et de décès**, et des tendances [**Twitter**](https://twitter.com/) et [**Google Trends**](https://trends.google.fr/trends/) que nous avons dû extraire nous même. 
+
+Nous avons ainsi pu mettre en évidence plusieurs **corrélations** tel que le montre la matrice de corrélation visible ci-dessous. Plus un score est respectivement proche de 1 ou -1, plus il y a une corrélation respectivement positive ou négative entre l'indicateur en abscisse et celui en ordonnée. Une corrélation positive (score proche de 1) entre deux indicateurs indique qu'ils augmentent et diminuent ensemble. A l'inverse, une corrélation négative (score proche de -1) entre deux indicateurs indique que lorsque l'un augmente l'autre diminue et inversement. Un score proche de 0 nous indique que les deux indicateurs augmentent et diminuent sans rapport l'un avec l'autre.
+
+Ainsi, nous pouvons notamment relever les corrélations suivantes : 
+* l'**anxiété** et la **dépression** au sein de la population française se corrélent positivement
+* la **dépression** des français, les **hospitalisations**, les **réanimations**, et les **décès** se corrélent positivement
+* la recherche des mots **"psychologue"** et **"psychiatre"** se corrélent négativement avec la **dépression**
+* le nombre de tweets contenant les mots **"dépression"** et/ou **"anxiété"** se corrèle positivement avec la **dépression** des français et de manière plus légère leur **anxiété** aussi.
+* le **respect du port du masque** se corrèle négativement avec la **dépression** des français, le **respect des gestes barrières**, le nombre de tweet contenant le mot **"dépression"** et/ou **"suicide"**, les **hospitalisations**, les **réanimations** et les **décès** mais il se corrèle positivement avec la recherche des mots **"psychologue"** et **"psychiatre"**
+
+Avec ces résultats, nous pouvons donc imaginer qu’il est possible de créer un algorithme utilisant des indicateurs provenant des données de [**Twitter**](https://twitter.com/) comme **le nombre de tweets contenant le mot "dépression" pour identifier les hausses et les baisses de la dépression et de l’anxiété dans la population française**. Par ailleurs, nous pouvons voir que compte-tenu de sa corrélation négative avec les données d'hospitalisation, le respect du port du masque semblent jouer un rôle essentiel contre la propagation de l'épidémie. Et, selon sa corrélation négative avec la dépression et l'anxiété des français, il semble jouer un rôle important dans l'amélioration de la santé mentale des français. Je me risquerais d'inférer que **le masque apparait alors comme étant une protection efficace contre le coronavirus et rassurante pour la population**.
+
+Evidemment, bien d’autres corrélations peuvent être décelées au sein de cette matrice.
+
+![Matrice de corrélation](/hackathon-covid-2021/correlationMatrix.png)
+
+
+#### Evolution de la santé mentale des français
+
+Pour visualiser l'évolution de la santé mentale des français, nous avons utilisé les données [**Coviprev**](https://www.data.gouv.fr/fr/datasets/donnees-denquete-relatives-a-levolution-des-comportements-et-de-la-sante-mentale-pendant-lepidemie-de-covid-19-coviprev/) réalisé par [Santé Publique France](https://www.santepubliquefrance.fr/etudes-et-enquetes/coviprev-une-enquete-pour-suivre-l-evolution-des-comportements-et-de-la-sante-mentale-pendant-l-epidemie-de-covid-19). Ainsi, nous avons créé un premier  Dashboard en open source en python (vous pouvez trouver le code source de ce Dashboard sur ce [dépot Github](https://github.com/Naowak/Coviprev)). Puis je l'ai ré-édité par la suite en react-js pour l'intégrer [**ici**](https://naowak.fr/coviprev/). 
+
+![Dashboard coviprev python](/hackathon-covid-2021/dashboard_coviprev_python.png)
+
+
+#### Pour finir
+
+Notre projet a été sélectionné parmi les dix plus prometteurs selon les représentants du **ministère de la santé**. Ces derniers nous ont incités à continuer la recherche d'indicateurs de la santé mentale des français dans les données présentent sur internet, et à développer un algorithme permettant d'inférer l'état de la santé mentale des français en fonction de ces indicateurs. Cependant, faute de volonté de leur part de financer un quelconque projet, et nos obligations personnelles, nous n'avons pu continuer ce projet.
+
+
+#### Membres de l'équipe PsyCovid
+
+* BAKALARA Johanne, doctorante
+* BENDI-OUIS Yannis, ingénieur
+* BEN SLAMA Selim, M2 Sciences Digitales au Centre de Recherche Interdisciplinaires
+* BUTON Nicolas, Doctorant
+* CONNES Victor, doctorant
+* DUQUESNES Camille, M2 Sciences Digitales
+* GUYET Thomas, enseignant-chercheur
+* GUINCHARD Sarah, M2 Bio-informatique
+* HOMBOURGER Sophie, docteure en biologie/data analyst
+* LEDIEU Thibault, ingénieur
+* LE CUNFF, Yann, enseignant-chercheur
+
+![Psykokwak : mascotte de l'équipe PsyCovid ](/hackathon-covid-2021/psykokwak.png)
+
+##### Yannis Bendi-Ouis
+

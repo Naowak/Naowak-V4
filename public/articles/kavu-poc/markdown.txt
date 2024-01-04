@@ -1,0 +1,31 @@
+# Kavu-Dechet : Un POC pour une cause environnementale à Mayotte
+
+Il y a quelques semaines, j'ai été contacté par un ancien camarade de classe vivant maintenant sur l'île de Mayotte et en difficulté face au développement d'une application mobile : KavuDechet. Cette application intervient dans un projet associatif plus large visant à aider à la récolte des déchets sauvages sur l'île de Mayotte. Ainsi, sans hésitation compte tenu du sujet, j'ai décidé de mettre mes compétences au profit de ce projet, et de l'aider à développer un POC (Proof of Concept) pour présenter le projet à des financeurs.
+
+#### Le concept de Kavu-Dechet
+
+Le principe de Kavu-Dechet est extrêmement simple, et a déjà fait ses preuves dans d'autres territoires. Les utilisateurs de l'application peuvent prendre en photo un déchet qu'ils croisent et l'envoyer à nos serveurs. Nous récupérons alors leur position GPS lors de l'envoi pour localiser le déchet. L'ensemble des déchets est ensuite visible sur une carte, ce qui aide les autorités compétentes à les gérer.
+
+#### L'importance du projet
+
+Ce projet a une importance capitale à Mayotte, compte tenu de la situation sur place. Il a été initié par l'association Kavu, qui rassemble un ensemble de professeurs et d'élèves de Mayotte. L'île est en effet en proie à une crise environnementale, avec des déchets sauvages qui s'accumulent partout. Les autorités locales sont dépassées par la situation, et les habitants de l'île sont souvent démunis face à ce problème. C'est pourquoi Kavu a décidé de prendre les choses en main et de développer une application pour aider à la récolte des déchets.
+
+#### L'état actuel de l'application
+
+Aujourd'hui, l'application est très basique, avec des fonctionnalités minimales et des graphismes simples. Il s'agit d'un POC (Proof of Concept) destiné à présenter le projet à des financeurs. Cependant, cela pourrait changer prochainement. En effet, si les financeurs sont convaincus par le projet, il est possible que je sois amené à développer une version officielle de l'application et du site web ([kavu-dechet.com](http://kavu-dechet.com)), avec des fonctionnalités plus avancées et un design plus travaillé.
+
+![POC de l'application](/kavu-poc/preview.png)
+
+#### Remerciements
+
+Il est important de noter que je ne suis qu'un développeur en prestataire pour ce projet, et que je ne suis en aucun cas à son initiation ou à sa gestion. Je tiens à féliciter les bénévoles de Kavu qui travaillent depuis 2 ans à la mise en place de ce projet. 
+
+D'ailleurs, ils ont aussi développé et déployé un POC du site web de Kavu-Dechet, que vous pouvez retrouver à l'adresse suivante : [kavu-dechet.com](http://kavu-dechet.com).
+
+![POC du site web (développé par les bénévoles de Kavu)](/kavu-poc/website-poc.png)
+
+#### Conclusion
+
+C'est un projet qui allie technologie et environnement, deux domaines qui me tiennent à cœur. J'ai hâte de voir comment ce projet évoluera à l'avenir et comment il contribuera à améliorer la situation environnementale à Mayotte.
+
+##### Yannis Bendi-Ouis

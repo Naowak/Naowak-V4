@@ -1,0 +1,77 @@
+# Kothrak-v2 : apprentissage par renforcement deux joueurs
+
+*Ce projet fait suite au projet **Kothrak-v1**, dont vous pouvez retrouver l'article [ici](/kothrak-v1/), et le code [ici](https://github.com/Naowak/Kothrak). Vous pouvez retrouver dans ce prédécent article des explications sur [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement) ainsi que sur le jeu de plateau [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) dont je me suis inspiré pour créer **Kothrak**.*
+
+Suite au succès de notre agent à trouver une politique optimale dans notre première version de **Kothrak**, j'ai décidé d'augmenter le challenge en recréant **Kothrak** dans un environnement 3D grâce au moteur graphique [open-source](https://fr.wikipedia.org/wiki/Open_source) [Godot](https://godotengine.org/), en y entrainant cette fois-ci deux agents simultanément, **l'un contre l'autre**.  
+Bien que les actions réalisables par nos deux agents soient identiques à celles de [Kothrak-v1](/kothrak-v1/), le but du jeu lui change quelque peu et s'adapte à ce mode de jeu 2 joueurs. Ainsi, un agent gagne lorsqu'il atteint le troisième étage de n'importe quelle cellule, et perd si son adversaire l'atteint en premier. Le jeu se joue à tour de rôle. A chaque tour l'agent devant jouer doit réaliser deux actions dans l'ordre : se déplacer d'une case et construire sur une case adjacente.
+
+#### Un nouvel environnement 3D
+
+Pour cette seconde version de **Kothrak**, j'ai décidé d'abandonner l'interface 2D existante dans [Kothrak-v1](/kothrak-v1/) et de la remplacer par une toute nouvelle interface 3D réalisée avec [Godot](https://godotengine.org/). Cette décision a nécessairement amener dep rofonds changements dans le fonctionnement du projet. Fini de travailler avec un seul et unique programme gérant à la fois le jeu, les graphismes et l'entrainement des agents. Nous avons maintenant deux programmes, l'un dit serveur (codé en [Python](https://www.python.org/)), l'autre dit client (codé avec [Godot](https://godotengine.org/)).  
+
+Dans cette architecture, le serveur gère :
+* le jeu (il vérifie notamment son bon fonctionnement, et que les joueurs ne demandent pas une action impossible, ou ne trichent pas)
+* l'entrainement des agents (distribution des punitions et des récompenses, et gestion des paramètres du réseau de neurones : application de la [rétropropagation du gradient](https://fr.wikipedia.org/wiki/R%C3%A9tropropagation_du_gradient))
+* leur sauvegarde (de manière à pouvoir réutiliser un agent entrainé)
+
+Le côté client quant à lui gère l'interface graphique, c'est à dire :
+* l'affichage des parties 
+* la réception des actions utilisateurs à retransmettre au serveur  
+
+C'est notamment via l'interface graphique qu'un utilisateur peut demander au serveur de lancer une session d'entrainement selon certains paramètres, ou de lancer une partie **Humain vs Agent**, ou **Agent vs Agent** en sélectionnant le ou les agent(s) sauvegardé(s) qu'il souhaite voir s'affronter.
+
+#### Entrainement : un environnement instable
+
+Dans cette version 2 joueurs de **Kothrak**, les agents ne convergent plus en 80 parties comme c'est le cas dans la 1ère version. En ajoutant un second agent, la complexité du jeu pour nos agents a grandement augmenté. Premièrement, nous avons plus d'informations a encoder, donc nous avons besoin de plus de données pour identifier un état du jeu. De ce fait, notre algorithme mettra nécessairement plus de temps à converger. De plus, à la différence de la première version de **Kothrak**, un agent n'est plus responsable **seul** de la modification de la grille. Etant donné qu'un autre agent joue entre deux de ses coups, chacun de ses coups ne permet pas à lui seul de déterminer l'état de la grille à son prochain tour, cela dépend de son adversaire. Il n'est donc pas étonnant de constater qu'un agent met plus de temps à réussir à trouver une politique lui permettant de gagner des parties.  
+Dans les meilleurs scénarios que j'ai pu obtenir au fil de mes différents entrainements, il leur faut jouer plusieurs milliers de parties (~2500) avant de gagner leur première. De plus, les politiques obtenues sont rarement stables, et finissent souvent par se perdre au fil du temps.  
+
+J'ai longtemps chercher quelles pouvaient être les raisons de cette instabilité. Aujourd'hui, mon hypothèse la plus probable est que l'entrainement **simultané** de nos deux agents ne leur permet pas de converger facilement : pour qu'un agent puisse correctement évoluer et converger dans un environnement, il faut que ce dernier soit stable (c'est à dire que ses règles ne doivent pas changer, ou très peu). Or, dans notre seconde version de **Kothrak**, chaque agent A cherche à apprendre face à un autre agent B, lui aussi en train d'apprendre. Nous pouvons alors dire que l'agent B fait partie de l'environnement dans lequel l'agent A s'entraine. Et inversement, que l'agent A fait partie de l'environnement dans lequel l'agent B s'entraine. Ces deux agents étant en apprentissage constant, leur politique change constamment, et donc leur comportement aussi. Rendant ainsi l'environnement dans lequel il se trouve instable pour son adversaire, empêchant ainsi tout agent de converger vers une politique optimale et de s'y stabiliser.
+
+Néanmoins, bien que très peu compétants, nos agents apprennent tout de même quelque peu à jouer. Dans la vidéo ci-dessous, je vous présente un timelapse de trois entainements mis bout à bout, où l'agent rouge obtient de meilleurs scores que l'agent bleu  :
+* Le premier nous montre l'agent rouge trouver une politique gagnante sur les cellules coté exterieur du plateau, tandis que l'agent bleu n'arrive pas à venir le contrer et ne cesse de perdre
+* Le deuxième nous montre l'agent rouge trouver une autre politique gagnante, cette fois ci en plein centre du plateau de jeu et en concurrence avec l'agent bleu qui peine à gagner des parties
+* Le troisième nous montre un combat plus acharné entre l'agent rouge et l'agent bleu, toujours au centre du plateau
+
+![Timelapse de 3 entrainements](/kothrak-v2/training.mp4)
+
+
+#### Et contre un humain ? 
+
+Nous venons de voir ce que donnent nos agents face à d'autres agents : ils peinent à gagner, mais y arrivent de temps en temps. Et bien qu'il soit intéressant de les voir évoluer et s'améliorer entre eux, on ne peut s'empêcher de remarquer que même au bout de 200.000 parties, ils ne paraissent pas imbattables pour autant ! Ou alors... Peut-être ont-ils atteint un niveau d'intelligence tellement supérieur au nôtre que nous ne sommes plus capables de comprendre leur stratégie ? 
+
+Une seule manière d'en avoir le coeur net ! Jouer contre eux !
+
+J'ai donc entrepris de réaliser quelques parties contre eux, et le moins que l'on puisse dire, c'est que leur niveau est... très décevant !  
+J'ai joué un peu plus d'une dizaine de parties contre différents agents, enregistrés à la suite de différents entrainements, et ayant différents paramètres. Je n'ai ni perdu, ni était inquiété une seule fois.  
+
+Je pense donc pouvoir en conclure que même s'ils sont capables de trouver des politiques leur permettant d'atteindre la victoire, leur niveau est encore médiocre lorsqu'il s'agit de jouer face à un Humain. Il va falloir encore un peu de travail pour obtenir des agents contre lesquels il sera intéressant de jouer. Peut-être pour un **Kothrak-v3** ? 
+
+
+#### Bonus : Anti-jeu
+
+Lors du développement de cette seconde version de **Kothrak**, alors que j'essayais tant bien que mal de faire converger mes agents vers une politique optimale - et que ceux-ci n'arrivaient que très peu à gagner - j'ai fini par réaliser qu'au fur et à mesure de l'avancement de l'entrainement, les parties devenaient de plus en plus longues : le nombre de coups joués par partie était multiplié par 10.  
+J'ai d'abord cru à une bonne nouvelle, me disant que les agents étaient devenus tellement intelligents qu'il était devenu compliqué de gagner contre eux, même pour eux ! Mais en me penchant un peu plus sur le problème et en visionnant les parties de ces derniers, j'ai fini par comprendre que le problème était tout autre...   
+
+Au lieu de chercher à gagner, les agents cherchaient à tout prix à éviter la victoire et les fautes éliminatoires. Leur but était donc de faire durer la partie le plus longtemps possible. Pour ce faire, ils construisait autant qu'ils le pouvaient, tout en essayant d'éviter de se déplacer sur une case ayant 3 de hauteur, comme le montre la vidéo ci-dessous. 
+
+![Timelaspe d'un entrainement où les agents évitent de gagner](/kothrak-v2/losing.mp4)
+
+Je ne sais pas si vous partagez aussi ce sentiment, mais je trouve ça assez fascinant de voir comment ces agents - bien que limités - soient capables de s'adapter aussi bien à leur environnement. Lors de ce bug, les récompenses et punitions des agents étaient altérées. Leur comportement s'est alors altéré aussi pour correspondre à leur environnement. Et il faut admettre qu'ils s'y sont plutôt bien adaptés : il n'est pas rare des les voir tapisser le plateau de construction de hauteur 3. 
+
+#### Bonus : Modélisation 3D
+
+Ce projet a été pour moi l'occasion de découvrir et d'apprendre un peu mieux le développement dans un environnement 3D. L'un de mes grands objectifs lors de ce projet était la prise en main de [Blender](https://www.blender.org/) pour la création de forme 3D. C'est avec lui que j'ai créé les dalles hexagonales, ainsi que les agents que l'on peut voir dans **Kothrak-v2**.   
+Cependant, ces quelques formes sont un peu simplistes. Alors pourquoi ne pas essayer d'embellir notre jeu en créant un batiment de quatre étages en 3D ? 
+Ainsi, au lieu de créer des piles de dalles hexagonales, les personnages pourront construire étage par étage leur bâtiment, à l'instar de [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini).
+
+C'est alors, qu'inspiré de nombreuses photos trouvées sur internet, je me suis lancé dans la création d'une tour chinoise, dont vous pouvez voir le résultat ci-dessous.
+
+![Modèle 3D d'un bâtiment](/kothrak-v2/chinese_tower.png)
+
+Si les timelaspes vous plaisent, vous pour voir ici la création du toit de la tour.
+
+![Timelaspe de la modélisation du toit](/kothrak-v2/roof_timelaspe.mp4)
+
+Pour l'instant, ce bâtiment ne remplace pas encore les dalles hexagonales. Mais peut-être auront nous la chance de le voir dans un **Kothrak-v3**, en plus d'une amélioration des agents !
+
+##### Yannis Bendi-Ouis

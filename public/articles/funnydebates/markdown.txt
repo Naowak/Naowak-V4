@@ -1,0 +1,29 @@
+# FunnyDebates : Quand l'IA anime des débats humoristiques
+
+Avec la puissance des nouveaux LLMs [(Large Language Model)](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage), il est désormais possible de générer du texte de manière très réaliste. C'est ce que j'ai voulu explorer avec ce projet, en créant une plateforme qui utilise l'intelligence artificielle pour créer des débats humoristiques et caricaturaux entre deux personnages, qu'ils soient réels ou fictifs.
+
+#### Comment ça fonctionne ?
+
+FunnyDebates est un service web qui fut disponible à l'adresse https://www.funnydebates.com/ mais qui est aujourd'hui fermé. Il permettait de créer des débats humoristiques entre deux personnages, qu'ils soient réels ou fictifs.  
+
+Pour créer un débat, l'utilisateur sélectionne deux personnages et leur donne un sujet de débat. Ensuite, grâce à des modèles de génération de langage (ici GPT-3.5), ces deux personnages débattent de manière humoristique et caricaturale en fonction de leur personnalité. 
+
+Pour cela, l'agent va dans un premier temps chercher à définir la personnalité de chacun des intervenants, avant d'utiliser ces descriptions pour imiter les personnages et créer un débat humoristique.
+
+#### Comment ce projet a-t-il été développé ?
+
+FunnyDebates reprends la même architecture de code que mon précédent projet, [GaucheDroite](https://www.naowak.fr/gauchedroite/). J'ai utilisé la base de [GaucheDroite](https://www.naowak.fr/gauchedroite/) que j'ai adaptée pour FunnyDebates.com.  
+
+L'idée était de créer une plateforme plus légère et plus amusante, tout en exploitant les capacités de l'intelligence artificielle pour générer du texte.
+
+![FunnyDebates preview](/funnydebates/preview.png)
+
+#### Quel est l'avenir de FunnyDebates ?
+
+J'ai maintenu le site FunnyDebates.com pendant quelques jours avant de décider de le fermer. Le projet n'était pas encore assez mûr, et je n'avais pas beaucoup de temps à y consacrer. Cependant, je suis convaincu que l'idée a du potentiel et j'espère pouvoir y revenir à l'avenir.
+
+#### Conclusion
+
+FunnyDebates est un projet qui m'a permis d'explorer une nouvelle facette de l'intelligence artificielle et de la génération de texte. Même si le projet n'est pas encore prêt pour une utilisation à grande échelle, j'ai beaucoup appris en le développant et j'ai hâte de voir où ces technologies nous mèneront à l'avenir.
+
+##### Yannis Bendi-Ouis

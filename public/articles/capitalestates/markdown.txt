@@ -1,0 +1,30 @@
+# CapitalEstates : Que représente la fortune de Bernard Arnault face à la valeur de l'ensemble des logements du parc immobilier de Paris ou Bordeaux ?
+
+Bernard Arnault s'élève à la deuxième place du classement Forbes en 2023, avec une fortune estimée à **212.7 milliards d'euros** [selon Forbes](https://www.forbes.fr/classements/classement-milliardaires-forbes-2023-2-bernard-arnault-lempereur-du-luxe-au-210-milliards-de-fortune/). Mais comment peut-on visualiser une telle somme ?
+
+#### Contexte : L'inflation et la crise du logement
+
+L'inflation sévit et le coût de la vie ne cesse d'augmenter. Les denrées alimentaires, les services, mais aussi et surtout le logement sont de plus en plus onéreux.
+
+D'après [Capital](https://www.capital.fr/economie-politique/rentree-universitaire-2023-son-cout-flambe-encore-voici-a-combien-seleve-la-facture-pour-les-etudiants-1476662), le coût du loyer a augmenté de **9% en un an** pour les étudiants, avec un loyer moyen de 533 euros.
+
+La hausse ne s'arrête pas là. Selon [Nexity](https://www.nexity.fr/guide-immobilier/conseils-achat/tendance-du-marche/evolution-des-prix-de-l-immobilier-sur-10-ans), le prix des logements a augmenté en moyenne de **30% en 10 ans** sur le territoire français. Dans des villes comme Bordeaux, cette augmentation atteint les **74% en 10 ans** [d'après LesFurets](https://www.lesfurets.com/pret-immobilier/guide/evolution-prix-immobiliers-sur-les-10-dernieres-annees).
+
+#### La croissance exponentielle de la fortune de Bernard Arnault
+
+Tandis que le coût de la vie grimpe, certaines fortunes, comme celle de Bernard Arnault, connaissent une croissance phénoménale. Sa fortune a **triplé en 3 ans**, passant de 76 milliards en avril 2020 ([source Forbes](https://www.forbes.fr/classements/classement-forbes-2020-des-milliardaires-bernard-arnault-sur-le-podium/)) à 212.7 milliards en 2023.
+
+Mais à quoi correspondent réellement 200 milliards d'euros ? C'est équivalent à 200.000 fois 1 million d'euros. Pour mettre cela en perspective, cela équivaut à **200.000 appartements de 100m2 à Paris**, si on considère un prix moyen de 10.000 euros/m2.
+
+#### Visualisations 
+
+Pour mieux comprendre cette différence vertigineuse, voici deux graphiques comparatifs :
+
+![Graphique comparaison Bordeaux](preview.png)
+![Graphique comparaison Paris](infographie-paris.png)
+
+Le code source de ce projet est disponible en open-source. Vous pouvez accéder au GitHub via ce [lien](https://github.com/Naowak/CapitalEstates).
+
+---
+
+Bonne publication sur votre blog ! 

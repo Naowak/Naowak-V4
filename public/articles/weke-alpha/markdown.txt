@@ -1,0 +1,29 @@
+# Weke (Alpha), une application pour organiser et rejoindre des rencontres sportives
+
+Avez-vous déjà voulu faire un foot, un basket, ou tout autre activité sportive mais vous manquiez de participants ? Vous ne saviez pas à qui proposer l'activité, ou ces derniers n'étaient pas disponible ?  
+La recherche de joueurs pour une activité sportive est l'un des plus grands freins que peut rencontrer un sportif. Nombreuses sont les fois où des sportifs ont annulé leur plan car ils ne trouvaient pas assez de joueurs pour organiser leur match, ou que l'un des joueurs se désistais au dernier moment. C'est la problématique à laquelle cherche à répondre **Weke** : organiser et rejoindre facilement des activités sportives.	
+
+#### Rejoindre une activité
+
+Une fois connecté à l'application, **Weke** vous affiche immédiatement les différentes rencontres sportives organisées autour de votre position. Vous pouvez alors facilement filtrer les activités pour trouver celles qui vous conviennent, puis vous inscrire seul ou avec vos amis en cliquant sur le bouton rejoindre.
+
+![La carte des évènements, une activité, rejoindre une activité](join_event.png)
+
+#### Organiser une activité
+
+Tout le monde peut créer une activité avec **Weke**, il vous suffit d'indiquer la description de l'évènement, la date et le lieu du rendez-vous. Une fois l'évènement validé, les autres utilisateurs de **Weke** peuvent le voir et le rejoindre, ou vous en faire la demande selon les conditions que vous avez pré-remplis. 
+
+![Organiser une activité](new_activity.png)
+
+#### Communication entre participants
+
+Pour faciliter la communication d'informations entre les participants, dès l'évènement créé, une conversation est aussi créée entre tous les participants de votre évènement.
+
+![Exemple d'une conversation](conversation.png)
+
+#### Pour finir
+
+**Weke** cherche à être l'outil principal pour aider les sportifs à organiser leurs rencontres. Bien que l'ensemble des fonctionnalités présentées ci dessus soient fonctionnelles, **Weke** est actuellement toujours en développement par un seul développeur : *Yannis Bendi-Ouis*. Une première version officielle est prévu pour le printemps 2022.
+
+
+##### Yannis Bendi-Ouis

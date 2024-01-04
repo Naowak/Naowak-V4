@@ -1,0 +1,60 @@
+# Kothrak-v1 : apprentissage par renforcement un joueur
+
+Aujourd'hui, l'une des branches phare du développement de l'Intelligence Artificielle est celle de [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement). Cette technique est capable d'apprendre à un programme n'ayant aucune connaissance préalable à **évoluer dans un environnement**, à en comprendre les règles, à y **prendre des décisions** et **s'adapter en fonction de récompenses/punitions liées à cet environnement**. 
+
+Ces dernières années, de nombreux exploits ont été réalisés grâce à cette méthode. C'est notamment dans le domaine des jeux que nous en avons entendue parler. Ainsi, c'est grâce à [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement) que **[DeepMind](https://deepmind.com/) a battu Lee Sedol au [jeu de Go](https://fr.wikipedia.org/wiki/Go_(jeu))** en 2016 avec son programme [AlphaGo](https://deepmind.com/research/case-studies/alphago-the-story-so-far). Depuis, d'autres exploits ont eu lieu sur d'autres jeux tels que [Starcraft](https://deepmind.com/blog/article/AlphaStar-Grandmaster-level-in-StarCraft-II-using-multi-agent-reinforcement-learning), [Dota](https://openai.com/five/), [Atari](https://deepmind.com/research/publications/2019/playing-atari-deep-reinforcement-learning), et bien d'autres...  
+
+Par curiosité personnelle, j'ai souhaité découvrir un peu mieux ce monde de l'apprentissage par renforcement. Ainsi, j'ai travaillé sur un premier projet dont le but était de développer une variante du jeu [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) (un jeu de plateau) et d'y entrainer un agent. Le code associé à ce projet est open-source et disponible sur [ce dépôt github](https://github.com/Naowak/Kothrak).
+
+#### L'apprentissage par renforcement : comment fonctionne-t-il ?
+
+Comme énoncé précédemment, [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement) utilise les récompenses et les punitions que son environement lui donne pour évoluer. Son but étant de prendre des décisions qui vont **maximiser les récompenses et minimiser les punitions obtenues**. Pour ce faire, l'agent doit parcourir l'ensemble des différentes situations et mémoriser les récompenses ou les punitions pour chacune des décisions qu'il peut prendre. De cette manière, il peut s'arranger pour réaliser la meilleure d'entres elles dans chacune des situations qu'il rencontre, et ainsi créer sa **politique optimale**.
+
+Le fait est que dans certains environnement, **le nombre de situations différentes est tellement élevé qu'il est techniquement impossible de toutes les parcourir** et donc, de connaître pour chacune d'entre elle la meilleure décision à prendre - c'est entre autre le cas du [jeu de Go](https://fr.wikipedia.org/wiki/Go_(jeu)) où l'on dénombre pas moins de 10^172 différentes situations (c'est à dire un 1 avec 172 zéro derrière) pour une grille 19x19.
+
+Pour créer sa **politique optimale**, l'agent doit alors utiliser une fonction capable de **généraliser** les situations et de **deviner**, pour chacune des situations possibles (y compris celles qu'il n'a encore jamais rencontrées), la récompense ou la punition qu'il obtiendra pour chacune des décisions qu'il peut prendre. Souvent, nous utilisons alors un **réseau de neurones artificiels** dont la tâche sera de modéliser cette fonction, et que nous entraineront en le faisant explorer le plus de situations possibles dans son environnement.
+
+#### Santorini
+
+![Santorini sur plateau](/kothrak-v1/santorini.png)
+
+[Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) est un jeu de plateau tour par tour et multijoueur dont le but est d'être le premier joueur à atteindre le 3ème étage.  
+A tour de rôle, chaque joueur a deux actions à effectuer : un **déplacement** d'une case, puis la **construction** d'un étage sur une case adjaçante à sa position. Un joueur ne peut se déplacer ou construire sur une case occupée par un autre joueur, ou de hauteur 4 (ayant un dôme). Si un joueur ne peut pas effectuer l'une de ces deux actions, il perd la partie.  
+- **Déplacement** : Un joueur ne peut pas se déplacer sur une case ayant 2 étages ou plus que la case sur laquelle il se trouve. En revanche, il peut descendre d'autant d'étages qu'il le souhaite.  
+*Explication : Un joueur ne peut donc pas se déplacer sur une case de hauteur 3 s'il est sur une case de hauteur 0 ou 1, ni sur une case de hauteur 2 s'il est sur une case de hauteur 0. En revanche, il peut descendre d'une case de hauteur 2 à une case de hauteur 0 ou 1.*  
+- **Construction** : Un joueur peut construire sur une case de hauteur 0, 1, 2, ou 3. S'il construit sur une case de hauteur 3, il construit un dôme, scellant la case jusqu'à la fin de la partie. Plus aucun joueur ne sera en mesure de se déplacer dessus ou d'y construire un étage. 
+
+#### Développement du jeu
+
+Kothrak-v1 est une version 1 joueur de [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) et sert de *Proof Of Concept* pour le développement d'une version 2 joueurs que vous pouvez voir ici : [Kothrak-v2](https://www.naowak.fr/kothrak-v2).  
+Cette version 1 joueur est donc **minimaliste** : le joueur gagne lorsqu'il atteint le troisième étage. Il ne peut pas construire au delà du 3ème niveau et ainsi ne peut jamais sceller une case jusqu'à la fin de la partie. De plus, à la différence du vrai [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini), le jeu se déroule sur une grille hexagonale au lieu d'un classique quadrillage. 
+
+L'ensemble de cette première version a été entièrement développée en [Python](https://www.python.org/) et utilise [PyQt5](https://www.riverbankcomputing.com/software/pyqt/) pour son interface graphique. 
+
+![Interface d'entrainement](/kothrak-v1/interface-trainer.png)
+
+#### Entrainement d'une IA
+	
+La tâche que l'agent doit réaliser (construire et atteindre le 3ème étage) semble être assez simple dans sa version 1 joueur. Au bout de **80 parties seulement**, l'agent est déjà en mesure d'atteindre le 3ème étage et a trouvé **la politique permettant d'y arriver avec le moins de coups possibles** (alterner déplacement et construction entre deux cases).  
+
+La vidéo ci-dessous nous montre la configuration de l'agent ainsi que son entrainement en vitesse réelle (attention, c'est rapide !). 
+
+![Entrainement d'un agent](/kothrak-v1/training-video.mp4)
+
+
+#### Observations
+
+Deux systèmes de représentation du jeu ont été implémentés pour ce projet : l'un dit **relatif**, l'autre dit **absolu**.
+- Le système **relatif** centre toujours le joueur au milieu de sa grille. Il offre comme information au joueur une "vision" du jeu à partir de sa position. Ainsi le joueur peut voir dans un cercle de rayon 2 autour de lui. Il peut donc voir les cellules en dehors de la map, indiquées de hauteur 0. Cependant, si le rayon de vision n'est pas deux fois supérieur au rayon du plateau de jeu, le joueur ne verra pas systématiquement toutes les cellules du plateau.
+Dans ce système d'état, la hauteur des cellules est indiquée par un premier vecteur dont les valeurs sont ramenées entre 0 et 1, puis la présence ou non d'un d'adversaire sur une cellule est indiqué par un second vecteur boolean.
+- Le système **absolu** ne montre que les cellules existantes centrées sur la cellule centrale du plateau, et indique leur hauteur dans un premier vecteur dont les valeurs sont ramenées entre 0 et 1, puis la présence ou non d'un joueur sur une cellule est indiqué par un second vecteur boolean.
+
+Nous pouvons observer que ces deux systèmes d'état permettent à une IA un joueur de converger, mais nous pouvons constater quelques différences : le système d'état **absolu** converge en trouvant un endroit spécifique dans la map (un couple de deux cellules) où il arrive à atteindre le troisième niveau, et essaie alors systématiquement de rejoindre cet endroit pour gagner la partie. Alors que le système d'état **relatif** est en mesure de trouver la victoire sur plusieurs couples de cellules différents, mais conservera la même relation adjaçante (le couple de cellule qu'il utilisera sera toujours agencer pareil : deux cellules en diagonales, ou deux cellules horizontales par exemple).
+
+
+#### La suite : Kothrak-v2
+
+J'ai travaillé sur une seconde version de ce projet, dont vous pouvez trouver l'article ici : [Kothrak-v2](https://www.naowak.fr/kothrak-v2). Pour cette seconde version, nous nous intéressons toujours à entrainer des agents sur le jeu [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini), mais cette fois-ci dans un mode 2 joueurs et sur une autre interface graphique, en 3D. 
+
+##### Yannis Bendi-Ouis 
+

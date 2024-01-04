@@ -1,0 +1,40 @@
+# Weke (Bêta), pré-lancement de l'application pour organiser et rejoindre des rencontres sportives
+
+
+Cela fait maintenant un peu plus d'un an que j'ai commencé le développement de Weke ([voir cet article](/weke-alpha/)) et ça y est, Weke est disponible en version bêta sur l'[AppStore](https://apps.apple.com/fr/app/weke/id1640500765) (iOS) et le [Google Play Store](https://play.google.com/store/apps/details?id=com.naowak.weke) (Android).  
+
+#### Version Bêta
+
+Cette nouvelle version apporte son lot de modifications par rapport à la version alpha. De nouvelles fonctionnalités ont été ajoutées, comme la possibilité de modifier une activité ou son profil, l'ajout des discussions privées ou encore la gestion des notifications. La carte a été revue, avec l'ajout de filtres permettant de choisir au mieux parmi les activités proposées. Le design a lui aussi été quelque peu modifié.
+
+![Screenshots de Weke](preview.png)
+
+#### Ouverture au grand public
+
+Cette version bêta - loin d'être définitive - est suffisante pour permettre un pré-lancement de Weke, et l'ouvrir au grand public. Ainsi, toute personne résidant en France peut télécharger l'application, et l'utiliser pour organiser ses activités. Cela dit, même si en l'état Weke est suffisante pour organiser des activités, il y a peu de chances pour que l'application trouve son public. J'y vois les problématiques suivantes :
+
+- Weke ne possède peut être pas encore toutes les fonctionnalités nécessaires pour correspondre aux besoins de son public. 
+- La communication n'est pas mon point fort, et je vais devoir apprendre à diffuser l'application au plus grand nombre.
+- Entre le développement de Weke et la communication, je risque de manquer de temps.
+- Weke reste une application sociale. Son fonctionnement dépend de l'activité des utilisateurs. Ainsi, cela risque d'être compliqué de créer une dynamique, notamment au début.  
+
+Quand bien même Weke ne parvient pas à trouver son public lors de ce pré-lancement, ce dernier devrait tout de même être positif car il devrait me permettre d'obtenir des retours/conseils de la part de son public, de faire connaître Weke à plus de personnes qu'à mes proches, et éventuellement de prendre contact avec des personnes intéressées par le projet et son développement. Un tel pré-lancement peut aussi me permettre d'obtenir une liste de pré-inscrits que je pourrai solliciter lors de la sortie officielle.
+
+#### Un site web
+
+Pour faciliter la diffusion de Weke, je lui ai donné une présence sur le web : [https://www.weke.fr/](https://www.weke.fr/)  
+
+Ce site web est minimaliste pour l'instant. Il présente l'application, ses fonctionnalités, les activités proposées actuellement par les membres de Weke, et le fondateur de Weke : moi-même. Son rôle est d'avoir une identité sur le web et un lien à partager, accessible à tous, qui redirige vers les stores et réseaux de Weke. Plus tard, j'envisage d'ajouter au site toutes les fonctionnalités présentes sur l'application.  
+
+#### Première activité !
+
+Pour donner un peu de jus à l'application, et essayer de lancer une dynamique, j'en suis son premier utilisateur. Ainsi chaque semaine, j'organise des Beach Volley sur les plages de La Rochelle, et les diffuse sur Weke.  
+Combiné à un peu de communication de ma part à propos de Weke sur Facebook pour avoir les premiers utilisateurs, mes activités ont un petit succès, et c'est grâce à Weke que certains participants ont découvert l'activité !
+
+#### Un lancement qui va prendre du temps
+
+Comme on pouvait s'y attendre, le lancement de Weke semble être un processus qui va prendre énormément de temps et d'énergie. Bien que je reçoive énormément de retours positifs, publier l'application sur les stores et faire quelques postes sur les réseaux sociaux ne suffiront pas à la faire connaître, ni à la faire adopter. D'autres actions devront être réalisées sur le long terme si je souhaite qu'un jour Weke deviennent l'application des sportifs !  
+
+J'espère vous voir prochainement sur Weke ! Sur ce, je retourne à son développement !
+
+##### Yannis Bendi-Ouis

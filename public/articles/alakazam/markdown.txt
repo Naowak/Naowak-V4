@@ -1,0 +1,50 @@
+# Alakazam : un jeu multijoueur tour par tour
+
+ **Alakazam** est un projet initialement imaginé et développé par [Gauthier Hobbes](https://github.com/Reituag) et moi-même : [Yannis Bendi-Ouis](https://github.com/Naowak/). Nous avons réalisé ce projet avec [Godot](https://godotengine.org/) : un **game engine gratuit et open-source**, et [Python](https://www.python.org/) pour la partie serveur. L'ensemble du code de ce projet est **open-source**, vous pouvez le consulter sur ce [dépôt Github](https://github.com/Tess-Qieu/Alakazam-Phoenix). Le développement de ce projet est actuellement **en pause**, mais il peut être amené à reprendre.  
+
+
+#### Un système de combat tour par tour
+
+Plus jeunes, Gauthier et moi-même avons eu l'occasion de passer de nombreuses heures sur des jeux-vidéo. [**Dofus**](https://www.dofus.com/fr/prehome) fut l'un d'entre eux. Ce jeu-vidéo à la particularité de proposer un **système de combat en tour par tour sur un échiquier**, où chaque personnage possède un nombre de points d'action et de mouvement à dépenser pour terrasser ses ennemis. Ce système de combat unique a séduit de nombreux joueurs en France et de par le monde. Seulement, le côté [MMORPG](https://fr.wikipedia.org/wiki/Jeu_de_r%C3%B4le_en_ligne_massivement_multijoueur) de [**Dofus**](https://www.dofus.com/fr/prehome) implique un grand investissement en temps pour qu'un joueur puisse s'amuser à réaliser des combats contre d'autres joueurs, et freine parfois certains joueurs, pourtant grand amateur de ce style de combat.  
+Malheureusement, comme dit précédemment, ce système de combat est quasiment unique. Et il n'existe actuellement aucun jeu grand public proposant un style de combat similaire à celui de [**Dofus**](https://www.dofus.com/fr/prehome).
+
+Avec **Alakazam**, Gauthier et moi souhaitions créer le jeu auquel nous souhaitions jouer. Un jeu multijoueur tour par tour, où chaque joueur peut créer son équipe pour combattre celle des autres, sans avoir à investir de nombreuses heures de jeu pour réunir suffisamment de ressources in-game pour bâtir son équipe.  
+
+#### Un échiquier hexagonale
+
+**Alakazam** se veut être un jeu de stratégie, or un quadrillage classique en carré pose quelques problèmes pour ce genre de jeu : **les diagonales faussent les distances**. Ainsi, deux personnages positionnés sur deux cases en diagonales peuvent être évaluer à 2 de distance l'un de l'autre, alors qu'ils sont côte à côte et que leur cases se touchent. **Ce problème disparaît avec l'utilisation d'une grille hexagonale**.  
+
+Pour développer notre grille, nous nous sommes beaucoup aidé de [Red Blob Games](https://www.redblobgames.com/grids/hexagons/) qui propose une documentation complète sur les grilles hexagonale.
+
+![Un combat dans Alakazam (encore en développement)](/alakazam/preview.png)
+
+#### Au revoir le MMORPG, bonjour les combats instantannés
+
+A l'instar de nombreux autres jeux de notre époque ([League Of Legends](https://www.leagueoflegends.com/fr-fr/), [Hearthstone](https://playhearthstone.com/fr-fr), et d'autres...), **Alakazam** vous propose de trouver un adversaire en quelques secondes, puis de l'affronter avec l'équipe que vous aurez préalablement construite. Bien qu'en tour par tour, le combat est ensuite assez classique : le joueur ayant vaincu tous les personnages de son adversaire est déclaré gagnant.
+
+#### Design de personnages 3D
+
+Pour **Alakazam**, nous avions besoin de personnages 3D à intégrer à notre jeu. Pour ce faire, Gauthier a designé un premier personnage entièrement sur [Blender](https://www.blender.org/) : **L'Hexapode**.
+
+![L'Hexapode](/alakazam/hexapode.gif)
+
+Puis un second, qui n'est pas encore intégré au jeu, mais dont les modèles sont disponibles : **Le Biped**.
+
+![Le Biped](/alakazam/biped.png)
+
+#### A l'avenir 
+
+Si le développement d'**Alakazam** vient à reprendre, nous pensons à de nombreuses modifications :
+
+* Actuellement le jeu ne propose que 3 capacités, et un seul personnage non-modifiable. A l'avenir, les joueurs pourront **composer eux-mêmes leurs équipes et créer leurs propres personnages** en sélectionnant parmis les capacités et caractéristiques disponibles celles qui leur conviennent le mieux.  
+* Nous pensons aussi ajouter de nouveaux skins (personnages).
+* Nous pensons à une meilleure interface graphique.
+* Le jeu n'a pour l'instant que très peu d'enjeu. Nous pensons à l'ajout d'un ladder pour classer les joueurs et créer un système de compétition.
+* Eventuellement de nouveaux modes de jeu pourront eux aussi être créés. Comme des systèmes de combats 2v2.  
+* De nouveaux types de capacité pourront voir le jour (voir plus bas).
+
+![Types de capacité étudiés](/alakazam/spells.png)
+
+Cependant, Gauthier et moi avons tous deux nos projets respectifs. Ainsi, la reprise du développement de ce projet est incertain.
+
+##### Yannis Bendi-Ouis

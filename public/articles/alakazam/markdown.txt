@@ -1,6 +1,6 @@
 # Alakazam : un jeu multijoueur tour par tour
 
- **Alakazam** est un projet initialement imaginé et développé par [Gauthier Hobbes](https://github.com/Reituag) et moi-même : [Yannis Bendi-Ouis](https://github.com/Naowak/). Nous avons réalisé ce projet avec [Godot](https://godotengine.org/) : un **game engine gratuit et open-source**, et [Python](https://www.python.org/) pour la partie serveur. L'ensemble du code de ce projet est **open-source**, vous pouvez le consulter sur ce [dépôt Github](https://github.com/Tess-Qieu/Alakazam-Phoenix). Le développement de ce projet est actuellement **en pause**, mais il peut être amené à reprendre.  
+ **Alakazam** est un projet initialement imaginé et développé par [Gauthier Hobbes](https://github.com/Reituag) et moi-même : [Yannis Bendi-Ouis](https://github.com/Naowak/). Nous avons réalisé ce projet avec [Godot](https://godotengine.org/) : un **game engine gratuit et open-source**, et [Python](https://www.python.org/) pour la partie serveur. L'ensemble du code de ce projet est **open-source**, vous pouvez le consulter sur ce [dépôt Github](https://github.com/Tess-Qieu/articles/alakazam-Phoenix). Le développement de ce projet est actuellement **en pause**, mais il peut être amené à reprendre.  
 
 
 #### Un système de combat tour par tour
@@ -16,7 +16,7 @@ Avec **Alakazam**, Gauthier et moi souhaitions créer le jeu auquel nous souhait
 
 Pour développer notre grille, nous nous sommes beaucoup aidé de [Red Blob Games](https://www.redblobgames.com/grids/hexagons/) qui propose une documentation complète sur les grilles hexagonale.
 
-![Un combat dans Alakazam (encore en développement)](/alakazam/preview.png)
+![Un combat dans Alakazam (encore en développement)](/articles/alakazam/preview.png)
 
 #### Au revoir le MMORPG, bonjour les combats instantannés
 
@@ -26,11 +26,11 @@ A l'instar de nombreux autres jeux de notre époque ([League Of Legends](https:/
 
 Pour **Alakazam**, nous avions besoin de personnages 3D à intégrer à notre jeu. Pour ce faire, Gauthier a designé un premier personnage entièrement sur [Blender](https://www.blender.org/) : **L'Hexapode**.
 
-![L'Hexapode](/alakazam/hexapode.gif)
+![L'Hexapode](/articles/alakazam/hexapode.gif)
 
 Puis un second, qui n'est pas encore intégré au jeu, mais dont les modèles sont disponibles : **Le Biped**.
 
-![Le Biped](/alakazam/biped.png)
+![Le Biped](/articles/alakazam/biped.png)
 
 #### A l'avenir 
 
@@ -43,7 +43,7 @@ Si le développement d'**Alakazam** vient à reprendre, nous pensons à de nombr
 * Eventuellement de nouveaux modes de jeu pourront eux aussi être créés. Comme des systèmes de combats 2v2.  
 * De nouveaux types de capacité pourront voir le jour (voir plus bas).
 
-![Types de capacité étudiés](/alakazam/spells.png)
+![Types de capacité étudiés](/articles/alakazam/spells.png)
 
 Cependant, Gauthier et moi avons tous deux nos projets respectifs. Ainsi, la reprise du développement de ce projet est incertain.
 

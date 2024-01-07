@@ -50,7 +50,13 @@ export async function loadArticles() {
     const preview = `/${path.relative('./public', previewPath)}`;
     const config = JSON.parse(await fs.promises.readFile(configPath, 'utf8'));
 
-    return { markdown: previewArticle(markdown), preview, title: config.title, date: config.date };
+    return { 
+      markdown: previewArticle(markdown), 
+      preview, 
+      title: config.title, 
+      date: config.date, 
+      link: dir
+    };
   }));
 
   articles = articles.sort((a, b) => compareDate(a.date, b.date));

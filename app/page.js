@@ -1,10 +1,10 @@
 import ArticlePreview from '@/components/ArticlePreview';
-import { loadArticles } from '@/libs/article';
+import { loadPreviews } from '@/libs/article';
 
 
 export default async function Home() {
 
-  const articles = await loadArticles();
+  const articles = await loadPreviews();
 
   return (
     <main className="flex flex-col items-center justify-between p-8">

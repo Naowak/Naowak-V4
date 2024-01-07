@@ -37,7 +37,7 @@ const previewArticle = (article) => {
   return text.join(' ')
 }
 
-export async function loadArticles() {
+export async function loadPreviews() {
   const articlesDir = './public/articles';
   const articleDirs = await fs.promises.readdir(articlesDir);
 
@@ -51,14 +51,38 @@ export async function loadArticles() {
     const config = JSON.parse(await fs.promises.readFile(configPath, 'utf8'));
 
     return { 
-      markdown: previewArticle(markdown), 
-      preview, 
+      id: dir,
       title: config.title, 
       date: config.date, 
-      link: dir
+      preview, 
+      markdown: previewArticle(markdown), 
     };
   }));
 
   articles = articles.sort((a, b) => compareDate(a.date, b.date));
   return articles;
+}
+
+export async function loadArticle(id) {
+  const articlesDir = './public/articles';
+  const articleDirs = await fs.promises.readdir(articlesDir);
+
+  const articleDir = articleDirs.find((dir) => dir === id);
+  if (!articleDir) return null;
+
+  const markdownPath = path.join(articlesDir, articleDir, 'markdown.txt');
+  const previewPath = path.join(articlesDir, articleDir, 'preview.png');
+  const configPath = path.join(articlesDir, articleDir, 'config.json');
+
+  const markdown = await fs.promises.readFile(markdownPath, 'utf8');
+  const preview = `/${path.relative('./public', previewPath)}`;
+  const config = JSON.parse(await fs.promises.readFile(configPath, 'utf8'));
+
+  return { 
+    id,
+    title: config.title, 
+    date: config.date, 
+    preview, 
+    markdown, 
+  };
 }

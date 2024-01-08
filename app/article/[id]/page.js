@@ -1,4 +1,4 @@
-import Markdown from 'react-markdown'
+import Markdown from '@/components/Markdown'
 import { loadArticle } from '@/libs/article'
 
 export default async function ArticlePage ({ params }) {

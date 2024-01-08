@@ -2,7 +2,7 @@
 
 Après avoir lancé une première version servant de preuve de concept en septembre, j’ai reçu des retours extrêmement positifs sur la nécessité d'une telle application. C'est donc sans relâche que j'ai continué à travailler depuis pour vous offrir une meilleure expérience.
 
-![Image pour promouvoir le lancement de Weke](preview.png)
+![Image pour promouvoir le lancement de Weke](/articles/weke-officiel/preview.png)
 
 #### Nouvelle version
 
@@ -11,7 +11,7 @@ Cette nouvelle version marque la fin de la phase bêta de Weke et propose de nou
 Vous pouvez retrouver cette nouvelle version sur l'[AppStore](https://apps.apple.com/fr/app/weke/id1640500765) (iOS) et le [Google Play Store](https://play.google.com/store/apps/details?id=com.naowak.weke) (Android), ou en passant par le site web de Weke (toujours minimaliste) : [https://www.weke.fr/](https://www.weke.fr/).  
 
 
-![Screenshots de Weke](illustration.png)
+![Screenshots de Weke](/articles/weke-officiel/illustration.png)
 
 #### L'équipe se créée !
 

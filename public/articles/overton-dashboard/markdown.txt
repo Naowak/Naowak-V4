@@ -1,0 +1,7 @@
+# Dashboard Overton
+
+Cette page présentait anciennement le Dashboard Overton permettant de visualiser les plus de 100 000 discours politiques produits lors de la cinquième république.
+
+Malheureusement, ce dashboard n'est plus en ligne actuellement. 
+
+![Dashboard](/articles/overton-dashboard/preview.png)

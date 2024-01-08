@@ -8,7 +8,7 @@ GaucheDroite est un service disponible sur le web à l'adresse [www.gauchedroite
 
 J'ai développé [GaucheDroite](https://www.gauchedroite.net/) dans le but de fournir un outil précis et accessible pour analyser les discours politiques. Après avoir travaillé sur des projets tels que [GPTJ-Overton](https://www.naowak.fr/gptj-overton/), un chatbot spécialisé dans la politique française, j'ai voulu créer un outil qui pourrait aider les gens à mieux comprendre le paysage politique français.
 
-![Preview du site www.gauchedroite.net](/gauchedroite/preview.png)
+![Preview du site www.gauchedroite.net](/articles/gauchedroite/preview.png)
 
 #### Comment ça marche ?
 
@@ -24,7 +24,7 @@ Vous pouvez essayer [GaucheDroite](https://www.gauchedroite.net/)  gratuitement 
 
 Pour vous donner une idée de ce que [GaucheDroite](https://www.gauchedroite.net/) peut faire, j'ai réalisé une vidéo de présentation dans laquelle j'évalue un discours de Jean-Luc Mélenchon. Vous pouvez la regarder ci-dessous.
 
-![Vidéo de présentation de GaucheDroite](/gauchedroite/video-melanchon.mp4)
+![Vidéo de présentation de GaucheDroite](/articles/gauchedroite/video-melanchon.mp4)
 
 #### Conclusion
 

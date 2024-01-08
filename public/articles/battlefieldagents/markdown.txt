@@ -27,7 +27,7 @@ Ils utilisent ces informations pour décider de ce qu'ils vont faire, c'est à d
 
 Pour comprendre comment "BattleFieldAgents" fonctionne, il est utile de le visualiser comme un cycle d'interaction entre le jeu et [GPT-4](https://openai.com/gpt-4). Voici un schéma simplifié de ce cycle :
 
-![Workflow](/battlefieldagents/workflow.png)
+![Workflow](/articles/battlefieldagents/workflow.png)
 
 1. Le jeu envoie l'état actuel du jeu à l'API Python. Cet état comprend des informations sur la position des agents, leur vie, les obstacles, etc.
 2. L'API Python génère un prompt basé sur cet état et l'envoie à GPT-4.

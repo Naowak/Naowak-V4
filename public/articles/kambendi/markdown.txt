@@ -6,13 +6,13 @@ Mon père expose ses œuvres sur internet depuis des années, mais il n'a jamais
 
 Le site vitrine [kambendi.fr](https://www.kambendi.fr/) est un espace où mon père peut exposer ses différentes œuvres. Il est conçu pour mettre en valeur ses toiles et permettre aux visiteurs de les découvrir et de les acheter facilement. Le site est intégré avec Stripe, ce qui permet aux acheteurs de payer en toute sécurité directement sur le site.
 
-![Site vitrine : www.kambendi.fr](/kambendi/preview.png)
+![Site vitrine : www.kambendi.fr](/articles/kambendi/preview.png)
 
 #### Le site administrateur
 
 J'ai également créé un second site, un site administrateur, qui permet à mon père de gérer ses œuvres et le contenu du site vitrine. Grâce à ce site, il peut ajouter, modifier ou supprimer des œuvres, et gérer le contenu des différentes pages du site vitrine. Cela lui donne un contrôle total sur son site et lui permet de le maintenir à jour facilement.
 
-![Site administrateur](/kambendi/admin_preview.png)
+![Site administrateur](/articles/kambendi/admin_preview.png)
 
 #### Un site web en évolution
 

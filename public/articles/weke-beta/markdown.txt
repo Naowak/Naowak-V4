@@ -7,7 +7,7 @@ Cela fait maintenant un peu plus d'un an que j'ai commencé le développement de
 
 Cette nouvelle version apporte son lot de modifications par rapport à la version alpha. De nouvelles fonctionnalités ont été ajoutées, comme la possibilité de modifier une activité ou son profil, l'ajout des discussions privées ou encore la gestion des notifications. La carte a été revue, avec l'ajout de filtres permettant de choisir au mieux parmi les activités proposées. Le design a lui aussi été quelque peu modifié.
 
-![Screenshots de Weke](preview.png)
+![Screenshots de Weke](/articles/weke-beta/preview.png)
 
 #### Ouverture au grand public
 

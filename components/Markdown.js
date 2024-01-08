@@ -29,25 +29,25 @@ export default function Markdown ({ children }) {
 
 function H1 (props) {
   return (
-    <h1 className="text-3xl font-bold mb-2" {...props} />
+    <h1 className="text-3xl font-bold mb-1" {...props} />
   )
 }
 
 function H2 (props) {
   return (
-    <h1 className="text-2xl font-bold mb-2" {...props} />
+    <h1 className="text-2xl font-bold mb-1" {...props} />
   )
 }
 
 function H3 (props) {
   return (
-    <h1 className="text-xl font-bold mb-2" {...props} />
+    <h1 className="text-xl font-bold mb-1" {...props} />
   )
 }
 
 function H4 (props) {
   return (
-    <h1 className="text-lg font-bold mb-2" {...props} />
+    <h1 className="text-lg font-bold mb-1" {...props} />
   )
 }
 
@@ -68,7 +68,7 @@ function Media (props) {
 
 function Line (props) {
   if (!props.ordered) {
-    return <span className="mb-2 text-primary">• {props.children}<br/></span>
+    return <span className="mb-1 text-primary">• {props.children}<br/></span>
   }
   return (
     <span className='flex flex-row gap-2 pl-4 items-start'>
@@ -81,7 +81,7 @@ function Line (props) {
 
 function Paragraph (props) {
   return (
-    <p className="w-full my-2 text-md text-start" {...props} />
+    <p className="w-full mb-1 text-md text-start" {...props} />
   )
 }
 

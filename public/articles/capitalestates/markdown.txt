@@ -20,11 +20,9 @@ Mais à quoi correspondent réellement 200 milliards d'euros ? C'est équivalent
 
 Pour mieux comprendre cette différence vertigineuse, voici deux graphiques comparatifs :
 
-![Graphique comparaison Bordeaux](preview.png)
-![Graphique comparaison Paris](infographie-paris.png)
+![Graphique comparaison Bordeaux](/articles/capitalestates/preview.png)
+![Graphique comparaison Paris](/articles/capitalestates/infographie-paris.png)
 
 Le code source de ce projet est disponible en open-source. Vous pouvez accéder au GitHub via ce [lien](https://github.com/Naowak/CapitalEstates).
 
----
-
-Bonne publication sur votre blog ! 
+##### Yannis Bendi-Ouis

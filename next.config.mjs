@@ -2,6 +2,8 @@
 const nextConfig = {
     output: "export",
     basePath: "/Naowak-V4",
+    images: {
+        unoptimized: true,
+    },
 }
-
-module.exports = nextConfig
+export default nextConfig;

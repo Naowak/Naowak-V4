@@ -4,6 +4,8 @@ import Markdown from '@/components/Markdown';
 
 export default function ArticlePreview({ article }) {
 
+  console.log(article.preview)
+
   return (
     <div className="flex flex-row p-4 gap-8">
       <div className="w-3/5 h-60 overflow-hidden rounded-xl shadow">

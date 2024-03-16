@@ -11,7 +11,7 @@ export default function ArticlePreview({ article }) {
       <div className="w-3/5 h-60 overflow-hidden rounded-xl shadow">
         <Link href={`/article/${article.id}`}>
           <img 
-            src={'/Naowak-V4' + article.preview} 
+            src={article.preview} 
             alt="Article preview" 
             className='w-full h-full object-cover object-center'
           />

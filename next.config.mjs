@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    //basePath: '',//process.env.NODE_ENV === 'development' ? "" : "/Naowak-V4/",
     //assetPrefix: process.env.NODE_ENV === 'development' ? "" : "/Naowak-V4/",
+    basePath: '/',
+    output: "export",
     images: {
         unoptimized: true,
     },

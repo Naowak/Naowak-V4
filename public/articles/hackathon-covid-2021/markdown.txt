@@ -21,14 +21,14 @@ Avec ces résultats, nous pouvons donc imaginer qu’il est possible de créer u
 
 Evidemment, bien d’autres corrélations peuvent être décelées au sein de cette matrice.
 
-![Matrice de corrélation](/articles/hackathon-covid-2021/correlationMatrix.png)
+![Matrice de corrélation](/article/hackathon-covid-2021/correlationMatrix.png)
 
 
 #### Evolution de la santé mentale des français
 
 Pour visualiser l'évolution de la santé mentale des français, nous avons utilisé les données [**Coviprev**](https://www.data.gouv.fr/fr/datasets/donnees-denquete-relatives-a-levolution-des-comportements-et-de-la-sante-mentale-pendant-lepidemie-de-covid-19-coviprev/) réalisé par [Santé Publique France](https://www.santepubliquefrance.fr/etudes-et-enquetes/coviprev-une-enquete-pour-suivre-l-evolution-des-comportements-et-de-la-sante-mentale-pendant-l-epidemie-de-covid-19). Ainsi, nous avons créé un premier  Dashboard en open source en python (vous pouvez trouver le code source de ce Dashboard sur ce [dépot Github](https://github.com/Naowak/Coviprev)). Puis je l'ai ré-édité par la suite en react-js pour l'intégrer [**ici**](https://naowak.fr/coviprev/). 
 
-![Dashboard coviprev python](/articles/hackathon-covid-2021/dashboard_coviprev_python.png)
+![Dashboard coviprev python](/article/hackathon-covid-2021/dashboard_coviprev_python.png)
 
 
 #### Pour finir
@@ -50,7 +50,7 @@ Notre projet a été sélectionné parmi les dix plus prometteurs selon les repr
 * LEDIEU Thibault, ingénieur
 * LE CUNFF, Yann, enseignant-chercheur
 
-![Psykokwak : mascotte de l'équipe PsyCovid ](/articles/hackathon-covid-2021/psykokwak.png)
+![Psykokwak : mascotte de l'équipe PsyCovid ](/article/hackathon-covid-2021/psykokwak.png)
 
 ##### Yannis Bendi-Ouis
 

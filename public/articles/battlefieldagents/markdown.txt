@@ -27,7 +27,7 @@ Ils utilisent ces informations pour décider de ce qu'ils vont faire, c'est à d
 
 Pour comprendre comment "BattleFieldAgents" fonctionne, il est utile de le visualiser comme un cycle d'interaction entre le jeu et [GPT-4](https://openai.com/gpt-4). Voici un schéma simplifié de ce cycle :
 
-![Workflow](/articles/battlefieldagents/workflow.png)
+![Workflow](/article/battlefieldagents/workflow.png)
 
 1. Le jeu envoie l'état actuel du jeu à l'API Python. Cet état comprend des informations sur la position des agents, leur vie, les obstacles, etc.
 2. L'API Python génère un prompt basé sur cet état et l'envoie à GPT-4.
@@ -113,7 +113,7 @@ Ceci permettrait de remplacer GPT-4 qui présente trois désaventages majeurs :
 - Il est très coûteux. Chaque action coûte entre 0.01$ - 0.02$.
 - C'est un modèle fermé. Nous ne connaissont pas les données sur lesquels il s'est entrainé et ses biais.
 - Nous ne pouvons pas le modifier et l'améliorer.
-D'ailleurs, si le fine-tuning d'un [LLM](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) vous intéresse, je vous invite à lire [**GPTJ-OVERTON : le finetuning d'un LLM Politique**](/gptj-overton/).
+D'ailleurs, si le fine-tuning d'un [LLM](https://fr.wikipedia.org/wiki/Grand_modèle_de_langage) vous intéresse, je vous invite à lire [**GPTJ-OVERTON : le finetuning d'un LLM Politique**](/article/gptj-overton/).
 
 Aussi, bien que le prompt actuel permette un comportement intéressant, il est loin d'être parfait. Des recherches supplémentaires pourraient être menées pour améliorer le prompt et obtenir un comportement plus complexe et stratégique de la part des agents. 
 

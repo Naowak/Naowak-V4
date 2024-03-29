@@ -7,19 +7,19 @@ La recherche de joueurs pour une activité sportive est l'un des plus grands fre
 
 Une fois connecté à l'application, **Weke** vous affiche immédiatement les différentes rencontres sportives organisées autour de votre position. Vous pouvez alors facilement filtrer les activités pour trouver celles qui vous conviennent, puis vous inscrire seul ou avec vos amis en cliquant sur le bouton rejoindre.
 
-![La carte des évènements, une activité, rejoindre une activité](/articles/weke-alpha/join_event.png)
+![La carte des évènements, une activité, rejoindre une activité](/article/weke-alpha/join_event.png)
 
 #### Organiser une activité
 
 Tout le monde peut créer une activité avec **Weke**, il vous suffit d'indiquer la description de l'évènement, la date et le lieu du rendez-vous. Une fois l'évènement validé, les autres utilisateurs de **Weke** peuvent le voir et le rejoindre, ou vous en faire la demande selon les conditions que vous avez pré-remplis. 
 
-![Organiser une activité](/articles/weke-alpha/new_activity.png)
+![Organiser une activité](/article/weke-alpha/new_activity.png)
 
 #### Communication entre participants
 
 Pour faciliter la communication d'informations entre les participants, dès l'évènement créé, une conversation est aussi créée entre tous les participants de votre évènement.
 
-![Exemple d'une conversation](/articles/weke-alpha/conversation.png)
+![Exemple d'une conversation](/article/weke-alpha/conversation.png)
 
 #### Pour finir
 

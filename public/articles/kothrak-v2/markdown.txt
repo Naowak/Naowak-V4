@@ -1,13 +1,13 @@
 # Kothrak-v2 : apprentissage par renforcement deux joueurs
 
-*Ce projet fait suite au projet **Kothrak-v1**, dont vous pouvez retrouver l'article [ici](/kothrak-v1/), et le code [ici](https://github.com/Naowak/Kothrak). Vous pouvez retrouver dans ce prédécent article des explications sur [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement) ainsi que sur le jeu de plateau [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) dont je me suis inspiré pour créer **Kothrak**.*
+*Ce projet fait suite au projet **Kothrak-v1**, dont vous pouvez retrouver l'article [ici](/article/kothrak-v1/), et le code [ici](https://github.com/Naowak/Kothrak). Vous pouvez retrouver dans ce prédécent article des explications sur [l'apprentissage par renforcement](https://fr.wikipedia.org/wiki/Apprentissage_par_renforcement) ainsi que sur le jeu de plateau [Santorini](https://www.spinmaster.com/en-US/brands/spin-master-games/santorini) dont je me suis inspiré pour créer **Kothrak**.*
 
 Suite au succès de notre agent à trouver une politique optimale dans notre première version de **Kothrak**, j'ai décidé d'augmenter le challenge en recréant **Kothrak** dans un environnement 3D grâce au moteur graphique [open-source](https://fr.wikipedia.org/wiki/Open_source) [Godot](https://godotengine.org/), en y entrainant cette fois-ci deux agents simultanément, **l'un contre l'autre**.  
-Bien que les actions réalisables par nos deux agents soient identiques à celles de [Kothrak-v1](/kothrak-v1/), le but du jeu lui change quelque peu et s'adapte à ce mode de jeu 2 joueurs. Ainsi, un agent gagne lorsqu'il atteint le troisième étage de n'importe quelle cellule, et perd si son adversaire l'atteint en premier. Le jeu se joue à tour de rôle. A chaque tour l'agent devant jouer doit réaliser deux actions dans l'ordre : se déplacer d'une case et construire sur une case adjacente.
+Bien que les actions réalisables par nos deux agents soient identiques à celles de [Kothrak-v1](/article/kothrak-v1/), le but du jeu lui change quelque peu et s'adapte à ce mode de jeu 2 joueurs. Ainsi, un agent gagne lorsqu'il atteint le troisième étage de n'importe quelle cellule, et perd si son adversaire l'atteint en premier. Le jeu se joue à tour de rôle. A chaque tour l'agent devant jouer doit réaliser deux actions dans l'ordre : se déplacer d'une case et construire sur une case adjacente.
 
 #### Un nouvel environnement 3D
 
-Pour cette seconde version de **Kothrak**, j'ai décidé d'abandonner l'interface 2D existante dans [Kothrak-v1](/kothrak-v1/) et de la remplacer par une toute nouvelle interface 3D réalisée avec [Godot](https://godotengine.org/). Cette décision a nécessairement amener dep rofonds changements dans le fonctionnement du projet. Fini de travailler avec un seul et unique programme gérant à la fois le jeu, les graphismes et l'entrainement des agents. Nous avons maintenant deux programmes, l'un dit serveur (codé en [Python](https://www.python.org/)), l'autre dit client (codé avec [Godot](https://godotengine.org/)).  
+Pour cette seconde version de **Kothrak**, j'ai décidé d'abandonner l'interface 2D existante dans [Kothrak-v1](/article/kothrak-v1/) et de la remplacer par une toute nouvelle interface 3D réalisée avec [Godot](https://godotengine.org/). Cette décision a nécessairement amener dep rofonds changements dans le fonctionnement du projet. Fini de travailler avec un seul et unique programme gérant à la fois le jeu, les graphismes et l'entrainement des agents. Nous avons maintenant deux programmes, l'un dit serveur (codé en [Python](https://www.python.org/)), l'autre dit client (codé avec [Godot](https://godotengine.org/)).  
 
 Dans cette architecture, le serveur gère :
 * le jeu (il vérifie notamment son bon fonctionnement, et que les joueurs ne demandent pas une action impossible, ou ne trichent pas)
@@ -32,7 +32,7 @@ Néanmoins, bien que très peu compétants, nos agents apprennent tout de même 
 * Le deuxième nous montre l'agent rouge trouver une autre politique gagnante, cette fois ci en plein centre du plateau de jeu et en concurrence avec l'agent bleu qui peine à gagner des parties
 * Le troisième nous montre un combat plus acharné entre l'agent rouge et l'agent bleu, toujours au centre du plateau
 
-![Timelapse de 3 entrainements](/articles/kothrak-v2/training.mp4)
+![Timelapse de 3 entrainements](/article/kothrak-v2/training.mp4)
 
 
 #### Et contre un humain ? 
@@ -54,7 +54,7 @@ J'ai d'abord cru à une bonne nouvelle, me disant que les agents étaient devenu
 
 Au lieu de chercher à gagner, les agents cherchaient à tout prix à éviter la victoire et les fautes éliminatoires. Leur but était donc de faire durer la partie le plus longtemps possible. Pour ce faire, ils construisait autant qu'ils le pouvaient, tout en essayant d'éviter de se déplacer sur une case ayant 3 de hauteur, comme le montre la vidéo ci-dessous. 
 
-![Timelaspe d'un entrainement où les agents évitent de gagner](/articles/kothrak-v2/losing.mp4)
+![Timelaspe d'un entrainement où les agents évitent de gagner](/article/kothrak-v2/losing.mp4)
 
 Je ne sais pas si vous partagez aussi ce sentiment, mais je trouve ça assez fascinant de voir comment ces agents - bien que limités - soient capables de s'adapter aussi bien à leur environnement. Lors de ce bug, les récompenses et punitions des agents étaient altérées. Leur comportement s'est alors altéré aussi pour correspondre à leur environnement. Et il faut admettre qu'ils s'y sont plutôt bien adaptés : il n'est pas rare des les voir tapisser le plateau de construction de hauteur 3. 
 
@@ -66,11 +66,11 @@ Ainsi, au lieu de créer des piles de dalles hexagonales, les personnages pourro
 
 C'est alors, qu'inspiré de nombreuses photos trouvées sur internet, je me suis lancé dans la création d'une tour chinoise, dont vous pouvez voir le résultat ci-dessous.
 
-![Modèle 3D d'un bâtiment](/articles/kothrak-v2/chinese_tower.png)
+![Modèle 3D d'un bâtiment](/article/kothrak-v2/chinese_tower.png)
 
 Si les timelaspes vous plaisent, vous pour voir ici la création du toit de la tour.
 
-![Timelaspe de la modélisation du toit](/articles/kothrak-v2/roof_timelaspe.mp4)
+![Timelaspe de la modélisation du toit](/article/kothrak-v2/roof_timelaspe.mp4)
 
 Pour l'instant, ce bâtiment ne remplace pas encore les dalles hexagonales. Mais peut-être auront nous la chance de le voir dans un **Kothrak-v3**, en plus d'une amélioration des agents !
 

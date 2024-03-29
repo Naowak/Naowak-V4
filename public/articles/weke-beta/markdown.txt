@@ -1,13 +1,13 @@
 # Weke (Bêta), pré-lancement de l'application pour organiser et rejoindre des rencontres sportives
 
 
-Cela fait maintenant un peu plus d'un an que j'ai commencé le développement de Weke ([voir cet article](/weke-alpha/)) et ça y est, Weke est disponible en version bêta sur l'[AppStore](https://apps.apple.com/fr/app/weke/id1640500765) (iOS) et le [Google Play Store](https://play.google.com/store/apps/details?id=com.naowak.weke) (Android).  
+Cela fait maintenant un peu plus d'un an que j'ai commencé le développement de Weke ([voir cet article](/article/weke-alpha/)) et ça y est, Weke est disponible en version bêta sur l'[AppStore](https://apps.apple.com/fr/app/weke/id1640500765) (iOS) et le [Google Play Store](https://play.google.com/store/apps/details?id=com.naowak.weke) (Android).  
 
 #### Version Bêta
 
 Cette nouvelle version apporte son lot de modifications par rapport à la version alpha. De nouvelles fonctionnalités ont été ajoutées, comme la possibilité de modifier une activité ou son profil, l'ajout des discussions privées ou encore la gestion des notifications. La carte a été revue, avec l'ajout de filtres permettant de choisir au mieux parmi les activités proposées. Le design a lui aussi été quelque peu modifié.
 
-![Screenshots de Weke](/articles/weke-beta/preview.png)
+![Screenshots de Weke](/article/weke-beta/preview.png)
 
 #### Ouverture au grand public
 

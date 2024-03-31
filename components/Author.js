@@ -1,8 +1,8 @@
 export default function Author () {
 
   return (
-    <div className='xl:fixed xl:w-1/5 xl:p-10'>
-      <div className='bg-white rounded-xl overflow-hidden shadow-2xl'>
+    <div className='p-4 md:p-8 xl:fixed xl:w-1/5 xl:p-10'>
+      <div className='bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col content-center'>
         <img src={`/picture.png`} alt='user_picture' className='' />
         <div className='p-2'>
           <h1 className='text-lg text-center font-semibold'>Yannis Bendi-Ouis</h1>

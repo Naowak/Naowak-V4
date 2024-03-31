@@ -5,8 +5,8 @@ import Markdown from '@/components/Markdown';
 export default function ArticlePreview({ article }) {
 
   return (
-    <div className="flex flex-row p-4 gap-8">
-      <div className="w-3/5 h-60 overflow-hidden rounded-xl shadow">
+    <div className="flex flex-col xl:flex-row p-4 gap-8">
+      <div className="w-full xl:w-3/5 h-60 overflow-hidden rounded-xl shadow">
         <Link href={`/article/${article.id}`}>
           <img 
             src={article.preview} 

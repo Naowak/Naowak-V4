@@ -16,7 +16,7 @@ FunnyDebates reprends la même architecture de code que mon précédent projet, 
 
 L'idée était de créer une plateforme plus légère et plus amusante, tout en exploitant les capacités de l'intelligence artificielle pour générer du texte.
 
-![FunnyDebates preview](/article/funnydebates/preview.png)
+![FunnyDebates preview](/articles/funnydebates/preview.png)
 
 #### Quel est l'avenir de FunnyDebates ?
 

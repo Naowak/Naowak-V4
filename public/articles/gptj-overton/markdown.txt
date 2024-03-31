@@ -21,9 +21,9 @@ Le résultat de ce POC n'est pas un modèle avec lequel nous pouvons chatter, o�
 Comme vous pouvez le voir sur les images ci-dessous, le modèle a été capable de générer des textes politiques cohérents et de conserver un contexte. C'est un bon début !
 Nous pouvons alors passer à l'étape suivante : l'entraînement du modèle sur l'ensemble de mes données !
 
-![Résultats du POC - Example 1](/article/gptj-overton/poc-0.png)
-![Résultats du POC - Example 2](/article/gptj-overton/poc-1.png)
-![Résultats du POC - Example 3](/article/gptj-overton/poc-2.png)
+![Résultats du POC - Example 1](/articles/gptj-overton/poc-0.png)
+![Résultats du POC - Example 2](/articles/gptj-overton/poc-1.png)
+![Résultats du POC - Example 3](/articles/gptj-overton/poc-2.png)
 
 #### Le processus d'entraînement
 
@@ -31,9 +31,9 @@ Pour entraîner mon modèle, j'ai travaillé avec un jeu de données d'environ 1
 
 J'ai ensuite loué une grosse machine à [Google](https://cloud.google.com/?hl=fr) pour 14$/h (4 [GPU A100](https://www.nvidia.com/fr-fr/data-center/a100/)) pour lancer mon entraînement. Malheureusement, la machine a manqué de stockage pendant la nuit et l'entraînement s'est brusquement arrêté à 20%. Malgré cette mésaventure, j'ai tout de même pu récupérer une version du modèle ayant vu près d'un demi GB de données textuelles politiques, que j'ai ensuite pu affiner (finetune).
 
-![Résultats du Modèle - Example 1](/article/gptj-overton/model-0.jpeg)
-![Résultats du Modèle - Example 2](/article/gptj-overton/model-1.jpeg)
-![Résultats du Modèle - Example 3](/article/gptj-overton/model-2.jpeg)
+![Résultats du Modèle - Example 1](/articles/gptj-overton/model-0.jpeg)
+![Résultats du Modèle - Example 2](/articles/gptj-overton/model-1.jpeg)
+![Résultats du Modèle - Example 3](/articles/gptj-overton/model-2.jpeg)
 
 #### Les résultats
 

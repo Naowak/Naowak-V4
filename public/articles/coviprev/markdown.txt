@@ -6,4 +6,4 @@ Malheureusement, ce dashboard n'est plus en ligne actuellement.
 
 Vous pouvez toutefois retrouvé le code open-source ayant permis de générer sa première version ici : [dépôt Github](https://github.com/Naowak/Coviprev).
 
-![Dashboard](/article/coviprev/preview.png)
+![Dashboard](/articles/coviprev/preview.png)

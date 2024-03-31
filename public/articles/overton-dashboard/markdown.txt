@@ -4,4 +4,4 @@ Cette page présentait anciennement le Dashboard Overton permettant de visualise
 
 Malheureusement, ce dashboard n'est plus en ligne actuellement. 
 
-![Dashboard](/article/overton-dashboard/preview.png)
+![Dashboard](/articles/overton-dashboard/preview.png)

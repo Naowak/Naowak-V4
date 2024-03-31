@@ -5,7 +5,7 @@ C’est ce que je vous propose de faire avec le [Dashboard Overton](https://www.
 Voici l’histoire de son développement. Au menu : scrapping, big data, traitement automatique du langage, intelligence artificielle, dataviz et développement web. 
 
 
-![Dashboard Overton](/article/overton/dashboard.png)
+![Dashboard Overton](/articles/overton/dashboard.png)
 
 
 #### Début du projet et récupération du dataset
@@ -16,7 +16,7 @@ Je suis donc parti à la recherche d’un **dataset** et j’ai trouvé [vie-pub
 
 Vous pouvez retrouver le code utilisé pour scrapper [vie-publique.fr](www.vie-publique.fr) sur ce [dépôt github](https://github.com/Naowak/Overton).
 
-![Site web vie-publique.fr](/article/overton/vie-publique.png)
+![Site web vie-publique.fr](/articles/overton/vie-publique.png)
 
 #### Traitement de la donnée 
 
@@ -40,6 +40,6 @@ Je vous invite à explorer vous même ces données sur le [**dashboard**](https:
 
 Trouvant ceci très satisfaisant, je vous partage en bonus deux timelapses montrant le déroulement de l'algorithme [TSNE](https://fr.wikipedia.org/wiki/Algorithme_t-SNE) sur 10.000 données. 
 
-![Deux timelapses de l'Algorithme T-SNE](/article/overton/tsne.mp4)
+![Deux timelapses de l'Algorithme T-SNE](/articles/overton/tsne.mp4)
 
 ##### Yannis Bendi-Ouis

@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
           <Author />
 
           {/* Layout */}
-          <div className='absolute p-4 md:p-8 xl:w-4/5 xl:right-0 xl:py-10 xl:pr-10'>
-            <div className='bg-white rounded-xl shadow-2xl p-8'>
+          <div className='absolute p-4 md:p-8 xl:p-0 xl:w-4/5 xl:right-0 xl:py-10 xl:pr-10'>
+            <div className='bg-white rounded-xl shadow-2xl p-2'>
               {children}
             </div>
           </div>

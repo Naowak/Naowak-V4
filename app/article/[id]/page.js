@@ -10,7 +10,9 @@ export default async function ArticlePage ({ params }) {
   }
 
   return (
-    <Markdown>{article.markdown}</Markdown>
+    <div className='p-4 xl:p-8'>
+      <Markdown>{article.markdown}</Markdown>
+    </div>
   );
 }
 

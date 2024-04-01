@@ -59,7 +59,7 @@ function H5 (props) {
 
 function Media (props) {
   return (
-    <span className="flex flex-col items-center gap-4 my-4 text-md text-gray-400">
+    <span className="flex flex-col items-center p-4 xl:p-8 gap-4 my-4 text-md text-gray-400">
       <img {...props} />
       {props.alt}
     </span>
@@ -93,7 +93,7 @@ function Anchor (props) {
 
 function Quote (props) {
   return (
-    <div className='bg-gray-200 rounded-md py-1'>
+    <div className='bg-gray-200 rounded-md p-4 xl:p-8'>
       <BiSolidQuoteAltLeft color='gray' className='ml-1'/>
         <h1 className="pl-2 italic text-gray-800" {...props} />
       <BiSolidQuoteAltRight color='gray' className='ml-1'/>

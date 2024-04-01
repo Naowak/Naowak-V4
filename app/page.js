@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col items-center justify-between">
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
         {articles.map((article, index) => (
           <ArticlePreview article={article} key={index} />
         ))}

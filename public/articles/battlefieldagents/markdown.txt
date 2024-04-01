@@ -2,7 +2,7 @@
 
 Dans le monde de l'intelligence artificielle (IA), les modèles de langage comme [GPT-4 d'OpenAI](https://openai.com/gpt-4) ont ouvert de nouvelles portes pour la simulation d'agents intelligents. Dans cet article, nous parlerons de mon dernier projet en date : "BattleFieldAgents", qui utilise [GPT-4](https://openai.com/gpt-4) pour contrôler des agents dans un jeu vidéo de stratégie. Nous discuterons de la conception du jeu, des défis rencontrés, et de la manière dont l'IA a été intégrée pour créer une expérience de jeu unique.
 
-![BattleFieldAgents : example d'une partie en vidéo](https://youtu.be/W-KyDJx34Qg)
+![BattleFieldAgents : example d'une partie en vidéo](https://www.youtube.com/watch?v=W-KyDJx34Qg)
 
 #### Présentation du projet "BattleFieldAgents"
 

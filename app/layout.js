@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import Author from '@/components/Author'
 import './globals.css'
@@ -13,6 +14,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+
+          <Head>
+            {/* <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            /> */}
+            <meta
+              httpEquiv="Content-Security-Policy"
+              content="img-src 'self' data: youtube.com youtu.be; frame-src 'self' youtube.com youtu.be;"
+            />
+          </Head>
 
           {/* Author */}
           <Author />

@@ -1,9 +1,13 @@
+import Link from 'next/link'
+
 export default function Author () {
 
   return (
     <div className='p-4 md:p-8 xl:fixed xl:w-1/5 xl:p-10'>
       <div className='bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col content-center'>
-        <img src={`/picture.png`} alt='user_picture' className='' />
+        <Link href={'http://localhost:3000/'}>
+          <img src={`/picture.png`} alt='user_picture' className='' />
+        </Link>
         <div className='p-2'>
           <h1 className='text-lg text-center font-semibold'>Yannis Bendi-Ouis</h1>
           <h2 className='text-sm text-center text-slate-500  p-0.5'>Doctorant en Intelligence Artificielle</h2>

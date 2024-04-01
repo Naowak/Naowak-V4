@@ -5,7 +5,7 @@ export default function Author () {
   return (
       <div className='p-4 md:p-8 xl:fixed xl:w-1/5 xl:p-10'>
         <div className='bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col content-center'>
-          <Link href={'http://localhost:3000/'}>
+          <Link href={'/'}>
             <img src={`/picture.png`} alt='user_picture' className='w-full' />
           </Link>
           <div className='p-2'>

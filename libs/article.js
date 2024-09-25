@@ -47,8 +47,7 @@ export async function loadPreviews() {
     const configPath = path.join(articlesDir, dir, 'config.json');
 
     const markdown = await fs.promises.readFile(markdownPath, 'utf8');
-    const basePath = process.env.NODE_ENV === 'development' ? "/" : "/Naowak-V4/";
-    const preview = `${basePath}${path.relative('./public', previewPath)}`;
+    const preview = `/${path.relative('./public', previewPath)}`;
     const config = JSON.parse(await fs.promises.readFile(configPath, 'utf8'));
 
     return { 

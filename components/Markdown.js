@@ -62,8 +62,28 @@ function H5 (props) {
 }
 
 function Media (props) {
+
+  // Youtube Video
+  if (props.src.includes('youtube') || props.src.includes('youtu.be')) {
+    const id = props.src.split('v=')[1]
+    const link = `https://www.youtube.com/embed/${id}`
+    return (
+      <span className="flex flex-col items-center p-4 xl:p-8 gap-4 my-4 text-md text-gray-400">
+        <iframe 
+          className='aspect-video w-full'
+          src={link} 
+          frameborder="0"
+          allow 
+          allowFullScreen
+        />
+        {props.alt}
+      </span>
+    )
+  }
+
+  // Image & Video
   return (
-    <span className="flex flex-col items-center gap-4 my-4 text-md text-gray-400">
+    <span className="flex flex-col items-center p-4 xl:p-8 gap-4 my-4 text-md text-gray-400">
       <img {...props} />
       {props.alt}
     </span>
@@ -117,7 +137,7 @@ function Quote (props) {
   });
 
   return (
-    <div className='bg-gray-200 rounded-md p-4'>
+    <div className='bg-gray-200 rounded-md p-4 xl:p-8'>
       <BiSolidQuoteAltLeft color='gray' className='ml-1'/>
         {extractedText.map((text, i) => (
           text == "\n" ? 

@@ -1,5 +1,7 @@
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from 'react-icons/bi'
+import '@/css/Table.css'
 
 export default function Markdown ({ children }) {
 
@@ -15,12 +17,14 @@ export default function Markdown ({ children }) {
     a: Anchor,
     blockquote: Quote,
     code: Code,
+    table: Table,
   }
 
   return (
     <ReactMarkdown
       components={components}
       className='flex flex-col gap-4 w-full text-base'
+      remarkPlugins={[remarkGfm]}
     >
       {children}
     </ReactMarkdown>
@@ -92,10 +96,34 @@ function Anchor (props) {
 }
 
 function Quote (props) {
+
+  const extractedText = [];
+
+  props.children.forEach(element => {
+    if (typeof element === 'string') {
+      extractedText.push(element);
+    } else if (element && element.props && element.props.children) {
+      const text = element.props.children;
+      if (Array.isArray(text)) {
+        text.forEach(part => {
+          if (typeof part === 'string') {
+            extractedText.push(...part.split('\n'));
+          }
+        });
+      } else if (typeof text === 'string') {
+        extractedText.push(...text.split('\n'));
+      }
+    }
+  });
+
   return (
-    <div className='bg-gray-200 rounded-md py-1'>
+    <div className='bg-gray-200 rounded-md p-4'>
       <BiSolidQuoteAltLeft color='gray' className='ml-1'/>
-        <h1 className="pl-2 italic text-gray-800" {...props} />
+        {extractedText.map((text, i) => (
+          text == "\n" ? 
+            <br key={i} /> :
+            <h1 className="pl-2 italic text-gray-800" children={text} key={i} />
+        ))}
       <BiSolidQuoteAltRight color='gray' className='ml-1'/>
     </div>
   )
@@ -115,5 +143,14 @@ function Code (props) {
         <span key={i} className='break-all'>{line}<br/></span>
       ))}
     </div>
+  )
+}
+
+function Table (props) {
+  console.log('hello', props)
+  return (
+    <table className='w-full table'>
+      {props.children}
+    </table>
   )
 }

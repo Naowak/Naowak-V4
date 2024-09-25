@@ -1,0 +1,9 @@
+# Poster scientifique sur les Recurrent Attention Network pour la conférence Bernstein 2024
+
+Pour la conférence Bernstein 2024, j'ai préparé un poster sur mes travaux de Thèse : les Recurrent Attention Networks. Ces travaux proposent une nouvelle architecture de réseaux de neuronne récurrent pour le traitement de séquences et s'inspirent des Transformers et du Reservoir Computing pour modéliser un réservoir scalable possèdant des unités plus complexe : des unités d'attention.
+
+![Poster sur les Recurrent Attention Network pour Bernstein 2024](/articles/bernstein-poster/final-poster-a0.pdf)
+
+Vous pouvez retrouver les informations de cette conférence ici : [Bernstein Conference Website](https://bernstein-network.de/bernstein-conference/).
+
+##### Yannis Bendi-Ouis

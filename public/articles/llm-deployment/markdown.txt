@@ -1,5 +1,7 @@
 # Déploiement de modèles de langage de grande taille open-source : une analyse des performances
 
+[Article scientifique original disponible sur arXiv (en anglais)](https://arxiv.org/abs/2409.14887)
+
 Depuis la sortie de ChatGPT [5] en novembre 2022, les modèles de langage de grande taille (LLMs) [1] ont connu un succès considérable, y compris dans la communauté open-source, avec de nombreux modèles à poids ouverts disponibles. Cependant, les exigences pour déployer un tel service sont souvent inconnues et difficiles à évaluer à l'avance.
 Pour faciliter ce processus, nous avons mené de nombreux tests au Centre Inria de l'Université de Bordeaux. Dans cet article, nous proposons une comparaison des performances de plusieurs modèles de différentes tailles (principalement Mistral [2][3] et LLaMa [4]) en fonction des GPU disponibles, en utilisant vLLM [8], une bibliothèque Python conçue pour optimiser l'inférence de ces modèles.
 Nos résultats fournissent des informations précieuses pour les groupes privés et publics souhaitant déployer des LLMs, leur permettant d'évaluer les performances de différents modèles en fonction de leur matériel disponible. Cette étude contribue donc à faciliter l'adoption et l'utilisation de ces grands modèles de langage dans divers domaines d'application.

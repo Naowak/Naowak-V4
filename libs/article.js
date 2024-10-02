@@ -6,7 +6,7 @@ const previewArticle = (article) => {
 
   /* Find first part */
   const splited = article.split('\n')
-  const specialChars = ['#', '!']
+  const specialChars = ['#', '!', '[']
 
   let flag_begin = false
   let flag_stop = false

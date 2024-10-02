@@ -1,69 +1,69 @@
-# Deploying Open-Source Large Language Models: A Performance Analysis
+# Déploiement de modèles de langage de grande taille open-source : une analyse des performances
 
-Since the release of ChatGPT [5] in November 2022, large language models (LLMs) [1] have seen considerable success, including in the open-source community, with many open-weight models available. However, the requirements to deploy such a service are often unknown and difficult to evaluate in advance.
-To facilitate this process, we conducted numerous tests at the Centre Inria de l'Université de Bordeaux. In this article, we propose a comparison of the performance of several models of different sizes (mainly Mistral [2][3] and LLaMa [4]) depending on the available GPUs, using vLLM [8], a Python library designed to optimize the inference of these models.
-Our results provide valuable information for private and public groups wishing to deploy LLMs, allowing them to evaluate the performance of different models based on their available hardware. This study thus contributes to facilitating the adoption and use of these large language models in various application domains.
+Depuis la sortie de ChatGPT [5] en novembre 2022, les modèles de langage de grande taille (LLMs) [1] ont connu un succès considérable, y compris dans la communauté open-source, avec de nombreux modèles à poids ouverts disponibles. Cependant, les exigences pour déployer un tel service sont souvent inconnues et difficiles à évaluer à l'avance.
+Pour faciliter ce processus, nous avons mené de nombreux tests au Centre Inria de l'Université de Bordeaux. Dans cet article, nous proposons une comparaison des performances de plusieurs modèles de différentes tailles (principalement Mistral [2][3] et LLaMa [4]) en fonction des GPU disponibles, en utilisant vLLM [8], une bibliothèque Python conçue pour optimiser l'inférence de ces modèles.
+Nos résultats fournissent des informations précieuses pour les groupes privés et publics souhaitant déployer des LLMs, leur permettant d'évaluer les performances de différents modèles en fonction de leur matériel disponible. Cette étude contribue donc à faciliter l'adoption et l'utilisation de ces grands modèles de langage dans divers domaines d'application.
 
 ## Introduction
 
-Following the release of ChatGPT by OpenAI in November 2022 [5], large language models (LLMs) [1] have sparked great interest in the private sector, with many companies seeking to offer services based on these models. However, training and inference of such models remain inaccessible to the general public, requiring considerable computational power and high-quality data. For example, Meta AI acquired 350,000 NVIDIA H100 GPUs in January 2024, at an estimated cost of $9 billion, specifically for training LLMs. Their training of LLaMa-3 was performed on $14*10^{12}$ tokens.
+Suite à la sortie de ChatGPT par OpenAI en novembre 2022 [5], les modèles de langage de grande taille (LLMs) [1] ont suscité un grand intérêt dans le secteur privé, avec de nombreuses entreprises cherchant à offrir des services basés sur ces modèles. Cependant, l'entraînement et l'inférence de tels modèles restent inaccessibles au grand public, nécessitant une puissance de calcul considérable et des données de haute qualité. Par exemple, Meta AI a acquis 350 000 GPU NVIDIA H100 en janvier 2024, pour un coût estimé à 9 milliards de dollars, spécifiquement pour l'entraînement des LLMs. Leur entraînement de LLaMa-3 a été réalisé sur $14*10^{12}$ jetons.
 
-Some pioneering companies quickly realized they could benefit from a monopoly on this technological advancement, giving them unprecedented decision-making power. To ensure they retain this monopoly, these companies are now lobbying governments for the regulation of these models, citing the risks and potential dangers of their malicious use. They propose measures ranging from banning the training of models beyond a certain computational power to government control of GPUs, with the possibility of remote deactivation [12].
+Certaines entreprises pionnières ont rapidement réalisé qu'elles pouvaient bénéficier d'un monopole sur cette avancée technologique, leur conférant un pouvoir décisionnel sans précédent. Pour s'assurer qu'elles conservent ce monopole, ces entreprises font désormais du lobbying auprès des gouvernements pour la réglementation de ces modèles, en invoquant les risques et les dangers potentiels de leur utilisation malveillante. Elles proposent des mesures allant de l'interdiction de l'entraînement de modèles au-delà d'une certaine puissance de calcul au contrôle gouvernemental des GPU, avec la possibilité de désactivation à distance [12].
 
-However, it is essential that these tools are not solely in the hands of a few powerful actors, capable of influencing the biases of their models that they distribute on a large scale, thus allowing them mass influence. The transparency of these models, with the opening of training data and associated weights, is the most appropriate solution to allow any external entity to verify the reliability and security of the proposed models. Although this approach is not appreciated by the majority of these companies, some of them, such as Meta and Mistral, are investing heavily in open-weight models, freely distributing variants of their LlaMa [4] and Mistral [2][3] models.
+Cependant, il est essentiel que ces outils ne soient pas uniquement entre les mains de quelques acteurs puissants, capables d'influencer les biais de leurs modèles qu'ils distribuent à grande échelle, leur permettant ainsi une influence de masse. La transparence de ces modèles, avec l'ouverture des données d'entraînement et des poids associés, est la solution la plus appropriée pour permettre à toute entité externe de vérifier la fiabilité et la sécurité des modèles proposés. Bien que cette approche ne soit pas appréciée par la majorité de ces entreprises, certaines d'entre elles, comme Meta et Mistral, investissent massivement dans des modèles à poids ouverts, distribuant librement des variantes de leurs modèles LlaMa [4] et Mistral [2][3].
 
-Thanks to these efforts, many groups, both public and private, are now able to deploy powerful models, thus ensuring the sovereignty of their data and avoiding the concentration of this wealth and potential power in a single point. However, even though these models are available to everyone, it is not easy to deploy them or estimate the resources needed to do so. While it is simple to serve a model to one user, it is much more complex to deploy it for tens, hundreds, or even thousands of simultaneous users. In this context, we conducted several tests at the Centre Inria de l'Université de Bordeaux concerning the deployment of such models.
+Grâce à ces efforts, de nombreux groupes, tant publics que privés, sont désormais en mesure de déployer des modèles puissants, assurant ainsi la souveraineté de leurs données et évitant la concentration de cette richesse et de ce potentiel en un seul point. Cependant, même si ces modèles sont disponibles pour tous, il n'est pas facile de les déployer ou d'estimer les ressources nécessaires pour le faire. Bien qu'il soit simple de servir un modèle à un utilisateur, il est beaucoup plus complexe de le déployer pour des dizaines, des centaines, voire des milliers d'utilisateurs simultanés. Dans ce contexte, nous avons mené plusieurs tests au Centre Inria de l'Université de Bordeaux concernant le déploiement de tels modèles.
 
-## Objectives
+## Objectifs
 
-The main objective of our study is to address the security and confidentiality concerns raised by the increasing use of proprietary LLM solutions - such as ChatGPT - by students and researchers at the Centre Inria de l'Université de Bordeaux. Indeed, a huge part of our students use these tools to help them in their daily work, whether for writing, programming, proofreading articles, or brainstorming.
+L'objectif principal de notre étude est de répondre aux préoccupations de sécurité et de confidentialité soulevées par l'utilisation croissante de solutions LLM propriétaires - telles que ChatGPT - par les étudiants et les chercheurs du Centre Inria de l'Université de Bordeaux. En effet, une grande partie de nos étudiants utilisent ces outils pour les aider dans leur travail quotidien, qu'il s'agisse d'écriture, de programmation, de relecture d'articles ou de brainstorming.
 
-However, the use of these proprietary solutions raises serious security and confidentiality issues. They do not guarantee the confidentiality of data, and the private interests behind them can potentially use them for commercial purposes, training, or even industrial espionage. This last point is particularly concerning for a research center like Inria, which must ensure the confidentiality of its employees' research work and is in direct competition with the companies offering these proprietary solutions.
+Cependant, l'utilisation de ces solutions propriétaires soulève de sérieuses questions de sécurité et de confidentialité. Elles ne garantissent pas la confidentialité des données, et les intérêts privés derrière elles peuvent potentiellement les utiliser à des fins commerciales, de formation ou même d'espionnage industriel. Ce dernier point est particulièrement préoccupant pour un centre de recherche comme Inria, qui doit assurer la confidentialité du travail de recherche de ses employés et qui est en concurrence directe avec les entreprises offrant ces solutions propriétaires.
 
-It is therefore crucial for Inria to propose alternative solutions and preserve its digital sovereignty. Moreover, given the growing importance of this technology, more and more researchers and students wish to conduct experiments based on LLMs. For example, setting up RAG (Retrieval Augmented Generation) [6][7] systems is a common application in the business world, which involves using an LLM to "discuss" with its data. It would therefore be interesting to offer them an adapted service.
+Il est donc crucial pour Inria de proposer des solutions alternatives et de préserver sa souveraineté numérique. De plus, étant donné l'importance croissante de cette technologie, de plus en plus de chercheurs et d'étudiants souhaitent mener des expériences basées sur les LLMs. Par exemple, la mise en place de systèmes RAG (Retrieval Augmented Generation) [6][7] est une application courante dans le monde des affaires, qui consiste à utiliser un LLM pour "discuter" avec ses données. Il serait donc intéressant de leur offrir un service adapté.
 
-## Prerequisites
+## Prérequis
 
-### Skills
+### Compétences
 
-To deploy an LLM on a GPU, certain knowledge and skills are required in Linux and Python development, as well as a strong curiosity about existing models and quantification. Although understanding the internal workings of Transformers is not necessary, it can be an asset.
+Pour déployer un LLM sur un GPU, certaines connaissances et compétences sont requises en développement Linux et Python, ainsi qu'une grande curiosité pour les modèles existants et la quantification. Bien que la compréhension du fonctionnement interne des Transformers ne soit pas nécessaire, elle peut être un atout.
 
-The required skills include the ability to update CUDA drivers (version 12 minimum), install a version of Python (minimum 3.9), install Python dependencies, make HTTP requests, and choose the right model for your use case, quantified or not depending on your resources.
+Les compétences requises incluent la capacité à mettre à jour les pilotes CUDA (version 12 minimum), installer une version de Python (minimum 3.9), installer les dépendances Python, effectuer des requêtes HTTP, et choisir le bon modèle pour votre cas d'utilisation, quantifié ou non en fonction de vos ressources.
 
-### Hardware
+### Matériel
 
-We conducted our tests on the Plafrim computing server, equipped with two types of GPUs:
+Nous avons mené nos tests sur le serveur de calcul Plafrim, équipé de deux types de GPU :
 
 - NVIDIA V100 16 GB
 - NVIDIA A100 40 GB
 
-### Software
+### Logiciel
 
-We used vLLM [8], a Python library designed to optimize the inference of these models. This library requires at least the prior installation of Python 3.9 and CUDA 12.
+Nous avons utilisé vLLM [8], une bibliothèque Python conçue pour optimiser l'inférence de ces modèles. Cette bibliothèque nécessite au moins l'installation préalable de Python 3.9 et CUDA 12.
 
-The advantage of vLLM over other solutions is its ability to handle multiple requests simultaneously, without a queue and without a linear increase in computation time depending on the number of requests, but rather logarithmic.
+L'avantage de vLLM par rapport à d'autres solutions est sa capacité à gérer plusieurs requêtes simultanément, sans file d'attente et sans augmentation linéaire du temps de calcul en fonction du nombre de requêtes, mais plutôt logarithmique.
 
-However, depending on the available hardware, other solutions can be considered. Notably, tensorRT-LLM offers excellent performance with NVIDIA GPUs, and lllama.cpp provides remarkable performance on Macs equipped with M1, M2, or M3 chips.
+Cependant, en fonction du matériel disponible, d'autres solutions peuvent être envisagées. Notamment, tensorRT-LLM offre d'excellentes performances avec les GPU NVIDIA, et lllama.cpp fournit des performances remarquables sur les Mac équipés de puces M1, M2 ou M3.
 
 ### Quantification
 
-Some models can be very large, making it particularly difficult to load them into the available hardware - limited by its VRAM.
+Certains modèles peuvent être très volumineux, ce qui rend particulièrement difficile leur chargement dans le matériel disponible - limité par sa VRAM.
 
-To address this problem, one of the best solutions is to quantify our models. Instead of writing the values of our weights on 16 or 32 bits, we can accept a slight loss of precision and write them on 4 or 8 bits.
+Pour résoudre ce problème, l'une des meilleures solutions est de quantifier nos modèles. Au lieu d'écrire les valeurs de nos poids sur 16 ou 32 bits, nous pouvons accepter une légère perte de précision et les écrire sur 4 ou 8 bits.
 
-This loss has been evaluated several times, and although it varies depending on the models and quantification methods used, we can affirm that it is negligible up to 6-bits and acceptable up to 4-bits. However, for a number of parameters greater than 70 billion, the models are robust enough to allow quantification below 4-bits while maintaining good coherence.
+Cette perte a été évaluée plusieurs fois, et bien qu'elle varie en fonction des modèles et des méthodes de quantification utilisées, nous pouvons affirmer qu'elle est négligeable jusqu'à 6 bits et acceptable jusqu'à 4 bits. Cependant, pour un nombre de paramètres supérieur à 70 milliards, les modèles sont suffisamment robustes pour permettre une quantification inférieure à 4 bits tout en maintenant une bonne cohérence.
 
-Among the different quantification methods [10], we can mention AWQ [9], GPTQ [11], and GGUF (llama.cpp).
+Parmi les différentes méthodes de quantification [10], nous pouvons mentionner AWQ [9], GPTQ [11] et GGUF (llama.cpp).
 
-## Experimentation
+## Expérimentation
 
-In this study, we seek to determine the maximum load of simultaneous requests that a server equipped with V100 16 GB or A100 40 GB GPUs can support, depending on the LLM used. For this, we conducted tests by progressively increasing the number of simultaneous requests and the size of the prompts, until reaching the maximum load. For each request, we measured the time required to generate 100 tokens. And, for each model and GPU, we measured the memory load, execution speed, and number of tokens per second depending on the number of simultaneous requests and the maximum context size.
+Dans cette étude, nous cherchons à déterminer la charge maximale de requêtes simultanées qu'un serveur équipé de GPU V100 16 GB ou A100 40 GB peut supporter, en fonction du LLM utilisé. Pour cela, nous avons mené des tests en augmentant progressivement le nombre de requêtes simultanées et la taille des invites, jusqu'à atteindre la charge maximale. Pour chaque requête, nous avons mesuré le temps nécessaire pour générer 100 jetons. Et, pour chaque modèle et GPU, nous avons mesuré la charge de mémoire, la vitesse d'exécution et le nombre de jetons par seconde en fonction du nombre de requêtes simultanées et de la taille maximale du contexte.
 
-We chose to focus mainly on the models proposed by Mistral AI [2][3], due to their diversity, popularity, and skills. We also appreciate their performance on European languages, particularly French. Additionally, their Mixture of Experts [3] architecture allows for computational savings during inference, by selecting only a part of the model's weights at each step, which also reduces energy consumption.
+Nous avons choisi de nous concentrer principalement sur les modèles proposés par Mistral AI [2][3], en raison de leur diversité, de leur popularité et de leurs compétences. Nous apprécions également leurs performances sur les langues européennes, en particulier le français. De plus, leur architecture Mixture of Experts [3] permet des économies de calcul lors de l'inférence, en ne sélectionnant qu'une partie des poids du modèle à chaque étape, ce qui réduit également la consommation d'énergie.
 
-Moreover, we included the LLaMa-3-70B [4] model from Meta, which achieves performance comparable to GPT-4 with its 70 billion parameters. This model size seems to be a good compromise between size and performance, justifying its inclusion in our study.
+De plus, nous avons inclus le modèle LLaMa-3-70B [4] de Meta, qui atteint des performances comparables à GPT-4 avec ses 70 milliards de paramètres. Cette taille de modèle semble être un bon compromis entre taille et performance, justifiant son inclusion dans notre étude.
 
-Thus, we tested the following models:
+Ainsi, nous avons testé les modèles suivants :
 
 - Mistral-7B
 - Codestral-22b
@@ -71,9 +71,9 @@ Thus, we tested the following models:
 - Mixtral-8x22b
 - LLaMa-3-70B
 
-## Results
+## Résultats
 
-### Mistral 7B on 2 V100 16 GB
+### Mistral 7B sur 2 V100 16 GB
 
 | Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
 |----------|----|----|-----|-----|-----|-----|------|  
@@ -86,113 +86,113 @@ Thus, we tested the following models:
 | 64       | 6.7| 7.1| 7.7 | 9.8 | 11.9| 17.1| 36.0 |  
 | 128      | 10.6| 10.4| 11.5| 16.2| 24.4| 33.3| 72.1 |  
 
-### Codestral 22B AWQ 4-bits on 1 A100 40 GB
+### Codestral 22B AWQ 4-bits sur 1 A100 40 GB
 
-| Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
-|----------|----|----|-----|-----|-----|-----|------|  
-| 1        | 2.3| 2.3| 2.4 | 2.5 | 2.6 | 2.6 | 3.0  |  
-| 2        | 2.3| 2.4| 2.5 | 2.7 | 2.7 | 2.8 | 3.5  |  
-| 4        | 2.4| 2.5| 2.6 | 2.8 | 3.0 | 3.4 | 4.8  |  
-| 8        | 2.6| 2.7| 2.8 | 3.2 | 3.7 | 4.5 | 7.4  |  
-| 16       | 3.0| 3.2| 3.4 | 4.2 | 5.0 | 6.4 | 12.3 |  
-| 32       | 4.5| 4.8| 5.4 | 6.7 | 8.4 | 11.4| 23.1 |  
-| 64       | 7.9| 8.5| 9.3 | 12.3| 15.8| 21.6| 47.7 |  
-| 128      | 14.3| 15.4| 17.6| 24.2| 29.9| 46.4| 96.2 |  
+| Requêtes | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |
+|----------|----|----|-----|-----|-----|-----|------|
+| 1        | 2.3| 2.3| 2.4 | 2.5 | 2.6 | 2.6 | 3.0  |
+| 2        | 2.3| 2.4| 2.5 | 2.7 | 2.7 | 2.8 | 3.5  |
+| 4        | 2.4| 2.5| 2.6 | 2.8 | 3.0 | 3.4 | 4.8  |
+| 8        | 2.6| 2.7| 2.8 | 3.2 | 3.7 | 4.5 | 7.4  |
+| 16       | 3.0| 3.2| 3.4 | 4.2 | 5.0 | 6.4 | 12.3 |
+| 32       | 4.5| 4.8| 5.4 | 6.7 | 8.4 | 11.4| 23.1 |
+| 64       | 7.9| 8.5| 9.3 | 12.3| 15.8| 21.6| 47.7 |
+| 128      | 14.3| 15.4| 17.6| 24.2| 29.9| 46.4| 96.2 |
 
-### Codestral 22B GPTQ 8-bits on 2 V100 16 GB
+### Codestral 22B GPTQ 8-bits sur 2 V100 16 GB
 
-| Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
-|----------|----|----|-----|-----|-----|-----|------|  
-| 1        | 3.1| 3.2| 3.2 | 3.3 | 3.4 | 3.7 | 4.3  |  
-| 2        | 3.3| 3.4| 3.4 | 3.6 | 4.0 | 4.4 | 5.8  |  
-| 4        | 3.7| 3.8| 3.9 | 4.4 | 4.8 | 5.6 | 8.8  |  
-| 8        | 4.8| 5.1| 5.3 | 6.0 | 6.8 | 8.8 | 15   |  
-| 16       | 7.1| 7.5| 7.9 | 9.8 | 11.7| 14.3| 27.5 |  
-| 32       | 10.4| 10.9| 11.9| 15.3| 19.0| 24.6| 53.8 |  
-| 64       | 15.5| 17.0| 18.7| 25.9| 32.1| 43.9| 108.2|  
-| 128      | 21.7| -  | -   | -   | -   | -   | -    |  
+| Requêtes | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |
+|----------|----|----|-----|-----|-----|-----|------|
+| 1        | 3.1| 3.2| 3.2 | 3.3 | 3.4 | 3.7 | 4.3  |
+| 2        | 3.3| 3.4| 3.4 | 3.6 | 4.0 | 4.4 | 5.8  |
+| 4        | 3.7| 3.8| 3.9 | 4.4 | 4.8 | 5.6 | 8.8  |
+| 8        | 4.8| 5.1| 5.3 | 6.0 | 6.8 | 8.8 | 15   |
+| 16       | 7.1| 7.5| 7.9 | 9.8 | 11.7| 14.3| 27.5 |
+| 32       | 10.4| 10.9| 11.9| 15.3| 19.0| 24.6| 53.8 |
+| 64       | 15.5| 17.0| 18.7| 25.9| 32.1| 43.9| 108.2|
+| 128      | 21.7| -  | -   | -   | -   | -   | -    |
 
-### Codestral 22B on 2 A100 40 GB
+### Codestral 22B sur 2 A100 40 GB
 
-| Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
-|----------|----|----|-----|-----|-----|-----|------|  
-| 1        | 2.3| 2.3| 2.4 | 2.4 | 2.5 | 2.6 | 2.8  |  
-| 2        | 2.3| 2.3| 2.4 | 2.5 | 2.6 | 2.7 | 3.3  |  
-| 4        | 2.4| 2.4| 2.5 | 2.7 | 2.8 | 3.1 | 4.2  |  
-| 8        | 2.5| 2.6| 2.8 | 3.1 | 3.4 | 4.1 | 6.3  |  
-| 16       | 2.8| 2.9| 3.2 | 3.8 | 4.4 | 5.6 | 10.2 |  
-| 32       | 3.3| 3.7| 4.0 | 5.2 | 6.4 | 8.8 | 18.1 |  
-| 64       | 4.3| 4.6| 5.7 | 8.0 | 10.5| 15.5| 36.8 |  
-| 128      | 6.8| 7.8| 9.4 | 14.5| 19.6| 32.9| 71.1 |  
+| Requêtes | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |
+|----------|----|----|-----|-----|-----|-----|------|
+| 1        | 2.3| 2.3| 2.4 | 2.4 | 2.5 | 2.6 | 2.8  |
+| 2        | 2.3| 2.3| 2.4 | 2.5 | 2.6 | 2.7 | 3.3  |
+| 4        | 2.4| 2.4| 2.5 | 2.7 | 2.8 | 3.1 | 4.2  |
+| 8        | 2.5| 2.6| 2.8 | 3.1 | 3.4 | 4.1 | 6.3  |
+| 16       | 2.8| 2.9| 3.2 | 3.8 | 4.4 | 5.6 | 10.2 |
+| 32       | 3.3| 3.7| 4.0 | 5.2 | 6.4 | 8.8 | 18.1 |
+| 64       | 4.3| 4.6| 5.7 | 8.0 | 10.5| 15.5| 36.8 |
+| 128      | 6.8| 7.8| 9.4 | 14.5| 19.6| 32.9| 71.1 |
 
-### Mixtral 8x7B AWQ 4-bits on 2 A100 40 GB
+### Mixtral 8x7B AWQ 4-bits sur 2 A100 40 GB
 
-| Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
-|----------|----|----|-----|-----|-----|-----|------|  
-| 1        | 3.1| 3.2| 3.6 | 3.4 | 3.5 | 3.5 | 4.1  |  
-| 2        | 3.3| 3.3| 3.5 | 3.5 | 3.8 | 3.8 | 4.7  |  
-| 4        | 3.5| 3.6| 3.5 | 4.3 | 4.1 | 4.6 | 6.2  |  
-| 8        | 3.8| 3.8| 4.0 | 4.3 | 4.9 | 5.7 | 9.3  |  
-| 16       | 4.3| 4.6| 4.9 | 6.0 | 6.7 | 8.5 | 15.5 |  
-| 32       | 6.0| 6.4| 7.6 | 8.7 | 10.9| 14.2| -    |  
-| 64       | 10.0| 10.5| 11.6| 15.5| -   | -   | -    |  
-| 128      | 18.5| 19.6| 21.5| -   | -   | -   | -    |  
+| Requêtes | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |
+|----------|----|----|-----|-----|-----|-----|------|
+| 1        | 3.1| 3.2| 3.6 | 3.4 | 3.5 | 3.5 | 4.1  |
+| 2        | 3.3| 3.3| 3.5 | 3.5 | 3.8 | 3.8 | 4.7  |
+| 4        | 3.5| 3.6| 3.5 | 4.3 | 4.1 | 4.6 | 6.2  |
+| 8        | 3.8| 3.8| 4.0 | 4.3 | 4.9 | 5.7 | 9.3  |
+| 16       | 4.3| 4.6| 4.9 | 6.0 | 6.7 | 8.5 | 15.5 |
+| 32       | 6.0| 6.4| 7.6 | 8.7 | 10.9| 14.2| -    |
+| 64       | 10.0| 10.5| 11.6| 15.5| -   | -   | -    |
+| 128      | 18.5| 19.6| 21.5| -   | -   | -   | -    |
 
-### Mixtral 8x22B AWQ 4-bits on 4 A100 40 GB
+### Mixtral 8x22B AWQ 4-bits sur 4 A100 40 GB
 
-| Requests | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |  
-|----------|----|----|-----|-----|-----|-----|------|  
-| 1        | 6.0| 6.0| 6.3 | 6.8 | 7.0 | 7.6 | 10.9 |  
-| 2        | 7.2| 7.1| 7.4 | 8.4 | 8.7 | 10.3| 16.7 |  
-| 4        | 8.0| 8.1| 8.7 | 10.3| 11.9| 14.2| 21.3 |  
-| 8        | 9.0| 9.4| 10.0| 13.0| 16.7| 19.4| 36.2 |  
-| 16       | 11.0| 12.2| 13.2| 21.1| 26.5| 31.9| 66.4 |  
-| 32       | 16.0| 17.6| 22.6| 33.6| 37.7| 56.7| -    |  
-| 64       | 28.0| 31.8| 35.9| 56.0| 71.7| -   | -    |  
-| 128      | 52.0| 55.3| 67.0| 111.7| -   | -   | -    |  
+| Requêtes | 31 | 63 | 119 | 296 | 480 | 822 | 2193 |
+|----------|----|----|-----|-----|-----|-----|------|
+| 1        | 6.0| 6.0| 6.3 | 6.8 | 7.0 | 7.6 | 10.9 |
+| 2        | 7.2| 7.1| 7.4 | 8.4 | 8.7 | 10.3| 16.7 |
+| 4        | 8.0| 8.1| 8.7 | 10.3| 11.9| 14.2| 21.3 |
+| 8        | 9.0| 9.4| 10.0| 13.0| 16.7| 19.4| 36.2 |
+| 16       | 11.0| 12.2| 13.2| 21.1| 26.5| 31.9| 66.4 |
+| 32       | 16.0| 17.6| 22.6| 33.6| 37.7| 56.7| -    |
+| 64       | 28.0| 31.8| 35.9| 56.0| 71.7| -   | -    |
+| 128      | 52.0| 55.3| 67.0| 111.7| -   | -   | -    |
 
-### LLaMa-3 70B AWQ 4-bits on 2 A100 40 GB
+### LLaMa-3 70B AWQ 4-bits sur 2 A100 40 GB
 
-| Requests | 21 | 51 | 97 | 240 | 398 | 703 | 1848 |  
-|----------|----|----|----|-----|-----|-----|------|  
-| 1        | 3.6| 3.7| 3.7| 3.9 | 4.0 | 4.2 | 4.8  |  
-| 2        | 3.7| 3.7| 3.9| 4.1 | 4.2 | 4.5 | 5.8  |  
-| 4        | 3.8| 4.0| 4.1| 4.4 | 4.7 | 5.4 | 7.9  |  
-| 8        | 4.3| 4.5| 4.8| 5.1 | 5.9 | 7.4 | 12.5 |  
-| 16       | 4.9| 5.2| 5.7| 6.9 | 8.3 | 10.8| 21.4 |  
-| 32       | 7.6| 8.2| 8.7| 11.1| 13.7| 19.6| 40.9 |  
-| 64       | 12.9| 13.9| 15.2| 20.3| 25.8| 37.5| -    |  
-| 128      | 23.2| -  | -  | -   | -   | -   | -    |  
+| Requêtes | 21 | 51 | 97 | 240 | 398 | 703 | 1848 |
+|----------|----|----|----|-----|-----|-----|------|
+| 1        | 3.6| 3.7| 3.7| 3.9 | 4.0 | 4.2 | 4.8  |
+| 2        | 3.7| 3.7| 3.9| 4.1 | 4.2 | 4.5 | 5.8  |
+| 4        | 3.8| 4.0| 4.1| 4.4 | 4.7 | 5.4 | 7.9  |
+| 8        | 4.3| 4.5| 4.8| 5.1 | 5.9 | 7.4 | 12.5 |
+| 16       | 4.9| 5.2| 5.7| 6.9 | 8.3 | 10.8| 21.4 |
+| 32       | 7.6| 8.2| 8.7| 11.1| 13.7| 19.6| 40.9 |
+| 64       | 12.9| 13.9| 15.2| 20.3| 25.8| 37.5| -    |
+| 128      | 23.2| -  | -  | -   | -   | -   | -    |
 
 ## Discussions & Perspectives
 
-The first thing we can notice is that the larger the context size, the slower the model is at generating 100 tokens. This is expected and is related to its complexity, which grows quadratically with the context size.
+La première chose que nous pouvons remarquer est que plus la taille du contexte est grande, plus le modèle est lent à générer 100 jetons. Cela est attendu et est lié à sa complexité, qui croît de manière quadratique avec la taille du contexte.
 
-Moreover, as we can see with the Mixtral [3] and Llama [4] models, just because a model can be loaded does not mean it can be used for any context size. The context size has a quadratic cost in RAM (or VRAM), which adds to the model size, potentially significantly increasing memory requirements.
+De plus, comme nous pouvons le voir avec les modèles Mixtral [3] et Llama [4], le fait qu'un modèle puisse être chargé ne signifie pas qu'il puisse être utilisé pour n'importe quelle taille de contexte. La taille du contexte a un coût quadratique en RAM (ou VRAM), qui s'ajoute à la taille du modèle, augmentant potentiellement de manière significative les exigences en mémoire.
 
-On the other hand, we can also observe that we do not have a linear loss of efficiency with the number of simultaneous requests: the time required to respond to a request does not double when the number of simultaneous requests doubles. However, this seems less true when the request size exceeds a certain threshold.
+D'autre part, nous pouvons également observer que nous n'avons pas une perte d'efficacité linéaire avec le nombre de requêtes simultanées : le temps nécessaire pour répondre à une requête ne double pas lorsque le nombre de requêtes simultanées double. Cependant, cela semble moins vrai lorsque la taille de la requête dépasse un certain seuil.
 
-Finally, we can notice that although the cost of these GPUs is far from trivial (V100 16GB ≈ $5000, A100 40GB ≈ $8500), it is not necessary to possess an exorbitant quantity to successfully run a local alternative to ChatGPT or other proprietary solutions. In fact, with two A100 40GB GPUs (or a single 80GB GPU), it is already possible to run LLaMa-3-70B or Mixtral 8x7B under very good conditions. According to numerous benchmarks and user reviews, these models are serious contenders to GPT-4.
+Enfin, nous pouvons remarquer que bien que le coût de ces GPU soit loin d'être trivial (V100 16GB ≈ $5000, A100 40GB ≈ $8500), il n'est pas nécessaire de posséder une quantité exorbitante pour exécuter avec succès une alternative locale à ChatGPT ou d'autres solutions propriétaires. En fait, avec deux GPU A100 40GB (ou un seul GPU 80GB), il est déjà possible d'exécuter LLaMa-3-70B ou Mixtral 8x7B dans de très bonnes conditions. Selon de nombreux benchmarks et avis d'utilisateurs, ces modèles sont de sérieux concurrents à GPT-4.
 
-![Number of tokens generated per second and per user for Mixtral 8x7B AWQ 4-bits on 2 A100 40GB](/articles/llm-deployment/token_per_second_2.png)
+![Nombre de jetons générés par seconde et par utilisateur pour Mixtral 8x7B AWQ 4-bits sur 2 A100 40GB](/articles/llm-deployment/token_per_second_2.png)
 
-![Total number of token generated per second for Mixtral 8x7B AWQ 4-bits on 2 A100 40GB](/articles/llm-deployment/total_tokens_2.png)
+![Nombre total de jetons générés par seconde pour Mixtral 8x7B AWQ 4-bits sur 2 A100 40GB](/articles/llm-deployment/total_tokens_2.png)
 
-To a lesser extent, it is possible to host smaller models (in the range of 7 to 30B) and achieve extremely impressive generation speeds, especially if requests are parallelized.
+Dans une moindre mesure, il est possible d'héberger des modèles plus petits (de l'ordre de 7 à 30B) et d'obtenir des vitesses de génération extrêmement impressionnantes, surtout si les requêtes sont parallélisées.
 
-For example, we can observe in Figure 1 the number of tokens generated per second and per user as a function of the number of simultaneous requests and the size of the prompt, and in Figure 2 the total number of tokens generated per second (for all users combined) as a function of the number of simultaneous requests and the size of the prompts. Thus, we can observe that for a model like Mixtral 8x7B — which has 49B parameters and only 12-13B active parameters at any given time (MoE architecture) [3] — we can achieve up to 700 tokens/second for 128 simultaneous requests with a nearly zero context (30 tokens), and we can obtain an inference speed of just under 20 tokens per second for 20 simultaneous users.
+Par exemple, nous pouvons observer dans la Figure 1 le nombre de jetons générés par seconde et par utilisateur en fonction du nombre de requêtes simultanées et de la taille de l'invite, et dans la Figure 2 le nombre total de jetons générés par seconde (pour tous les utilisateurs combinés) en fonction du nombre de requêtes simultanées et de la taille des invites. Ainsi, nous pouvons observer que pour un modèle comme Mixtral 8x7B — qui a 49B de paramètres et seulement 12-13B de paramètres actifs à tout moment (architecture MoE) [3] — nous pouvons atteindre jusqu'à 700 jetons/seconde pour 128 requêtes simultanées avec un contexte presque nul (30 jetons), et nous pouvons obtenir une vitesse d'inférence de près de 20 jetons par seconde pour 20 utilisateurs simultanés.
 
 ## Conclusion
 
-In this article, we have presented a comparative study of the performance of several large language models (LLMs) based on available hardware resources. Our results demonstrate that models such as Mistral [2][3] and LLaMa [5] can be efficiently deployed on V100 and A100 GPUs, offering competitive performance compared to proprietary solutions like ChatGPT [5].
+Dans cet article, nous avons présenté une étude comparative des performances de plusieurs modèles de langage de grande taille (LLMs) en fonction des ressources matérielles disponibles. Nos résultats montrent que des modèles tels que Mistral [2][3] et LLaMa [5] peuvent être déployés efficacement sur des GPU V100 et A100, offrant des performances compétitives par rapport à des solutions propriétaires comme ChatGPT [5].
 
-These findings have significant implications for both the academic and industrial communities, providing valuable insights into the resources required to deploy LLMs. They also highlight the importance of transparency and digital sovereignty, enabling public and private groups to deploy open-source models without relying on proprietary solutions.
+Ces résultats ont des implications significatives pour les communautés académiques et industrielles, fournissant des informations précieuses sur les ressources nécessaires pour déployer des LLMs. Ils soulignent également l'importance de la transparence et de la souveraineté numérique, permettant aux groupes publics et privés de déployer des modèles open-source sans dépendre de solutions propriétaires.
 
-We strongly encourage various public and private groups to deploy their own LLM solutions, particularly by utilizing open-source (or open-weight) models. This approach not only reduces our digital dependence but also brings us closer to achieving sovereignty over our data.
+Nous encourageons fortement divers groupes publics et privés à déployer leurs propres solutions LLM, en particulier en utilisant des modèles open-source (ou open-weight). Cette approche non seulement réduit notre dépendance numérique, mais nous rapproche également de la souveraineté de nos données.
 
-We extend our gratitude to the Centre Inria de l'Université de Bordeaux for their support and resources, which made this study possible.
+Nous remercions le Centre Inria de l'Université de Bordeaux pour leur soutien et leurs ressources, qui ont rendu cette étude possible.
 
-## References
+## Références
 
 1. Zhao, Wayne Xin, et al. "A survey of large language models." arXiv preprint arXiv:2303.18223 (2023).
 2. Jiang, Albert Q., et al. "Mistral 7B." arXiv preprint arXiv:2310.06825 (2023).
@@ -208,4 +208,3 @@ We extend our gratitude to the Centre Inria de l'Université de Bordeaux for the
 12. Reimagining secure infrastructure for advanced AI, [https://openai.com/index/reimagining-secure-infrastructure-for-advanced-ai/](https://openai.com/index/reimagining-secure-infrastructure-for-advanced-ai/)
 
 ##### Yannis Bendi-Ouis, Dan Dutarte, Xavier Hinaut (Centre Inria de l'Université de Bordeaux)
-

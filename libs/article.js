@@ -33,7 +33,7 @@ const previewArticle = (article) => {
   }, [])
 
   const text = lines.join('\n').split(' ')
-  if (text.length > 100) return text.slice(0, 50).join(' ') + '...'
+  if (text.length > 100) return text.slice(0, 70).join(' ') + '...'
   return text.join(' ')
 }
 

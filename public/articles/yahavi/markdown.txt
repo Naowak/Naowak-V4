@@ -1,0 +1,77 @@
+# Yahavi : Une initiative citoyenne pour Mayotte
+
+Lorsque le cyclone Chido a frappé Mayotte, laissant derrière lui des dégâts considérables et une population en détresse, une poignée de personnes s’est mobilisée pour agir. Parmi elles, des ingénieurs, des enseignants, des chercheurs, et bien d’autres, tous unis par une volonté commune : aider. C’est ainsi qu’est née **Yahavi**, une initiative citoyenne visant à fournir des informations fiables et actualisées aux Mahorais, tout en facilitant l’entraide et la coordination des secours. Je suis fier de faire partie de cette aventure, et je souhaite vous raconter comment tout cela s’est mis en place, malgré les obstacles et le temps limité dont nous disposions.
+
+## **La situation à Mayotte : un appel à l’action**
+
+Mayotte, déjà fragilisée avant le cyclone, a été durement touchée. Les bidonvilles du nord de l’île ont été particulièrement affectés, avec des infrastructures essentielles comme l’électricité, l’eau et les réseaux de communication gravement endommagées. Les habitants, déjà précaires, se sont retrouvés isolés, sans accès à l’information ni aux ressources de base. Les autorités ont été critiquées pour leur manque de transparence, et les rumeurs ont rapidement circulé, rendant difficile la distinction entre les informations fiables et les fausses nouvelles.
+
+C’est dans ce contexte que plusieurs initiatives citoyennes ont vu le jour. Parmi elles, https://chidomayotte.info, un site web créé par Victor Connes et David Tocaven, qui a permis de centraliser et de vérifier les informations. Eddine Omar, de son côté, a développé une carte interactive recensant les points d’intérêt essentiels comme les distributions d’eau, les centres de soins et les points d’accès internet. Ces initiatives, bien que précieuses, avaient besoin d’être renforcées et mutualisées pour maximiser leur impact. 
+
+D’autres initiatives ont également joué un rôle crucial. https://help-mayotte.yt, mis en place par Sandra Ibrahim et son compagnon, a permis de centraliser les dons et les informations sur les besoins urgents. Le Discord Situation Mayotte, créé et animé par des membres de la communauté, est devenu un espace vital d’échange et de coordination, rassemblant plus de 8 000 membres. Sur Facebook, des groupes comme Urgence Mayotte ont permis aux habitants de partager des informations en temps réel, malgré les risques de désinformation. Ces initiatives ont joué un rôle clé dans la coordination sur le terrain, la récolte et le partage d'information et ont montré la force de la mobilisation citoyenne.
+
+Ces efforts, bien que dispersés au départ, ont fini par se rejoindre, formant un réseau solide et réactif. Sans ces initiatives préalables, Yahavi n’aurait pas pu voir le jour aussi rapidement. Elles ont posé les bases d’une collaboration plus large, montrant que face à l’adversité, la solidarité et l’action collective peuvent faire la différence.
+
+## **La naissance de Yahavi : un projet collaboratif**
+
+C’est ainsi que nous nous sommes réunis, une quinzaine de personnes aux compétences variées, pour créer **Yahavi**. L’objectif était clair : développer une plateforme web permettant aux Mahorais de partager et de vérifier des informations en temps réel, tout en facilitant l’entraide et la coordination des secours. Le temps était compté – nous n’avions que deux semaines, les vacances de Noël, pour mettre en place un outil fonctionnel et utile.
+
+Le projet s’est articulé autour de trois axes principaux :
+- **Une carte interactive** : Inspirée de la carte d’Eddine Omar, nous avons développé une interface web (https://yahavi.yt) permettant aux utilisateurs de visualiser les points d’intérêt (distributions d’eau, centres de soins, etc.) et de voter pour confirmer ou infirmer les informations. L’idée était de permettre aux Mahorais eux-mêmes de valider les données, garantissant ainsi leur fiabilité.  
+- **Un système de récupération automatique d’informations** : Grâce à des modèles de langage (LLM) comme DeepSeek V3, nous avons mis en place un processus pour extraire des informations pertinentes des conversations sur Discord et Facebook. Ces données sont ensuite stockées dans une base de données MongoDB, prêtes à être utilisées pour générer des rapports quotidiens.  
+- **Une diffusion efficace des informations** : Nous avons exploré l’utilisation de Matrix pour diffuser des rapports quotidiens sur les réseaux sociaux populaires à Mayotte, comme WhatsApp, Facebook et Instagram. L’objectif était de toucher un public large, notamment les jeunes, souvent plus connectés.  
+
+## **Les défis rencontrés**
+
+Le temps était notre principal ennemi. Avec seulement deux semaines pour développer et déployer Yahavi, nous avons dû faire des choix difficiles. Certaines idées, comme un service SMS ou un chatbot alimenté par un LLM, ont été abandonnées en raison des risques d’erreurs et du manque de temps pour les tester correctement.
+
+La collaboration avec les autres initiatives, comme celle d’Eddine Omar, a été essentielle. Sans leur travail préalable, nous n’aurions pas pu avancer aussi rapidement. Cependant, il a fallu s’adapter en permanence, notamment pour intégrer les données existantes et les améliorer.
+
+## **Le déploiement de Yahavi**
+
+Malgré les obstacles, et avec la précieuse aide de Jimmy Leblanc, nous avons réussi à déployer **Yahavi**, accessible via les domaines **yahavi.yt**, **yahavi.fr** et **yahavi.org**. La plateforme est encore en phase beta, mais elle représente une première étape prometteuse. Les utilisateurs peuvent déjà consulter la carte interactive, voter pour valider les informations, et pourront bientôt contribuer à l’entraide en signalant des besoins ou des offres d’aide.
+
+Le déploiement de ce service a été rendu possible grâce à l’engagement et à l'expertise de chacun. Nous avons également reçu le soutien financier de plusieurs membres de la communauté, qui ont contribué aux frais de serveur et de noms de domaine.
+
+![Carte intéractive Yahavi.yt](/articles/yahavi/preview.png)
+
+## **Les prochaines étapes**
+
+Yahavi n’en est qu’à ses débuts. Les prochaines étapes incluent l’amélioration de l’interface utilisateur, l'automatisation de l'extraction et de l'ajout de nouvelle données, et la mise en place d’un système de modération pour garantir la qualité des informations. Nous envisageons également de développer des fonctionnalités supplémentaires, comme un système de gamification pour encourager la participation des utilisateurs.
+
+L’objectif à long terme est de faire de Yahavi un outil pérenne, capable d’aider les Mahorais non seulement dans l’urgence, mais aussi dans la reconstruction et le développement de l’île. Pour cela, nous espérons pouvoir compter sur le soutien des institutions locales et des organisations humanitaires.
+
+## **Un travail d’équipe**
+
+Ce projet n’aurait pas été possible sans la mobilisation de chacun. Je tiens à remercier tous ceux qui ont contribué, de près ou de loin, à la réalisation de Yahavi. Que ce soit en partageant des informations, en développant des fonctionnalités, ou en participant aux frais, chacun a joué un rôle crucial.
+
+Je pense notamment à Eddine Omar, dont la carte interactive a servi de base à notre projet, à Victor Connes et David Tocaven, qui ont bâti dès les premiers jours de la crise le site https://chidomayotte.info, et qui sont à la base de notre initiative, et à tous les développeurs qui ont travaillé sans relâche pour mettre en place les outils techniques. Je pense aussi à Johanne Bakalara, qui a apporté un éclairage précieux sur la situation locale, et à tous ceux qui ont contribué financièrement pour rendre ce projet possible.
+
+## **Conclusion**
+
+Yahavi est bien plus qu’un simple site web. C’est une initiative citoyenne, née de la volonté d’aider et de soutenir les Mahorais dans une période difficile. Bien que le projet soit encore en développement, il représente une lueur d’espoir et un exemple de ce que la collaboration et la solidarité peuvent accomplir.
+
+Je suis fier de ce que nous avons réalisé en si peu de temps, et j’espère que Yahavi continuera à évoluer pour devenir un outil indispensable pour les Mahorais. Merci à tous ceux qui ont contribué à ce projet, et merci à ceux qui continueront à le faire vivre.
+
+J'espère n'oublier personne, mais voici la liste des personnes ayant participé au projet:
+
+Sandra Ibrahim  
+Sophie Hombourger  
+Jonathan Legrand  
+Achille Gilig  
+Lucie Fontaine  
+Hugo Château-Laurent  
+Johanne Bakalara  
+Jimmy Leblanc  
+Victor Connes  
+David Tocaven  
+Eddine Omar  
+Yannis Bendi-Ouis  
+Adrien Grosjean  
+Julian Joaquim  
+Laïtissia Ahamada Combo  
+Naira Abdou Mohamed  
+Alexis  
+Armelle Bengochea  
+
+#### Yannis Bendi-Ouis  

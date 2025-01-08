@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Naowak',
   description: 'Site web personnel de Yannis Bendi-Ouis - alias Naowak - doctorant en intelligence artificielle à l\'Inria de l\'Université de Bordeaux',
+  icons: {
+    icon: '/icon.ico',
+  },
 }
 
 export default function RootLayout({ children }) {

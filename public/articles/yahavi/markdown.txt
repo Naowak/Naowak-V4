@@ -49,8 +49,6 @@ Je pense notamment à Eddine Omar, dont la carte interactive a servi de base à 
 
 ## **Conclusion**
 
-Yahavi est bien plus qu’un simple site web. C’est une initiative citoyenne, née de la volonté d’aider et de soutenir les Mahorais dans une période difficile. Bien que le projet soit encore en développement, il représente une lueur d’espoir et un exemple de ce que la collaboration et la solidarité peuvent accomplir.
-
 Je suis fier de ce que nous avons réalisé en si peu de temps, et j’espère que Yahavi continuera à évoluer pour devenir un outil indispensable pour les Mahorais. Merci à tous ceux qui ont contribué à ce projet, et merci à ceux qui continueront à le faire vivre.
 
 J'espère n'oublier personne, mais voici la liste des personnes ayant participé au projet:

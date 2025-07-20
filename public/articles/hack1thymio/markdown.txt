@@ -1,0 +1,63 @@
+# Hack1Thymio : quand des robots pilotés par LLM partent à la chasse au trésor
+
+Lors de notre participation à la 3ème édition de [Hack1Robo](https://sites.google.com/view/hack1robo), nous avions comme projet de faire collaborer des petits robots [Thymio](https://www.thymio.org/fr/) pilotés par des LLM pour qu'ils partent ensemble à la chasse au trésor ! Spoiler alert : le monde réel nous a donné une belle leçon d'humilité, mais l'aventure valait le détour.
+
+![](/articles/hack1thymio/hack1robo.png)
+
+## Le concept : des robots qui pensent et communiquent
+
+L'idée de départ était ambitieuse et, je dois l'avouer, assez excitante. Imaginez plusieurs petits robots [Thymio](https://www.thymio.org/fr/) évoluant sur une grille physique, chacun équipé de sa propre intelligence artificielle et capable de communiquer avec ses coéquipiers. Leur mission ? Partir à la recherche de trésors cachés dans l'environnement, mais pas n'importe lesquels : chaque robot avait son propre trésor à trouver !
+
+Le twist génial de ce projet, c'est que chaque [Thymio](https://www.thymio.org/fr/) était piloté par un LLM qui pouvait analyser les informations de son environnement immédiat (son champ de vision se limitait à une case) et échanger des informations avec les autres robots. L'objectif était d'observer comment ces intelligences artificielles allaient naturellement développer des stratégies de collaboration pour scanner efficacement la zone et se transmettre les découvertes importantes.
+
+## Des Ferrero Rocher comme Saint Graal
+
+Pour rendre l'expérience plus concrète et amusante, nous avions choisi des Ferrero Rocher comme trésors à découvrir ! Rien de tel que des chocolats dorés pour motiver nos petits robots explorateurs. L'idée était simple : chaque [Thymio](https://www.thymio.org/fr/) devait trouver son propre trésor, mais pouvait aider ses coéquipiers en leur signalant s'il tombait sur le leur.
+
+![Des robots [Thymio](https://www.thymio.org/fr/) se déplaçant sur une grille à la recherche de Ferrero Rocher, communiquant et prenant des décisions avec un LLM](/articles/hack1thymio/hack1thymio.gif)
+
+Le comportement que nous espérions observer était fascinant : des robots qui développent spontanément des protocoles de communication, qui se répartissent les zones d'exploration, qui mémorisent les découvertes de leurs coéquipiers et optimisent leurs déplacements en fonction des informations partagées. Une sorte d'intelligence collective émergente, en somme !
+
+## L'ambition des imposteurs
+
+Parce que la vie est rarement simple et que nous adorons les complications intéressantes, nous avions prévu d'introduire des imposteurs dans notre petite société robotique. Ces robots traîtres auraient eu pour mission de voler les trésors des autres et d'induire leurs "coéquipiers" en erreur par de fausses informations.
+
+L'idée était d'étudier comment les robots "honnêtes" auraient réagi face à ces comportements malveillants. Auraient-ils développé des mécanismes de détection de mensonges ? Des stratégies de vérification croisée des informations ? Comment l'intelligence collective aurait-elle évolué face à la tromperie ?
+
+## La réalité du hackathon : quand les robots nous rappellent à l'ordre
+
+Et là... la réalité du monde physique nous a rattrapés ! Les robots dans le monde réel, c'est une toute autre histoire que la simulation. Problèmes de calibrage, capteurs capricieux, connexions instables... Bref, nous avons passé une bonne partie de notre temps à jongler avec les caprices matériels plutôt qu'à peaufiner nos algorithmes d'intelligence collective.
+
+Les [Thymio](https://www.thymio.org/fr/), bien que adorables, se sont révélés être de petites bêtes assez têtues, et nous avons eu du mal à simplement les faire suivre une ligne. La gestion des communications entre robots était également un défi technique non négligeable dans l'environnement du hackathon, mais auquel nous avons réussi à répondre !
+
+Résultat : nous n'avons malheureusement pas eu le temps d'implémenter les imposteurs et tous les comportements collaboratifs sophistiqués que nous avions imaginés. Le temps file vite lors d'un hackathon, surtout quand on passe des heures à déboguer des problèmes hardware !
+
+![Un thymio](/articles/hack1thymio/thymio.png)
+
+## Mission accomplie : notre POC qui marche !
+
+Mais attention, tout n'est pas perdu ! Malgré les galères techniques, nous avons réussi à créer quelque chose de vraiment cool : notre proof of concept fonctionne ! Nous avons des robots [Thymio](https://www.thymio.org/fr/) pilotés par des LLM qui se déplacent sur une grille physique, analysent leur environnement, prennent des décisions et communiquent entre eux sur leurs découvertes.
+
+Voir ces petites machines évoluer, s'arrêter pour "réfléchir", puis reprendre leur exploration en fonction des informations reçues de leurs coéquipiers était absolument magique. Cela dit, on ne peut pas dire qu'ils développèrent des stratégies de collaboration très élaborées, mais le potentiel était là, et avec plus de temps, nous aurions pu vraiment pousser l'expérience plus loin.
+
+## Les leçons apprises
+
+Cette expérience m'a rappelé pourquoi j'adore les hackathons : ils nous confrontent brutalement à la réalité et nous obligent à prioriser l'essentiel. Nous avions des idées grandioses sur le papier, mais la contrainte temporelle et les défis techniques nous ont forcés à nous concentrer sur le cœur de notre concept : faire communiquer des IA embarquées sur des robots physiques.
+
+La leçon principale ? Les robots dans le monde réel peuvent être une vraie galère lors d'un hackathon ! Mais c'est aussi ce qui rend l'exercice si formateur. Passer de la théorie à la pratique, c'est toujours un choc, et c'est exactement ce type d'expérience qui forge de vrais développeurs et chercheurs.
+
+## Perspectives et suite du projet
+
+Même si nous n'avons pas pu implémenter toutes nos idées ambitieuses pendant le hackathon, le projet Hack1Thymio reste une base solide pour de futures explorations. L'idée des imposteurs et des comportements collaboratifs complexes mérite d'être creusée, peut-être dans un environnement plus contrôlé où nous aurions plus de temps pour peaufiner les aspects techniques.
+
+Le code source est [disponible sur GitHub](https://github.com/Achillegillig/hack1tymio) pour tous ceux qui voudraient reprendre le flambeau ou s'inspirer de notre approche. Qui sait ? Peut-être que la prochaine équipe réussira à créer cette société de robots collaboratifs et traîtres que nous avions imaginée !
+
+Même si nous n'avons pas atteint tous nos objectifs, voir des robots physiques pilotés par des LLM collaborer pour résoudre un problème concret était déjà une petite victoire en soi.
+
+Et puis, il faut bien l'avouer : regarder des petits robots se disputer des Ferrero Rocher en communiquant par IA interposée, c'était quand même assez irrésistible ! Parfois, les meilleurs projets sont ceux qui nous font sourire tout en nous apprenant quelque chose.
+
+---
+
+*Le projet Hack1Thymio a été réalisé en équipe lors de la 3ème édtion de [Hack1Robo](https://sites.google.com/view/hack1robo). Un grand merci à tous les participants et organisateurs qui ont rendu cette aventure possible ! Et notamment à Achille Gilig, Jonathan Legrand, David Trocellier, Sybille Lafont et 0MY pour leur travail acharné et leur créativité !*
+
+##### Yannis Bendi-Ouis

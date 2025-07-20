@@ -167,7 +167,6 @@ function Code (props) {
 }
 
 function Table (props) {
-  console.log('hello', props)
   return (
     <table className='w-full table'>
       {props.children}

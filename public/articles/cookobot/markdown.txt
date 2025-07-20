@@ -1,0 +1,61 @@
+# CookoBot : un projet ludique pour apprendre à maîtriser les LLM
+
+Apprendre à maîtriser un LLM peut être complexe… alors pourquoi ne pas le faire... en jouant ? Pas avec des exercices théoriques ennuyeux, mais avec un vrai petit jeu vidéo où l'on peut littéralement programmer l'intelligence de son robot ! C'est exactement ce que j'ai proposé à mes étudiants d'école d'ingénieurs, et le résultat a été au-delà de mes espérances. Laissez-moi vous raconter cette aventure pédagogique autour de **CookoBot** !
+
+## Le défi : créer un agent intelligent avant l'ère des "reasoning models"
+
+À l'époque (qui semble déjà lointaine !), nous n'avions pas encore les modèles de raisonnement avancés d'aujourd'hui. L'idée était donc d'apprendre aux étudiants à créer de toutes pièces un agent capable de comprendre des instructions en langage naturel, de raisonner sur son environnement, de prendre des décisions autonomes et d'exécuter des actions concrètes. Bref, créer une vraie intelligence artificielle opérationnelle !
+
+## CookoBot : un robot cuisinier pas comme les autres
+
+J'ai donc développé **CookoBot**, un petit jeu en Python où les étudiants contrôlent un robot évoluant sur une grille 15x15. Le principe est délicieusement simple : le robot peut se déplacer, ramasser des objets (fruits) et les déposer ailleurs, tout en possédant un inventaire limité à trois objets maximum. Mais voici le twist : **le robot est contrôlé entièrement par un LLM** !
+
+Les étudiants peuvent donner des instructions comme "Ramasse une poire", "Va chercher la pomme à droite" ou encore "Réarrannge tous les fruits en carré". Et c'est là que la magie opère : le LLM doit interpréter ces instructions, analyser l'état du jeu, raisonner sur la meilleure stratégie, puis générer les bonnes commandes techniques (*MOVE X,Y*, *PICK*, *DROP*).
+
+![Un aperçu du jeu CookoBot tel que les étudiants le reçoivent, puis du résultat attendu avec des instructions en langage naturel.](/articles/cookobot/cookobot.gif)
+
+## L'exercice : devenir des "prompt engineers" créatifs
+
+Ma volonté pédagogique était claire : faire comprendre aux étudiants que manipuler un LLM, ce n'est pas juste poser une question et attendre une réponse. C'est un véritable art qui demande de comprendre les limites du modèle, de savoir comment le LLM perçoit l'environnement et quelles informations lui donner pour qu'il prenne les bonnes décisions.
+
+Il fallait aussi qu'ils maîtrisent l'art du prompt engineering, c'est-à-dire structurer les instructions pour maximiser la compréhension et intégrer intelligemment le contexte du jeu dans le prompt. Apprendre à gérer les erreurs et l'incertitude était également crucial : que faire quand le robot fait n'importe quoi ? Comment déboguer un comportement inattendu ? Et bien sûr, il s'agissait d'apprendre à itérer et optimiser pour améliorer progressivement les performances de leur agent.
+
+L'exercice principal consistait à optimiser les prompts pour que l'agent LLM comprenne mieux les instructions et prenne des décisions plus judicieuses. Mais j'ai aussi encouragé les étudiants à modifier le code pour ajouter de nouvelles fonctionnalités.
+
+## Un mini-hackathon !
+
+J'ai eu la chance de pouvoir organiser un mini-hackathon autour de CookoBot. Les étudiants ont eu une journée entière en équipe pour modifier l'environnement et créer leurs propres agents, avec des objectifs très variés ! Voici quelques exemples de ce qu'ils ont réalisé :
+
+![Un robot qui va chercher de l'eau et qui arrose ses plantes jusqu'à maturité](/articles/cookobot/student1.gif)
+
+![Un robot qui récupère les objets et dessines des formes](/articles/cookobot/student2.gif)
+
+Certains ont transformé le robot cuisinier en robot fermier, d'autres ont créé un bot dessinateur, d'autres ont même tentés d'avoir plusieurs agents : berger, moutons, etc... La créativité était au rendez-vous !
+
+## Les apprentissages inattendus
+
+Ce qui m'a le plus marqué, c'est de voir mes étudiants découvrir par eux-mêmes les défis réels de l'IA. L'importance du contexte leur est apparue évidente : ils ont vite compris qu'un LLM sans contexte approprié, c'est comme un GPS sans carte ! La gestion des erreurs a également été un apprentissage fondamental. Leurs premiers agents faisaient souvent n'importe quoi, et apprendre à anticiper et gérer ces cas d'erreur a été crucial pour leur progression.
+
+L'itération créative a été particulièrement belle à observer. Voir leurs prompts évoluer, devenir de plus en plus sophistiqués, intégrer des stratégies de raisonnement... c'était vraiment gratifiant ! Mais peut-être le plus révélateur a été le passage de la théorie à la pratique. Passer de "un LLM, c'est un modèle de langage" à "comment je fais pour qu'il comprenne que la pomme est à sa droite ?" a été un moment charnière pour beaucoup d'entre eux.
+
+## Pourquoi ce projet me tient à cœur
+
+CookoBot représente pour moi une approche pédagogique que j'affectionne : **apprendre en faisant, en s'amusant, et en relevant de vrais défis techniques**. 
+
+Plutôt que d'expliquer théoriquement ce qu'est un agent LLM, j'ai préféré mettre mes étudiants dans la peau de développeurs d'IA. Ils ont touché du doigt les vraies difficultés : l'ambiguïté du langage naturel, l'importance de la représentation de l'état, la complexité du raisonnement spatial...
+
+Et le meilleur dans tout ça ? Ils se sont amusés ! Rien de tel qu'un petit robot qui fait des bêtises pour motiver à améliorer son code de prompt engineering.
+
+## Le projet aujourd'hui
+
+Le code source de CookoBot est [disponible sur GitHub](https://github.com/Naowak/CookoBot) sous licence libre. Si vous êtes enseignant, développeur curieux, ou simplement passionné d'IA, n'hésitez pas à le tester et à l'adapter à vos besoins !
+
+Le projet reste d'actualité : même si les modèles de raisonnement actuels sont plus sophistiqués, comprendre comment construire et optimiser les interactions avec un LLM reste une compétence fondamentale pour tout développeur qui veut travailler avec l'IA.
+
+Et qui sait ? Peut-être que votre version de CookoBot fera naître la prochaine génération d'agents intelligents !
+
+---
+
+*PS : Un grand merci à tous mes étudiants qui ont joué le jeu et ont créé des projets fantastiques. Vous m'avez donné envie de continuer à expérimenter dans l'enseignement !*
+
+##### Yannis Bendi-Ouis

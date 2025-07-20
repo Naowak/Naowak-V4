@@ -1,0 +1,37 @@
+# Le Kuiz : génération automatique par LLM de 10.000+ questions sourcées Wikipédia
+
+Un week-end, alors que je cherchais un jeu de quiz assez classique pour passer le temps, je fus outré de voir qu'une bonne partie d'entre eux se vendait près de 15 euros (voire plus) pour quelques milliers de questions. M'est alors venu l'idée de créer un générateur automatique de quiz éducatif, qui puisse non seulement fournir des questions de qualité, mais aussi s'appuyer sur l'immense base de données de [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal) pour offrir une expérience ludique et enrichissante. Ainsi est né [**Le Kuiz**](https://kuiz.naowak.fr), un projet qui combine web scraping, intelligence artificielle et pédagogie ludique.
+
+## L'idée : transformer Wikipédia en terrain de jeu éducatif
+
+L'inspiration est venue d'un constat simple : [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal) contient une mine d'or de connaissances (plus de 2,66 millions d'articles et environ 1800 portails thématiques !), mais cette richesse reste souvent sous-exploitée dans un contexte ludique et éducatif. Pourquoi ne pas transformer cette encyclopédie collaborative en source inépuisable de questions de culture générale ?
+
+L'objectif était ambitieux : créer un système capable de scraper automatiquement des articles [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal), d'en extraire les informations pertinentes, et de générer des questions à choix multiples de qualité professionnelle, avec différents niveaux de difficulté. Le tout, bien sûr, en gardant une interface simple et addictive !
+
+## Le défi technique : faire collaborer scraping et IA générative
+
+Le cœur du projet repose sur une architecture fascinante qui combine web scraping et génération de contenu par IA. Le processus consiste à extraire automatique du contenu de milliers articles [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal) ciblés selon différentes thématiques, puis de générer pour chaque articles extrait une dizaine de questions de culture générale. Pour cela, j'ai utilisé [**Deepseek**](https://www.deepseek.com), un modèle d'IA particulièrement impressionnant avec ses 671 milliards de paramètres totaux et 37 milliards de paramètres actifs grâce à son architecture MoE (Mixture of Experts). Entraîné sur 14,8 trillions de tokens, ce modèle a la capacité de comprendre et de synthétiser l'information de manière remarquablement intelligente.
+
+![Processus de génération de questions](/articles/kuiz/process.png)
+
+## L'art du prompt engineering pour des questions parfaites
+
+Créer de bonnes questions de quiz, c'est tout un art ! J'ai passé énormément de temps à peaufiner le prompt qui guide l'IA dans la création des questions. Le défi était multiple : il fallait que l'IA ignore les informations parasites typiques de [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal) (liens vers d'autres articles, références, structure de navigation), qu'elle évite les pièges comme inclure la réponse dans la question elle-même, et qu'elle crée des propositions de réponse crédibles mais fausses.
+
+Par exemple, si la bonne réponse est un nombre rond comme 1500, les propositions incorrectes doivent aussi être des nombres ronds (1200, 1800, 2000). Si c'est un nombre précis comme 1847, les alternatives doivent suivre la même logique (1843, 1851, 1852). Ces détails peuvent sembler anodins, mais ils font toute la différence entre des questions amateur et des questions dignes d'un vrai jeu télévisé !
+
+## Une interface qui donne envie de jouer
+
+![L'interface du Kuiz avec ses catégories colorées et son design épuré](/articles/kuiz/preview.png)
+
+L'interface de [kuiz.naowak.fr](https://kuiz.naowak.fr) a été conçue pour être à la fois moderne et familière. Six catégories thématiques colorées (Histoire, Sciences, Art & Culture, et autres) permettent de choisir son domaine de prédilection. L'affichage des questions avec leurs quatre propositions rappelle délibérément l'univers des grands jeux télévisés, avec un compteur qui suit vos bonnes et mauvaises réponses.
+
+
+## Testez par vous-même !
+
+La meilleure façon de comprendre Le Kuiz, c'est encore de l'essayer ! Rendez-vous sur [kuiz.naowak.fr](https://kuiz.naowak.fr) et lancez-vous dans une partie. Choisissez votre catégorie préférée, testez votre culture générale, et observez comment l'IA a su transformer les articles [Wikipédia](https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal) en défis ludiques.  
+
+L'ensemble du projet est open source et disponible ici : [dépôt github Le Kuiz](https://github.com/Naowak/Kuiz).
+
+
+##### Yannis Bendi-Ouis

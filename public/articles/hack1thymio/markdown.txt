@@ -58,6 +58,6 @@ Et puis, il faut bien l'avouer : regarder des petits robots se disputer des Ferr
 
 ---
 
-*Le projet Hack1Thymio a été réalisé en équipe lors de la 3ème édtion de [Hack1Robo](https://sites.google.com/view/hack1robo). Un grand merci à tous les participants et organisateurs qui ont rendu cette aventure possible ! Et notamment à Achille Gilig, Jonathan Legrand, David Trocellier, Sybille Lafont et 0MY pour leur travail acharné et leur créativité !*
+*Le projet Hack1Thymio a été réalisé en équipe lors de la 3ème édtion de [Hack1Robo](https://sites.google.com/view/hack1robo). Un grand merci à tous les participants et organisateurs qui ont rendu cette aventure possible ! Et notamment à Achille Gilig, Jonathan Legrand, David Trocellier, Sybille Lafont et Olivier Marty pour leur travail acharné et leur créativité !*
 
 ##### Yannis Bendi-Ouis

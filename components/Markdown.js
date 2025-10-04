@@ -152,16 +152,14 @@ function Quote (props) {
 function Code (props) {
   if (props.inline) {
     return (
-      <span className='bg-gray-100 font-code rounded break-all p-1 rounded'>
+      <code className='bg-gray-100 px-1 rounded'>
         {props.children}
-      </span>
+      </code>
     )
   }
   return (
-    <div className='bg-gray-100 font-code overflow-x-scroll p-4 pb-0 rounded text-start'>
-      {props.children[0].split('\n').map((line, i) => (
-        <span key={i} className='break-all'>{line}<br/></span>
-      ))}
+    <div className='bg-gray-100 font-code overflow-x-scroll p-4 rounded text-start'>
+      {props.children}
     </div>
   )
 }

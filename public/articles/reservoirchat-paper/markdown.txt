@@ -1,0 +1,279 @@
+# ReservoirChat : Documentation interactive enrichie par LLM et graphe de connaissances pour ReservoirPy
+
+[Article scientifique original disponible sur Arxiv](https://arxiv.org/abs/2507.05279)
+
+Nous introduisons un outil conçu pour améliorer les capacités des Large Language Models (LLMs) dans l'assistance au développement de code avec la bibliothèque ReservoirPy, ainsi que pour répondre à des questions complexes dans le domaine du Reservoir Computing. En intégrant des connaissances externes via la Retrieval-Augmented Generation (RAG) et des graphes de connaissances, notre approche vise à réduire les hallucinations et à augmenter la précision factuelle des réponses générées. Le système offre une expérience interactive similaire à ChatGPT, spécialement conçue pour ReservoirPy, permettant aux utilisateurs d'écrire, déboguer et comprendre du code Python tout en accédant à des informations fiables spécifiques au domaine. Dans notre évaluation, bien que des modèles propriétaires tels que ChatGPT-4o et NotebookLM aient obtenu de légèrement meilleurs résultats sur les questions de connaissances générales, notre modèle les a surpassés sur les tâches de codage et a montré une amélioration significative par rapport à son modèle de base, Codestral-22B.
+
+**Mots-clés :** Large Language Model, Graphe de connaissances, Retrieval Augmented Generation, Reservoir Computing, Génération de code, Question-Réponse, LLM, RAG, QA
+
+---
+
+## 1. Introduction
+
+Les Large Language Models (LLMs) sont des modèles basés sur des transformers conçus pour générer du texte, avec lesquels les utilisateurs interagissent en langage naturel. Ces modèles sont pré-entraînés sur une grande quantité de données couvrant une variété de domaines et de styles linguistiques. Les données d'entraînement proviennent généralement de pages web, d'articles de journaux, de livres, de documentation ou de littérature.
+
+Llama3 a été entraîné sur 15 trillions (1,5 × 10¹³) de tokens. Cependant, l'entraînement sur de si vastes ensembles de données nécessite des ressources computationnelles importantes, soulevant des préoccupations concernant le temps, le coût et la consommation d'énergie.
+
+Entraîner ces modèles sur de larges datasets de code leur permet d'assister les utilisateurs et développeurs, montrant un fort potentiel pour la génération de code. Un exemple notable est *GitHub Copilot*, un assistant conçu pour fournir des suggestions, des corrections d'erreurs et des autocompletions de code. Il est alimenté par le modèle Codex d'OpenAI, un modèle de programmation général. Copilot analyse le contexte dans lequel le code est écrit et génère des suggestions contextuellement pertinentes en temps réel, accélérant potentiellement le processus de codage.
+
+Cependant, un problème majeur avec les LLMs est lorsque le modèle génère des informations incorrectes ou non fondées. Ce phénomène est appelé hallucination. C'est un problème particulièrement préoccupant dans les domaines spécialisés ou sous-représentés dans le dataset d'entraînement, comme le Reservoir Computing. Ainsi, même si ChatGPT-4o sait ce qu'est un reservoir, il pourrait d'abord le confondre avec un réservoir d'eau. Même lorsque clarifié dans le contexte du machine learning, il ne donnera pas toujours une réponse précise et pourrait fournir des réponses qui semblent plausibles mais sont en réalité incorrectes.
+
+Les modèles de Reservoir Computing ne sont pas mainstream, malgré leurs performances dans différentes tâches, particulièrement celles impliquant de petits datasets séquentiels ou des corpus difficiles avec des interactions de variables non linéaires complexes comme les prédictions d'hospitalisation COVID. Cette sous-représentation peut rendre difficile pour les utilisateurs, en particulier ceux nouveaux dans le domaine, d'apprécier pleinement et d'exploiter le potentiel du Reservoir Computing, et en fait de paramétrer efficacement les modèles de reservoir.
+
+*ReservoirPy* est une bibliothèque Python qui permet aux utilisateurs de créer et manipuler facilement des modèles de Reservoir Computing. Mais les utilisateurs de ReservoirPy peuvent faire face à des défis lorsqu'ils essaient de configurer des modèles de reservoir pour comprendre les intuitions sous-jacentes et paramétrer correctement les modèles. De plus, lire la documentation complète peut être chronophage, en particulier pour les nouveaux utilisateurs. Un assistant interactif peut offrir une alternative plus intuitive et accessible à la documentation statique, aidant les utilisateurs à localiser efficacement des fonctionnalités spécifiques sans se perdre dans l'API.
+
+Plus généralement, le Reservoir Computing nécessite une certaine expertise pour configurer correctement un modèle. Par exemple, le tuning des hyperparamètres peut être un défi pour certaines tâches, et ReservoirPy propose des tutoriels sur les hyperparamètres.
+
+Dans ce qui suit, nous proposons diverses versions d'un LLM amélioré avec du code et des documents. Ensuite, nous comparons ses performances avec son modèle de base et d'autres modèles mainstream. Enfin, nous discutons des forces et des limites de cette approche.
+
+---
+
+## 2. Méthodes
+
+### 2.1 Embeddings et chatbot simple
+
+Le développement de ReservoirChat a commencé avec un chatbot simple conçu pour répondre à 245 questions prédéfinies (voir le dépôt GitHub), avec leurs réponses correspondantes. L'objectif était de déterminer si une application simple, sans l'implication d'un générateur de texte (décodeur LLM), pouvait être suffisante. L'ensemble de la base de données a été converti en vecteurs en utilisant des embeddings de texte, dans notre cas selon le modèle *nomic-embed-text-v1.5* de Nomic-AI avec *LM Studio*. Chaque question soumise par l'utilisateur était vectorisée et comparée avec la base de données via un processus de similarité cosinus, afin d'établir des corrélations entre les questions et la base de données. En fonction de la correspondance la plus proche, une réponse était sélectionnée et délivrée à l'utilisateur. Cette approche de base devient plus efficace à mesure que la base de données grandit.
+
+Lorsqu'un utilisateur soumettait une requête, le chatbot récupérait les cinq embeddings les plus similaires en fonction de la similarité cosinus entre l'embedding de la requête et la base de données de questions préparées.
+
+Les limites du système sont devenues apparentes lorsque les utilisateurs posaient des questions qui n'étaient pas explicitement couvertes dans la base de données. Ce problème était exacerbé lors du traitement de questions liées au codage, où même une légère variation dans le code ou la formulation de la question pouvait entraîner l'échec du chatbot à trouver une correspondance appropriée. Cela a révélé le besoin d'un système plus sophistiqué capable de gérer une gamme plus large de requêtes, y compris celles nécessitant une compréhension contextuelle plus profonde ou des défis de raisonnement plus complexes. Ce modèle préliminaire a servi de baseline, limité à des questions simples et prévisibles.
+
+### 2.2 Retrieval-Augmented Generation et ReservoirRAG
+
+Une approche plus élaborée consiste à enrichir un LLM avec une base de données. Comme indiqué précédemment, l'hallucination se produit lorsque les LLMs génèrent des réponses incorrectes, mais parfois plausibles, en raison d'un manque de base factuelle. La Retrieval-Augmented Generation (RAG) peut atténuer ce problème sans nécessiter d'entraînement supplémentaire du modèle en récupérant dynamiquement des informations pertinentes depuis des sources de documentation externes avant de générer une réponse, à condition que les données récupérées aient été correctement validées. Cependant, si des sources incorrectes sont introduites, la RAG propagera ces erreurs, rendant ainsi essentielle une conservation minutieuse de la base de connaissances. En supposant que la base de données reste à jour, la RAG peut être facilement ajustée avec de nouvelles informations à un coût computationnel significativement inférieur comparé au réentraînement d'un modèle entier. Puisque la RAG influence la précision et la fiabilité des réponses, la sélection d'un LLM approprié reste une décision critique, car certains modèles offrent des capacités multilingues supérieures tandis que d'autres excellent dans l'assistance au codage.
+
+La RAG nécessite que la base de données soit préparée et découpée en chunks. Ces chunks de texte fournissent une base pour générer des réponses, traités comme des embeddings de texte, et corrélés selon le modèle précédent. La taille des chunks est définie par l'utilisateur en fonction du contexte et des paramètres. Il est possible, par exemple, de choisir des segments de 10 lignes, des paragraphes entiers, ou même des portions complètes de code. De plus, il est parfois approprié de superposer les chunks pour maintenir la cohérence contextuelle.
+
+Ainsi, le chatbot a évolué en ReservoirRAG, lorsque nous avons décidé de connecter Codestral-22B à une RAG. Codestral est un modèle multilingue développé par Mistral, connu pour sa gestion efficace des requêtes de codage. Les données de base consistent en documents, incluant la documentation ReservoirPy, des articles pertinents sur le Reservoir Computing, et des échantillons de code. Après traitement, des embeddings sont générés à partir de ces documents et stockés dans un fichier CSV avec leur contenu. Ces embeddings précalculés sont ensuite chargés en utilisant la bibliothèque *pandas* et organisés dans un DataFrame. Certains documents supplémentaires ont été traités de la même manière, mais réservés comme données externes pour la RAG.
+
+À nouveau, la pertinence des embeddings était basée sur le même test qu'auparavant, avec un seuil de corrélation de 0,75. Cette implémentation garantit que seules les données les plus pertinentes sont considérées, améliorant la précision des réponses. Une fois les documents pertinents identifiés, ils sont incorporés dans le processus de génération de réponse du LLM comme partie de l'information contextuelle, aux côtés de l'historique de conversation, permettant au modèle de conserver la mémoire des requêtes et réponses précédentes. Pour les requêtes liées au codage, le document personnalisé supplémentaire codes.md est ajouté à la base de données, contenant divers snippets de code et échantillons du GitHub ReservoirPy. Cette fonctionnalité est particulièrement importante pour les requêtes liées au codage, car même des erreurs mineures dans le code généré pourraient conduire à des réponses incorrectes.
+
+### 2.3 Graphe de connaissances, GraphRAG et ReservoirChat
+
+Un graphe de connaissances (Figure 1) est une représentation structurée d'un dataset qui organise l'information en entités et leurs relations, représentées respectivement comme des nœuds et des arêtes. Les graphes de connaissances permettent aux LLMs d'associer différents concepts de manière plus qualitative, améliorant la précision contextuelle et sémantique des réponses. Contrairement à la simple implémentation de RAG, cette méthode nécessite le prétraitement des documents lors de la création initiale d'un graphe, ce qui peut devenir intensif en temps et en ressources pour un résultat complet et approfondi. Elle reste néanmoins plus légère que le réentraînement du modèle entier.
+
+La méthode GraphRAG, développée par Microsoft, se distingue par sa capacité à gérer un volume de données large et complexe, sous forme de corpus, tels que des articles scientifiques. Là où la RAG traditionnelle brille lorsqu'il s'agit de questions spécifiques, GraphRAG est plus polyvalent, et efficace pour répondre à la fois aux questions spécifiques et aux requêtes plus larges sur le thème général d'un corpus.
+
+Selon la méthodologie (Figure 3) décrite par GraphRAG, le graphe de connaissances est construit à partir d'une base de données de documents, qui sont découpés en chunks comme détaillé précédemment. En utilisant des prompts guidés par LLM, le système identifie les entités nommées et les relations entre elles. Cela est répété en plusieurs tours pour garantir que toutes les entités pertinentes sont capturées. Chaque élément individuel est résumé selon un processus de résumé adapté au domaine. Ensuite, le système construit un graphe non orienté dans lequel chaque nœud représente une entité, et chaque arête capture la relation entre deux entités. Les arêtes sont pondérées en fonction de la fréquence et de la force des relations. Des algorithmes comme Leiden sont utilisés pour partitionner le graphe nouvellement créé, détectant des clusters de nœuds étroitement liés au sein du graphe. Ces clusters, également connus sous le nom de communautés, reflètent des sujets ou thèmes hautement interconnectés (Figure 2). Un résumé est ensuite généré pour chaque communauté, aidant à créer des réponses partielles aux requêtes utilisateur en s'appuyant sur plusieurs entités liées. Ces réponses partielles ou locales peuvent être pertinentes seules, ou résumées davantage en une réponse dite globale. Dans le cas de ReservoirChat et de sa version finale, il était plus approprié d'utiliser principalement des réponses locales, car elles fournissent des informations plus ciblées et détaillées qu'une réponse globale. Bien que plus complètes, les réponses globales tendent à être moins précises, ce qui est intuitivement moins désirable pour les objectifs scientifiques et éducatifs de ReservoirChat.
+
+Plusieurs versions de ReservoirChat ont été créées avec des contenus et des tailles de base de données variables (Figure 4). La version Basic inclut des issues résolues liées à ReservoirPy, sa documentation complète et son code, ainsi que des échantillons de code, résultant en un corpus de 70 documents. La version Little inclut 10 articles de recherche supplémentaires sur le Reservoir Computing. Medium a 10 documents de recherche supplémentaires ajoutés à sa base de données, incluant une thèse de doctorat. Enfin, Big inclut toutes les ressources précédentes avec 10 articles scientifiques supplémentaires, et une compilation de 245 questions et réponses préparées, incluant 55 questions liées au code, et 195 sur divers concepts liés au Reservoir Computing et ReservoirPy. La version Big est celle actuellement disponible sur le site web.
+
+Cependant, GraphRAG a aussi ses limites. La construction du graphe de connaissances permanent nécessite l'extraction précise d'entités et de relations depuis les documents sources. Cela nécessite un prétraitement de données supplémentaire pour garantir la qualité du graphe. Il doit également être régulièrement mis à jour avec de nouvelles informations pour rester pertinent, ce qui peut être computationnellement coûteux.
+
+![Figure 1 : Exemple simple d'un graphe de connaissances. Chaque nœud représente une entité, et chaque arête représente une relation entre deux entités.](/articles/reservoirchat-paper/fig1.png)
+
+![Figure 2 : Exemple simple de partitionnement d'un graphe de connaissances en communautés. Chaque couleur représente une communauté différente.](/articles/reservoirchat-paper/fig2.png)
+
+![Figure 3 : Schéma de la méthodologie GraphRAG.](/articles/reservoirchat-paper/fig3.png)
+
+![Figure 4 : Différentes versions de ReservoirChat avec des tailles de base de données variables.](/articles/reservoirchat-paper/fig4.png)
+
+
+### 2.4 Implémentation du modèle et de l'interface web
+
+L'interface utilisateur (Figure 5) est accessible à l'adresse https://chat.reservoirpy.inria.fr/. De plus, le code et la plupart des documents pour créer les différentes versions des modèles ReservoirChat peuvent être trouvés dans le dépôt GitHub suivant : https://github.com/Naowak/ReservoirChat/. Certains documents librement accessibles ailleurs (comme le contenu de publications scientifiques) n'ont pas été inclus. Une annexe avec les questions de benchmark est également disponible à la même URL.
+
+![Figure 5 : Interface utilisateur de ReservoirChat.](/articles/reservoirchat-paper/fig5.png)
+
+### 2.5 Méthode d'évaluation
+
+La qualité des réponses en langage naturel est complexe à évaluer, d'où la nécessité de considérer une approche systématique. L'évaluation humaine n'est pas préférée, car elle serait à la fois très chronophage et nécessiterait une expertise, ce qui est coûteux, en plus d'être vulnérable à la subjectivité et aux biais cognitifs. L'évaluation basée sur LLM a également été exclue, car il n'existe actuellement aucun LLM spécifiquement entraîné sur ReservoirPy et le Reservoir Computing, conduisant donc à une potentielle imprécision et manque de fiabilité.
+
+Le benchmarking a été la méthode choisie, étant la plus objective. Un ensemble de questions, rédigées par un expert en Reservoir Computing, ont été données au LLM. Le modèle devait sélectionner la réponse correcte parmi 4 suggestions.
+
+Dans l'expérience suivante, nous avons comparé chaque modèle de ReservoirChat que nous avons créé avec ChatGPT-4o, Llama3, Codestral et NotebookLM (basé sur Gemini 1.5). Seuls ReservoirChat et NotebookLM ont été nourris avec des documents sur le Reservoir Computing et ReservoirPy. ChatGPT-4o, Llama3 et Codestral se sont appuyés uniquement sur leurs propres connaissances et méthodes d'entraînement pour répondre. Nous avons essayé différents ensembles de documents pour NotebookLM. NotebookLM<sub>Core</sub> inclut les mêmes documents que ReservoirChat<sub>Basic</sub> sauf la documentation. NotebookLM<sub>Other</sub> inclut chaque document non inclus dans la version core, ceci a été ajouté pour tester l'influence du modèle core comparé à l'autre modèle. Le NotebookLM<sub>Big</sub> représente tous les documents comme ReservoirChat<sub>Big</sub>. Pour chaque modèle, une température de 0,1 a été utilisée pour minimiser les effets stochastiques, car des tests préliminaires ont montré que c'était un bon compromis et proche d'une température de 0 qui est souvent préférée. Cependant, ChatGPT-4o n'offre pas la possibilité de changer la température, ni NotebookLM.
+
+Le benchmark consistait en 20 questions basées sur les connaissances et 14 questions liées au codage, incluant 8 tâches de débogage. Pour minimiser les biais, chaque question a été posée indépendamment, sans contexte préalable. Un prompt standardisé conçu pour réduire toute disparité a été fourni pour garantir une comparaison équitable entre tous les modèles :
+
+> "Vous recevrez une question avec quatre options de réponse étiquetées A, B, C et D. Veuillez répondre en utilisant la bibliothèque ReservoirPy avec seulement la lettre (A, B, C ou D) qui est la réponse correcte."
+
+Chaque question a été posée 3 fois, donc un score de 0, 0,33, 0,66 ou 1 indique respectivement que le modèle a donné la réponse correcte zéro fois, une fois, deux fois ou trois fois sur trois tentatives. Le score total d'un modèle est l'addition du score individuel pour chaque question, respectivement sur une échelle de 0 à 20 pour le premier benchmark, puis de 0 à 14 pour le second, avec 0 indiquant la performance la plus basse possible.
+
+---
+
+## 3. Résultats
+
+### 3.1 Récapitulation brève
+
+Dans cette section, nous visons à comparer ReservoirChat, qui est basé sur l'architecture Codestral, à divers modèles classiques tels que LLaMA3 et GPT-4o, ainsi qu'à d'autres modèles capables d'apprendre depuis des bases de données externes, comme NotebookLM. Spécifiquement, les résultats se concentrent sur l'évaluation de deux aspects importants : les questions basées sur les connaissances liées aux concepts de Reservoir Computing et les tâches de codage/débogage impliquant la bibliothèque ReservoirPy. Nous examinons également comment l'incorporation de ressources externes, telles que des articles scientifiques et de la documentation, impacte la performance de plusieurs modèles. L'évaluation utilise un benchmark sur mesure développé pour évaluer la précision et la cohérence des réponses dans le contexte du Reservoir Computing (voir Méthodes).
+
+### 3.2 Analyse des performances basées sur les connaissances
+
+Concernant les questions de connaissances (Figure 6), Llama3 et Codestral ont des scores comparables de 12,66 et 11, respectivement. Tous les modèles ReservoirChat produisent des scores plus élevés que le Codestral par défaut, augmentant avec chaque ajout de documents d'un score de 15 pour le modèle Basic, jusqu'à un score de 18,66 avec le ReservoirChat<sub>Big</sub>. La performance s'améliore proportionnellement avec le nombre de documents ajoutés à la base de données de ReservoirChat. Des améliorations supplémentaires pourraient être obtenues en ajoutant plus de documents et en affinant le modèle. De plus, ChatGPT-4o et toutes les versions de NotebookLM obtiennent un score de 20. Ce score parfait met en évidence une capacité supérieure à répondre aux questions basées sur les connaissances par rapport à d'autres modèles.
+
+![Figure 6 : Scores des modèles sur les questions basées sur les connaissances.](/articles/reservoirchat-paper/fig6.png)
+
+### 3.3 Analyse des performances de code et débogage
+
+D'autre part, les questions de code et débogage (Figure 7) ont une performance globale beaucoup plus faible pour tous les modèles, aucun n'ayant ou n'approchant un score parfait. ChatGPT-4o a obtenu un score modéré de 7. NotebookLM varie de 7,66 à 8,66. Il est intéressant de noter que la version Core, entraînée sur des issues résolues, a un score pire que la version Other qui inclut la documentation ReservoirPy et des articles scientifiques sur les reservoirs et la bibliothèque. La différence, légèrement en faveur de NotebookLM<sub>Other</sub>, égale à 8,33 - 7,66 = 0,67, soit 4,8%, pourrait indiquer qu'un LLM entraîné sur une documentation de langage complète est plus fiable dans l'assistance au codage qu'un entraîné uniquement sur des issues résolues. NotebookLM<sub>Big</sub> produit un score similaire de 8,66.
+
+Ces résultats peuvent être biaisés, car dans des scénarios réels, les développeurs font souvent face à de nouveaux problèmes non couverts par les cas résolus existants, réduisant potentiellement la performance de NotebookLM<sub>Core</sub>.
+
+Llama3 produit de meilleurs résultats que Codestral, avec un score de 6 contre 5. Étant donné que Codestral est connu pour sa fiabilité dans l'assistance au codage, ce résultat est surprenant, et suggère que comme ReservoirPy est une bibliothèque récente, le modèle peut ne pas avoir été entraîné sur beaucoup de données en dehors de la documentation elle-même. La fiabilité habituelle de Codestral doit alors être fondée sur l'entraînement avec des datasets plus larges ou différents types de datasets. Cette divergence peut également être due à la façon dont les questions ont été posées, ou au fait que le corpus d'entraînement de Codestral peut se concentrer moins sur l'anglais et plus sur d'autres langues.
+
+Les modèles ReservoirChat surpassent également Codestral, obtenant un score de 9,66 pour les modèles Basic et Little, 7 pour Medium, et 8,66 pour Big. Ces résultats peuvent être indicatifs de l'influence d'autres documents non liés au code sur le graphe de connaissances. Plus la base de données est grande, plus les connexions entre entités sont complexes et nombreuses, affectant potentiellement certaines réponses. De plus, Medium ayant le score le plus bas pour les questions de codage, parmi toutes les versions de ReservoirChat testées, pourrait indiquer qu'il y a une limite jusqu'à laquelle plus de données confondent le modèle mais il n'y a pas encore assez de données pour ajuster sa propre performance.
+
+Enfin, il est intéressant de noter que lorsqu'on lui demande trois fois, ChatGPT-4o a fourni des réponses différentes à 50% des questions de codage, suggérant qu'il a une température élevée. En comparaison, lorsqu'on lui demande trois fois, ReservoirChat<sub>Big</sub> a fourni des réponses différentes à seulement 21,4% des questions de codage. De plus, les questions ont été organisées en catégories et niveaux de difficulté, mais aucune différence évidente n'a été observée.
+
+ReservoirChat<sub>Big</sub> est légèrement surpassé (Tableau 1 et 2) par ChatGPT 4o et NotebookLM<sub>Big</sub> dans le cas des questions de connaissances, avec un score inférieur de 6,70% dans les deux cas. Cependant, son score de codage reste comparable à NotebookLM<sub>Big</sub>, sans différence, et est meilleur de 23,71% en faveur de ReservoirChat<sub>Big</sub> dans le cas de ChatGPT 4o. Dans d'autres cas, ReservoirChat<sub>Big</sub> surpasse significativement d'autres modèles majeurs, atteignant jusqu'à une augmentation de 43,54% dans les scores de connaissances et une amélioration de 73,20% en codage comparé à Codestral. Ces résultats montrent que même si ReservoirChat n'atteint pas un score parfait, il améliore clairement Codestral lors de la réponse à des questions spécifiques aux Reservoirs. Ces différences de performance ont été calculées comme des taux de pourcentage basés sur le score total de chaque modèle comparé à chaque modèle ReservoirChat.
+
+![Figure 7 : Scores des modèles sur les questions de codage et débogage.](/articles/reservoirchat-paper/fig7.png)
+
+![Tableau 1 : Résumé des scores des modèles sur les questions de connaissances.](/articles/reservoirchat-paper/tab1.png)
+
+![Tableau 2 : Résumé des scores des modèles sur les questions de codage et débogage.](/articles/reservoirchat-paper/tab2.png)
+
+### 3.4 Analyse de corrélation entre les modèles
+
+Pour chaque modèle, nous avons respectivement concaténé les 3 réponses qu'ils ont données pour les questions liées aux connaissances et au code en deux vecteurs, et nous avons calculé la corrélation de Pearson entre tous. Nous pouvons voir ces résultats dans les Figures 8 et 9 qui montrent respectivement les matrices de corrélation liées aux connaissances et au code. Vous pouvez trouver la matrice de corrélation sur l'ensemble des questions dans l'Annexe (disponible sur notre dépôt).
+
+Comme on peut s'y attendre, les modèles qui performent bien sont corrélés ensemble, car il n'y a qu'une seule bonne réponse par question. Donc, pour la partie connaissances où beaucoup de modèles ont obtenu de bons résultats, il n'est pas surprenant de voir que beaucoup de modèles sont bien corrélés ensemble, comme on peut le voir avec GPT-4o, et toutes les versions de NotebookLM qui ont un score de corrélation de 1, car ils ont tous répondu parfaitement à toutes les questions de connaissances. À l'inverse, moins un modèle performe, moins il sera corrélé avec les autres, comme on peut le voir avec Codestral. Une exception est Llama3, qui ne performe pas bien sur les questions liées aux connaissances, mais est un peu corrélé avec d'autres modèles performants.
+
+D'autre part, lorsque nous regardons la matrice de corrélation liée au code, nous pouvons observer deux groupes majeurs de modèles : ceux liés à NotebookLM et ceux liés à ReservoirChat. Dans les deux groupes, les modèles sont bien corrélés ensemble, ce qui est attendu, car ils dérivent respectivement de la même base. Nous pouvons également observer cela avec Codestral qui est un peu corrélé à ReservoirChat mais pas du tout aux autres modèles. En fait, Codestral apparaît un peu isolé, avec des scores de corrélation proches de 0 avec chaque modèle sauf ReservoirChat et Llama3. Cela pourrait être dû au fait que Codestral est le seul modèle spécifiquement entraîné pour les tâches de codage. Comme résultat inattendu, nous observons également une corrélation entre Llama3 et NotebookLM Other qui pourrait être due aux documents avec lesquels ils ont été nourris, et la corrélation quasi-nulle entre ReservoirChat<sub>Medium</sub> et Codestral.
+
+![Figure 8 : Matrice de corrélation entre les modèles sur les questions basées sur les connaissances.](/articles/reservoirchat-paper/fig8.png)
+
+![Figure 9 : Matrice de corrélation entre les modèles sur les questions de codage et débogage.](/articles/reservoirchat-paper/fig9.png)
+
+### 3.5 Résumé des résultats et directions futures
+
+Ces résultats sont encourageants pour les méthodes basées sur RAG et graphes de connaissances. Malgré les limites du modèle de base, notre approche améliore ses performances dans les tâches spécifiques au domaine, particulièrement en Reservoir Computing.
+
+---
+
+## 4. Collection de données utilisateurs avec ReservoirChat Big
+
+Sur trois mois, 130 utilisateurs ont interagi avec ReservoirChat<sub>Big</sub>. Certaines questions étaient directement liées à la bibliothèque ReservoirPy, tandis que d'autres nécessitaient des connaissances en codage plus larges au-delà de la base de données préchargée, s'appuyant sur le modèle de base Codestral.
+
+En moyenne, les gens ont posé entre deux et cinq questions, indiquant que bien que l'outil suscite la curiosité, il n'est pas encore pleinement utilisé comme assistant.
+
+Nous avons analysé les données collectées pour obtenir de l'inspiration sur quelles Q&R nous pourrions mettre dans le benchmark. Dans la section suivante, nous présentons une sélection de deux questions représentatives d'utilisateurs et les réponses correspondantes données par ReservoirChat<sub>Big</sub> entre août et novembre.
+
+### 4.1 Exemple de question de connaissances
+
+**Utilisateur :**  
+Comment une matrice aléatoire peut-elle produire de tels résultats ? Pourquoi cela fonctionne-t-il ? Comment peut-elle stocker une telle quantité d'informations ?
+
+**ReservoirChat :**  
+Une matrice aléatoire peut produire de tels résultats car c'est une matrice générée en utilisant des valeurs aléatoires. Ce caractère aléatoire peut conduire à la création de patterns et structures complexes qui peuvent capturer et stocker une quantité significative d'informations.
+
+La capacité d'une matrice aléatoire à stocker des informations est le résultat de sa dimensionnalité et de la distribution de ses valeurs. Une matrice aléatoire de haute dimension peut potentiellement avoir un grand nombre de configurations uniques, qui peuvent être utilisées pour représenter une large gamme de données. La distribution des valeurs dans la matrice joue également un rôle, car certaines distributions peuvent conduire à un empaquetage plus efficace de l'information.
+
+Cependant, il est important de noter que l'efficacité d'une matrice aléatoire dans le stockage d'informations peut varier en fonction des caractéristiques spécifiques des données et de la tâche en question. Bien que les matrices aléatoires puissent être des outils puissants, elles ne sont pas toujours le meilleur choix pour chaque situation.
+
+### 4.2 Exemple de question de code
+
+**Utilisateur :**  
+Code-moi l'initialisation d'un reservoir
+
+**ReservoirChat :**  
+Bien sûr, je peux vous aider avec cela.
+
+```
+from reservoirpy.nodes import Reservoir, Ridge
+
+# Définir la taille du reservoir et la dimension d'entrée
+reservoir_size = 100
+input_dimension = 1
+
+# Initialiser le reservoir avec des poids aléatoires
+reservoir = Reservoir(reservoir_size, input_dimension, 42)
+
+# Initialiser le readout avec la régression Ridge
+readout = Ridge(ridge=1e-5)
+```
+
+*Figure 10 : Code simple produit par ReservoirChat Big pour le prompt "Code-moi l'initialisation d'un reservoir".*
+
+Dans la Figure 10, on peut voir un exemple simple de la façon dont vous pourriez initialiser un reservoir en utilisant la bibliothèque ReservoirPy en Python. Cet exemple utilise une initialisation aléatoire.
+
+Dans ce code, nous importons d'abord les classes nécessaires depuis la bibliothèque ReservoirPy. Nous définissons ensuite la taille du reservoir et la dimension de l'entrée. Ensuite, nous initialisons le reservoir avec des poids aléatoires en utilisant la classe *Reservoir*. Enfin, nous initialisons le readout avec la régression Ridge en utilisant la classe *Ridge*.
+
+---
+
+## 5. Discussion
+
+Pour résumer, il existe un besoin évident d'un outil capable d'assister les utilisateurs travaillant avec le Reservoir Computing, une technologie sous-représentée dans la littérature. Bien que les LLMs traditionnels puissent partiellement remplir cette tâche, ils ont tendance à halluciner et à fournir des résultats incorrects par eux-mêmes, en particulier dans des domaines spécialisés comme le Reservoir Computing. De plus, même si la bibliothèque ReservoirPy est reconnue par la communauté, il n'y a pas autant de code disponible en ligne que pour d'autres bibliothèques mainstream comme scikit-learn. Ainsi, les LLMs généraux n'ont pas assez d'exemples sur lesquels s'entraîner pour les bibliothèques spécifiques à un domaine.
+
+Nous avons dû faire des choix pendant le développement de l'outil, en commençant par la bibliothèque GraphRAG de Microsoft, qui n'était pas à l'origine conçue pour être utilisée avec des LLMs autres que ChatGPT. En conséquence, nous avons dû identifier des LLMs et des embeddings qui correspondent à notre projet. Cela incluait des exigences telles que la génération de code, la réponse à des questions sur les RCs, la puissance de calcul disponible, et le support des langues européennes.
+
+Dans ce contexte, Codestral est apparu comme un choix approprié. Cependant, l'exécution de ces modèles localement nécessite une puissance de calcul élevée, et même si Codestral peut être considéré comme un petit modèle avec ses 22 milliards de paramètres, il nécessitait toujours l'utilisation d'un GPU (NVIDIA V100 16Go).
+
+ReservoirChat a montré de meilleurs résultats sur le benchmark dans les tâches basées sur les connaissances et le codage par rapport à Codestral, le modèle sur lequel il est basé. De plus, une base de données plus large tend intuitivement à fournir un compromis acceptable entre la fiabilité dans la réponse aux questions basées sur les connaissances et celles liées au code. De plus, les méthodes implémentées dans ReservoirChat<sub>Big</sub> ne produisent pas de sorties aberrantes, ni de réponses entièrement différentes de celles d'autres modèles. Enfin, ReservoirChat<sub>Big</sub> remplit son objectif, en étant capable de répondre de manière pertinente à la fois aux questions de connaissances et de codage concernant le Reservoir Computing et ReservoirPy, avec une fiabilité supérieure à celle d'autres LLMs couramment utilisés testés.
+
+Il est important de noter que GraphRAG a été développé à l'origine pour extraire des concepts et des relations depuis des textes narratifs. Cependant, les concepts impliqués dans les défis que nous avons rencontrés, tels que les tâches liées au code ou les connaissances techniques en Reservoir Computing, sont significativement différents et peuvent nécessiter des prompts adaptés à ces domaines, plutôt que ceux conçus à l'origine pour GraphRAG. Une amélioration potentielle pourrait être d'affiner les prompts de GraphRAG pour mieux extraire les concepts et relations pertinents à nos domaines d'intérêt.
+
+Cette approche pourrait servir de modèle pour rendre la documentation technique plus interactive. Elle pourrait représenter une avancée significative dans la façon dont les utilisateurs s'engagent avec des bibliothèques spécialisées et les appliquent dans leurs propres projets. Avec des raffinements supplémentaires, ReservoirChat pourrait devenir une solution fiable et pratique pour chaque développeur de Reservoir Computing. L'ajustement fin des hyperparamètres et des paramètres système pourrait aider à optimiser le temps de réponse et la qualité. De plus, la sélection minutieuse du LLM reste un composant critique de la performance du système.
+
+Des tests supplémentaires devraient également être envisagés pour garantir la sécurité, aucune réponse inappropriée ne devrait être générée même dans des cas d'utilisation imprévus. L'équité des données devrait être vérifiée, comme toujours, pour éviter toute utilisation abusive de la propriété intellectuelle, car c'est une préoccupation importante pour le pré-entraînement des LLM. La méthode du graphe de connaissances pourrait également être comparée à des approches alternatives en termes d'interprétabilité des réponses, d'exigences de ressources serveur, et de coût de configuration minimale pour une expérience utilisateur acceptable.
+
+L'outil ReservoirChat, basé sur une approche GraphRAG combinée avec une base de connaissances spécialisée, répond aux besoins pratiques de la communauté du Reservoir Computing. Il simplifie actuellement l'apprentissage et l'application de bibliothèques comme ReservoirPy, notamment en assistant avec le débogage et en suggérant des hyperparamètres pertinents (par exemple, rayon spectral, leak rate). Par exemple, un doctorant s'attaquant à son premier projet d'Echo State Network peut se tourner vers ReservoirChat comme partenaire technique pour configurer et optimiser son réseau, tandis qu'un ingénieur cherchant à déployer des modules de Reservoir Computing dans un environnement de production peut rapidement résoudre des problèmes de compatibilité et de performance.
+
+À l'avenir, l'ajout continu de nouvelles publications scientifiques au graphe de connaissances permettra à ReservoirChat de rester aligné avec les avancées dans le domaine (par exemple, architectures hybrides, reservoirs physiques photoniques ou spintroniques, et Deep RC). Cela permettrait aux chercheurs de consulter de manière interactive des articles récents et des prototypes de code pour identifier plus efficacement des configurations prometteuses. De plus, l'approche basée sur le graphe offre une meilleure traçabilité et interprétabilité : en retraçant les chemins d'inférence, les utilisateurs peuvent non seulement obtenir des réponses plus fiables mais aussi approfondir leur compréhension des concepts clés du Reservoir Computing. Ces développements positionnent ReservoirChat comme un outil polyvalent qui soutient la recherche, favorise l'innovation, et sert de ressource de documentation interactive et éducative pour la communauté du Reservoir Computing.
+
+---
+
+## Références
+
+[1] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin, "Attention is all you need," *Advances in neural information processing systems*, vol. 30, 2017.
+
+[2] J. Achiam, S. Adler, S. Agarwal, L. Ahmad, I. Akkaya, F. L. Aleman, D. Almeida, J. Altenschmidt, S. Altman, S. Anadkat et al., "GPT-4 technical report," *arXiv preprint arXiv:2303.08774*, 2023.
+
+[3] A. Radford, "Improving language understanding by generative pre-training," 2018.
+
+[4] A. Radford, J. Wu, R. Child, D. Luan, D. Amodei, I. Sutskever et al., "Language models are unsupervised multitask learners," *OpenAI blog*, vol. 1, no. 8, p. 9, 2019.
+
+[5] T. Brown, B. Mann, N. Ryder, M. Subbiah, J. D. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell et al., "Language models are few-shot learners," *Advances in neural information processing systems*, vol. 33, pp. 1877–1901, 2020.
+
+[6] A. Dubey, A. Jauhri, A. Pandey, A. Kadian, A. Al-Dahle, A. Letman, A. Mathur, A. Schelten, A. Yang, A. Fan et al., "The llama 3 herd of models," *arXiv preprint arXiv:2407.21783*, 2024.
+
+[7] A. Singh, N. P. Patel, A. Ehtesham, S. Kumar, and T. T. Khoei, "A survey of sustainability in large language models: Applications, economics, and challenges," *arXiv preprint arXiv:2412.04782*, 2024.
+
+[8] S. Peng, E. Kalliamvakou, P. Cihon, and M. Demirer, "The impact of AI on developer productivity: Evidence from github copilot," *arXiv preprint arXiv:2302.06590*, 2023.
+
+[9] M. Chen, J. Tworek, H. Jun, Q. Yuan, H. P. D. O. Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman et al., "Evaluating large language models trained on code," *arXiv preprint arXiv:2107.03374*, 2021.
+
+[10] L. Huang, W. Yu, W. Ma, W. Zhong, Z. Feng, H. Wang, Q. Chen, W. Peng, X. Feng, B. Qin et al., "A survey on hallucination in large language models: Principles, taxonomy, challenges, and open questions," *arXiv preprint arXiv:2311.05232*, 2023.
+
+[11] H. Jaeger, "The 'echo state' approach to analysing and training recurrent neural networks-with an erratum note," *Bonn, Germany: German National Research Center for Information Technology GMD Technical Report*, vol. 148, no. 34, p. 13, 2001.
+
+[12] A. Hurst, A. Lerer, A. P. Goucher, A. Perelman, A. Ramesh, A. Clark, A. Ostrow, A. Welihinda, A. Hayes, A. Radford et al., "GPT-4o system card," *arXiv preprint arXiv:2410.21276*, 2024.
+
+[13] T. Ferté and et al., "Reservoir Computing for Short High-Dimensional Time Series: an Application to SARS-CoV-2 Hospitalization Forecast," in *ICML'24: Proceedings of the 41st International Conference on Machine Learning*, ser. Proceedings of Machine Learning Research, vol. 235, Vienna, Austria, Jul. 2024, pp. 13 570–13 591.
+
+[14] N. Trouvain, L. Pedrelli, T. T. Dinh, and X. Hinaut, "Reservoirpy: an efficient and user-friendly library to design echo state networks," in *International Conference on Artificial Neural Networks*. Springer, 2020, pp. 494–505.
+
+[15] N. Trouvain, N. Rougier, and X. Hinaut, "Create efficient and complex reservoir computing architectures with reservoirpy," in *International Conference on Simulation of Adaptive Behavior*. Springer, 2022, pp. 91–102.
+
+[16] N. Trouvain and X. Hinaut, "reservoirpy: A Simple and Flexible Reservoir Computing Tool in Python," Jun. 2022, working paper or preprint.
+
+[17] X. Hinaut and N. Trouvain, "Which hype for my new task? Hints and random search for echo state networks hyperparameters," in *International Conference on Artificial Neural Networks*. Springer, 2021, pp. 83–97.
+
+[18] Z. Nussbaum, J. X. Morris, B. Duderstadt, and A. Mulyar, "Nomic embed: Training a reproducible long context text embedder," *arXiv preprint arXiv:2402.01613*, 2024.
+
+[19] P. Lewis and et al., "Retrieval-augmented generation for knowledge-intensive nlp tasks," in *Advances in Neural Information Processing Systems*, H. Larochelle and et al., Eds., vol. 33. Curran Associates, Inc., 2020, pp. 9459–9474.
+
+[20] Y. Gao, Y. Xiong, X. Gao, K. Jia, J. Pan, Y. Bi, Y. Dai, J. Sun, and H. Wang, "Retrieval-augmented generation for large language models: A survey," *arXiv preprint arXiv:2312.10997*, 2023.
+
+[21] A. Mistral, "Codestral: Hello, world," Section: news, 2024.
+
+[22] Z. Chen, Y. Wang, B. Zhao, J. Cheng, X. Zhao, and Z. Duan, "Knowledge graph completion: A review," *IEEE Access*, vol. 8, pp. 192 435–192 456, 2020.
+
+[23] D. Edge and et al., "From local to global: A graph RAG approach to query-focused summarization," 2024.
+
+[24] V. A. Traag, L. Waltman, and N. J. van Eck, "From louvain to leiden: guaranteeing well-connected communities," *Scientific Reports*, vol. 9, no. 1, Mar. 2019.
+
+[25] Google, "Introducing notebooklm," Section: news, 2024.
+
+[26] G. Team, P. Georgiev, V. I. Lei, R. Burnell, L. Bai, A. Gulati, G. Tanzer, D. Vincent, Z. Pan, S. Wang et al., "Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context," *arXiv preprint arXiv:2403.05530*, 2024.
+
+[27] M. Renze and E. Guven, "The effect of sampling temperature on problem solving in large language models," *arXiv preprint arXiv:2402.05201*, 2024.
+
+[28] A. Q. Jiang, A. Sablayrolles, A. Mensch, C. Bamford, D. S. Chaplot, D. d. l. Casas, F. Bressand, G. Lengyel, G. Lample, L. Saulnier et al., "Mistral 7b," *arXiv preprint arXiv:2310.06825*, 2023.
+
+[29] A. Q. Jiang, A. Sablayrolles, A. Roux, A. Mensch, B. Savary, C. Bamford, D. S. Chaplot, D. d. l. Casas, E. B. Hanna, F. Bressand et al., "Mixtral of experts," *arXiv preprint arXiv:2401.04088*, 2024.
+
+[30] Y. Bendi-Ouis, D. Dutarte, and X. Hinaut, "Deploying open-source large language models: A performance analysis," *arXiv preprint arXiv:2409.14887*, 2024.
+
+##### Virgile Boraud, Yannis Bendi-Ouis, Paul Bernard, Xavier Hinaut
+

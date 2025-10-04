@@ -1,0 +1,11 @@
+# Poster scientifique sur les Echo State Transformers pour la journée annuelle de l'EDMI
+
+Pour la journée annuelle de l'École Doctorale Mathématiques et Informatique (EDMI), j'ai eu l'opportunité de présenter un poster scientifique intitulé "Echo State Transformers" présentant une première version de mes travaux de recherche en cours. 
+
+> Nous présentons une nouvelle architecture hybride qui combine les avantages du Transformer et du Reservoir Computing pour surmonter la complexité quadratique inhérente au Transformer traditionnel. Notre approche intègre une mémoire de travail à travers plusieurs reservoirs par couche, chacun agissant comme une mémoire indépendante avec sa propre dynamique interne, et utilisant des mécanismes d'attention pour sélectionner les informations pertinentes de l'entrée actuelle et de l'état des autres mémoires. Bien qu'innovant, ce travail s'inspire fortement des Echo State Networks (ESN), qui ont démontré leur capacité à encoder et retenir l'information – y compris l'information chaotique – sur de longues périodes. Ainsi, en accord avec les ESN, nous proposons une mémoire fonctionnant par "Echo", basée sur des matrices aléatoires non apprises, permettant un encodage riche, diversifié et robuste de l'information avec une complexité constante à chaque étape. Nous avons conduit des évaluations préliminaires de l'Echo State Transformer (EST) sur le benchmark STREAM – un ensemble de tâches séquentielles modulables en difficulté – nous permettant ainsi d'avoir une première comparaison avec des modèles tels que LSTM et Transformer. Les résultats préliminaires montrent des performances prometteuses, indiquant que cette approche hybride pourrait offrir une alternative efficace aux modèles Transformer traditionnels.
+
+![Poster sur les Echo State Transformers](/articles/est-edmi/poster-est-edmi.pdf)
+
+[Cliquez ici pour consulter la publication HAL associée à ce poster.](https://hal.science/hal-04991876v1)
+
+##### Yannis Bendi-Ouis
